@@ -1,0 +1,177 @@
+body {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+}
+
+/* navbar */
+nav {
+  background-color: black;
+  color: white;
+  height: 4rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  list-style-type: none;
+  width: 100%;
+}
+/* list buttons */
+nav > li {
+  margin: 10px 20px; /* top, bottom -> 10px and left, right -> 20px */
+}
+nav > li > a {
+  color: white;
+  text-decoration: none;
+}
+/* profile button */
+nav > button {
+  padding: 10px 20px;
+  margin-left: auto;
+  margin-right: 20px;
+}
+
+/* main section */
+main{
+    padding: 2% 10%;
+    padding-top: 80px;
+} 
+
+.headerAndAddTask {
+  display: flex;
+  flex-direction: row;
+  
+  align-items: center;
+}
+
+.headerAndAddTask > button {
+  height: 35px;
+  margin-left: auto;
+}
+
+table {
+  border-collapse: collapse;
+  letter-spacing: 1px;
+  font-size: 0.8rem;
+}
+
+td,
+th {
+  border: 1px solid rgb(190, 190, 190);
+  padding: 10px 20px;
+}
+
+th {
+  background-color: rgb(235, 235, 235);
+}
+
+td {
+  text-align: left;
+}
+
+tr:nth-child(even) td {
+  background-color: #deded5 ;
+}
+
+tr:nth-child(odd) td {
+  background-color: rgb(245, 245, 245);
+}
+
+caption {
+  padding: 10px;
+}
+
+
+.main__title {
+  font-size: 4rem
+}
+
+.main__paragraph {
+  font-size: 1.8rem
+}
+
+
+.modal {
+  max-width: 700px;
+  width: 85%;
+  position: fixed;
+  top: 50%;
+  background-color: rgba(0, 0, 0, 0.3);
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 5px;
+  background: #ffffff;
+  display: none;
+}
+
+
+/****show modal class****/
+
+.modal.show {
+  display: block
+}
+
+#close {
+  cursor: pointer;
+  color: white;
+  position: absolute;
+  top: 0;
+  font-size: 25px;
+  right: 0;
+  padding: 1rem;
+  margin-right: 10px;
+}
+
+
+
+
+
+.modal__button {
+  background-color: #0a9396;
+  border: none;
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 5px;
+  box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.2);
+  transition: 0.3s background-color ease-in-out;
+}
+
+.modal__button:hover {
+  background-color: #0a9372;
+}
+
+main {
+  text-align: center;
+}
+
+.modal__container {
+  padding: 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+
+/****styling modal on smaller screen******/
+
+@media only screen and (min-width: 768px) {
+  .modal__container {
+      flex-direction: row;
+      padding: 2rem;
+      text-align: left;
+  }
+  .modal__img {
+      max-width: 50%
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .modal__title {
+      font-size: 2rem;
+  }
+  .modal__img {
+      max-width: 80%
+  }
+}

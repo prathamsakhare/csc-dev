@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./index.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <script src="./index.js" defer></script>
+    <title>CSC Management</title>
+  </head>
+  <body>
+    <!-- navbar -->
+    <nav class="navbar">
+      <li><a href="">Home</a></li>
+      <li><a href="">Dashboard</a></li>
+      <button>Profile</button>
+    </nav>
+
+    <!-- main content -->
+    <main>
+      <div class="modal" id="modal">
+        <div class='modal__container'>
+            
+            <div class="modal__content">
+                
+            </div>
+            <button id="close" type="button" onclick="closeModal()">X</button>
+        </div>
+    </div>
+      <section class="headerAndAddTask">
+        <header><h1>List Of Tasks</h1></header>
+        <button id="modalOpenButton" type="button" onclick="openModal()">Add Task</button>
+      </section>
+      <table style="width:100%;">
+        <thead>
+          <tr>
+            <th scope="col">Number</th>
+            <th scope="col">Category</th>
+            <th scope="col">Customer Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Date</th>
+            <th scope="col">Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Adhar Card</td>
+            <td>ABC</td>
+            <td>To update Adhar Card</td>
+            <td>4222.6</td>
+            <td class="current-date"></td>
+            <td>2.21 am</td>
+          </tr>
+
+          <tr>
+            <td>2</td>
+            <td>Shram Card</td>
+            <td>ABC</td>
+            <td>To open new Shram Card</td>
+            <td>2802.0</td>
+            <td class="current-date"></td>
+            <td>2.21 am</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Bank Account</td>
+            <td>XYZ</td>
+            <td>To open a new Bank Account</td>
+            <td>24.0</td>
+            <td class="current-date"></td>
+            <td>2.21 am</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>Print</td>
+            <td>IJK</td>
+            <td>To print some documents</td>
+            <td>24.7</td>
+            <td class="current-date"></td>
+            <td>2.21 am</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>Gov. Scheme</td>
+            <td>ABC</td>
+            <td>To inquire about gov. schemes</td>
+            <td>9.9</td>
+            <td class="current-date"></td>
+            <td>2.21 am</td>
+          </tr>
+        </tbody>
+      </table>
+    </main>
+
+    <!-- footer -->
+    <footer></footer>
+  </body>
+</html>
