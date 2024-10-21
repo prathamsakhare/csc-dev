@@ -26,9 +26,65 @@
       <div class="modal" id="modal">
         <div class='modal__container'>
             
-            <div class="modal__content">
-                
-            </div>
+          <div class="modal_theme">
+            <form action="post">
+              <div class="form_field">
+                <div class="form_subfield customer_name">
+                  <label for="username">Customer's Name</label>
+                  <input
+                    type="text"
+                    name="username"
+                    placeholder="Enter customer's Name..."
+                    required
+                  />
+                </div>
+                <div class="form_subfield task">
+                  <label for="task">Task</label>
+                  <input
+                    type="text"
+                    name="task"
+                    placeholder="Enter Task..."
+                    required
+                  />
+                </div>
+                <div class="form_subfield description">
+                  <label for="desc">Description</label>
+                  <textarea
+                    type="text"
+                    id="desc"
+                    name="desc"
+                    placeholder="Enter Task..."
+                    rows="5"
+                  ></textarea>
+                </div>
+                <div class="wrapper_category_pay">
+                  <div class="form_subfield category">
+                    <label for="category">Choose a task category:</label>
+        
+                    <select name="category" id="category" >
+                      <option value="select" selected="selected">Select one...</option>
+                      <option value="adhar">Adhar</option>
+                      <option value="pan">PAN</option>
+                      <option value="shram">Shram</option>
+                      <option value="Bank">Bank</option>
+                    </select>
+                  </div>
+                  <div class="form_subfield pay">
+                    <label for="pay">Payment</label>
+                    <input
+                      type="text"
+                      name="pay"
+                      placeholder="Enter Payment..."
+                      data="Number"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+              <button class="submit_button">Submit</button>
+
+            </form>
+          </div>
             <button id="close" type="button" onclick="closeModal()">X</button>
         </div>
     </div>
