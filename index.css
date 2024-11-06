@@ -1,0 +1,21 @@
+body{
+    margin : 0px;
+    padding : 0px;
+    box-sizing: border-box;
+}
+
+header{
+    border: 1px solid black;
+    display: flex;
+    flex-direction: row;
+    height: 7vh;
+    justify-content: center;
+    align-items: center;
+}
+
+header > #profile-button{
+    margin-left: auto;
+    margin-right: 15px;
+    height: 30px;
+
+}
