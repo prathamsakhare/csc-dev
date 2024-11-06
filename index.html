@@ -95,27 +95,30 @@
       <table style="width:100%;">
         <thead>
           <tr>
-            <th scope="col">Number</th>
-            <th scope="col">Category</th>
-            <th scope="col">Customer Name</th>
-            <th scope="col">Description</th>
-            <th scope="col">Amount</th>
-            <th scope="col">Date</th>
-            <th scope="col">Time</th>
+            <th scope="col" class="col_heading col_number">Number</th>
+            <th scope="col" class="col_heading col_category">Category</th>
+            <th scope="col" class="col_heading col_cname">Customer Name</th>
+            <th scope="col" class="col_heading col_mobile">Customer Mobile Number</th>
+            <th scope="col" class="col_heading col_desc">Description</th>
+            <th scope="col" class="col_heading col_amt">Amount</th>
+            <th scope="col" class="col_heading col_date">Date</th>
+            <th scope="col" class="col_heading col_time">Time</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>Adhar Card</td>
-            <td>ABC</td>
-            <td>To update Adhar Card</td>
-            <td>4222.6</td>
-            <td class="current-date"></td>
-            <td>2.21 am</td>
+          <!-- TODO : Put the unique id for each row -->
+          <tr id="1">
+            <td class="number">1</td>
+            <td class="category">Adhar Card</td>
+            <td class="cname">ABC</td>
+            <td class="mobile">+91 9876543210</td>
+            <td class="desc">To update Adhar Card</td>
+            <td class="amt">4222.6</td>
+            <td class="date current-date"></td>
+            <td class="time">2.21 am</td>
           </tr>
 
-          <tr>
+          <!-- <tr>
             <td>2</td>
             <td>Shram Card</td>
             <td>ABC</td>
@@ -150,7 +153,7 @@
             <td>9.9</td>
             <td class="current-date"></td>
             <td>2.21 am</td>
-          </tr>
+          </tr> -->
         </tbody>
       </table>
     </main>
