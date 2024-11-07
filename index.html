@@ -1,33 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./index.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./index.css" />
     <script src="./index.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
     <title>CSC PMS</title>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <h4>CSC PMS</h4>
-        <button id="profile-button">Profile</button>
+      <h1 id="logo">CSC PMS</h1>
+      <button id="profile-button" class="main-button">Profile</button>
     </header>
 
     <main>
-        <button id="add-record">Add Record</button>
-        <table id="record-table">
-            <tr>
-                <th>Index</th>
-                <th>Name</th>
-                <th>Mobile No.</th>
-                <th>Category</th>
-                <th>Task</th>
-                <th>Description</th>
-                <th>Amount</th>
-                <th>Date</th>
-                <th>Time</th>
-            </tr>
-        </table>
+      <div id="record-topbar">
+        <h2>Records</h2>
+        <button id="record-add-button" class="main-button">Add Record</button>
+      </div>
+      <table id="record-table">
+        <tr>
+          <th>Index</th>
+          <th>Name</th>
+          <th>Mobile No.</th>
+          <th>Category</th>
+          <th>Task</th>
+          <th>Description</th>
+          <th>Amount</th>
+          <th>Date</th>
+          <th>Time</th>
+        </tr>
+        <tr>
+          <td>I1</td>
+          <td>ABC</td>
+          <td>+91 9876543210</td>
+          <td>Adhar</td>
+          <td>Name Change</td>
+          <td>Adhar Update : Name Change</td>
+          <td>200</td>
+          <td>07/11/2024</td>
+          <td>11:39</td>
+        </tr>
+        <tr>
+          <td>I1</td>
+          <td>ABC</td>
+          <td>+91 9876543210</td>
+          <td>Adhar</td>
+          <td>Name Change</td>
+          <td>Adhar Update : Name Change</td>
+          <td>200</td>
+          <td>07/11/2024</td>
+          <td>11:39</td>
+        </tr>
+      </table>
     </main>
-</body>
+  </body>
 </html>
