@@ -210,16 +210,55 @@ table tr {
 }
 
 
-.cat-amt-input{
+.select-input{
   padding: 0.5rem;
-  width: 50%;
   margin-top: 10px;
   border: none;
   border-bottom: 1px solid grey;
   margin: 10px;
 }
+.cat-amt-select{
+  width: 50%;
+}
+.amt{
+  width: 50%;
+}
 
 
 .modal-body button{
   margin-top: 2rem;
+}
+
+
+/* name search dropdowm */
+.modal-name-dropdown{
+  position: fixed;
+  background-color: white;
+  border: 1px solid grey;
+  border-radius: 5px;
+  max-height: 50%;
+  width: 50%;
+  margin-top: 55px;
+  display: flex;
+  flex-direction: column;
+
+  
+}
+
+.name-display option{
+  border: 1px solid grey;
+  padding-left: 10px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  border: none;
+  border-bottom: 1px solid grey;
+  
+}
+
+.modal-name-dropdown button{
+  margin-top: 0px;
+  margin: 5px;
+  background-color: white;
+  border: none;
+  padding: 5px;
 }
