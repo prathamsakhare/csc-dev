@@ -19,6 +19,50 @@
       <button id="profile-button" class="main-button">Profile</button>
     </header>
 
+    <div class="parent-modal">
+      <div class="overlay"></div>
+      <div class="modal">
+        <div class="modal-heading">
+          <h2>Add Record</h2>
+          <button class="close secondary-button">Close</button>
+        </div>
+        <div class="modal-body">
+          <!-- <div class="modal-name"> -->
+          <input
+            type="text"
+            id="name"
+            class="modal-input"
+            placeholder="Enter customer's name..."
+          />
+          <textarea
+            name="desc"
+            id="desc"
+            class="modal-input"
+            placeholder="Enter description..."
+          ></textarea>
+          <div class="cat-amt-collection">
+            <select name="category" id="category" class="cat-amt-input">
+              <option value="select">Select Category...</option>
+              <option value="adhar">Adhar Card</option>
+              <option value="shram">Shram Card</option>
+              <option value="pmkcy">PMKCY</option>
+              <option value="mudra">Mudra Yojana</option>
+            </select>
+            <input
+              type="number"
+              id="amt"
+              class="cat-amt-input"
+              placeholder="Enter amount recieved..."
+            />
+          </div>
+          <button class="main-button">Save Record</button>
+          
+          <!-- </div> -->
+        </div>
+      </div>
+    </div>
+    
+
     <main>
       <div id="record-topbar">
         <h2>Records</h2>

@@ -1,17 +1,19 @@
 :root {
   --main-button-bgcolor: #4285f4;
   --table-header-bgcolor: #fafafa;
-  --table-border-color : #EFEFEF;
-  --header-border-color : #EFEFEF
+  --table-border-color: #efefef;
+  --header-border-color: #efefef;
+
+  --secondary-button-bgcolor:white;
+  --secondary-button-color : #4285f4
 }
 
 body {
-    margin: 0px;
-    padding: 0px;
-    box-sizing: border-box;
-    font-family: "Roboto", sans-serif;
-  }
-  
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+}
 
 .main-button {
   background-color: var(--main-button-bgcolor);
@@ -22,6 +24,18 @@ body {
   font-weight: bold;
 }
 
+.secondary-button {
+  background-color: var(--secondary-button-bgcolor);
+  border: 1px solid var(--secondary-button-color);
+  padding: 10px 30px;
+  color: var(--secondary-button-color);
+  border-radius: 3px;
+  font-weight: bold;
+}
+
+.main-button:hover, .secondary-button:hover {
+  cursor: pointer;
+}
 
 header {
   border: 1px solid var(--header-border-color);
@@ -33,7 +47,7 @@ header {
 }
 
 #logo {
-    margin-left: 1rem;
+  margin-left: 1rem;
 }
 
 header > #profile-button {
@@ -80,7 +94,7 @@ main {
 }
 
 table tr {
-  border-bottom: 1px solid var(--table-border-color)
+  border-bottom: 1px solid var(--table-border-color);
 }
 
 #record-table th {
@@ -95,4 +109,117 @@ table tr {
 
 #record-table td {
   border-radius: 5px;
+}
+
+/* Modal */
+.modal{
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid grey;
+  border-radius: 5px;
+  width: 45%;
+  height: 60vh;
+  padding: 15px;
+  margin-top: 4rem;
+  justify-content: space-evenly;
+  z-index: 6;
+  transform: translate(50%, 0%);
+  background-color: white;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(3px);
+  z-index: 4;
+}
+
+.modal-heading{
+  display: flex;
+  flex-direction: row;
+  height: 3rem;
+  padding-left: 2rem;
+}
+
+.close{
+  margin-left: auto;
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
+.close:hover{
+  background-color: red;
+  border: none;
+  padding: 10px 30px;
+  color: white;
+  border-radius: 3px;
+  font-weight: bold;
+}
+
+.modal-body{
+  /* margin-top: 2rem; */
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  height: 70%;
+  justify-content: space-evenly;
+}
+
+.modal-input{
+  padding: 0.5rem;
+  width: 97%;
+  margin-top: 10px;
+  border: none;
+  border-bottom: 1px solid grey;
+
+}
+
+/* In order to remove outline while focusing on element */
+.modal-input:focus{
+  outline: none;
+  background-color: #F1F3F4;
+}
+
+.modal-input::-webkit-input-placeholder {
+  font-family: "Roboto", sans-serif;
+}
+
+.modal-input:-ms-input-placeholder {
+  font-family: "Roboto", sans-serif;
+}
+
+.modal-input:-moz-placeholder {
+  font-family: "Roboto", sans-serif;
+}
+
+.modal-input::-moz-placeholder {
+  font-family: "Roboto", sans-serif;
+}
+
+.cat-amt-collection{
+  display: flex;
+  flex-direction: row;
+}
+
+
+.cat-amt-input{
+  padding: 0.5rem;
+  width: 50%;
+  margin-top: 10px;
+  border: none;
+  border-bottom: 1px solid grey;
+  margin: 10px;
+}
+
+
+.modal-body button{
+  margin-top: 2rem;
 }
