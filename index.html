@@ -19,12 +19,11 @@
       <button id="profile-button" class="main-button">Profile</button>
     </header>
 
-    <div class="parent-modal">
-      <div class="overlay"></div>
-      <div class="modal">
+      <div id="overlay" class="overlay"></div>
+      <div id="modal" class="modal">
         <div class="modal-heading">
           <h2>Add Record</h2>
-          <button class="close secondary-button">Close</button>
+          <button id="modal-close-btn" class="close secondary-button" onclick="closeModal()">Close</button>
         </div>
         <div class="modal-body">
           <!-- <div class="modal-name"> -->
@@ -55,10 +54,8 @@
               placeholder="Enter amount recieved..."
             />
           </div>
-          <button class="main-button">Save Record</button>
+          <button id="modal-save-btn" class="main-button">Save Record</button>
           
-          <!-- </div> -->
-        </div>
       </div>
     </div>
     
@@ -66,7 +63,7 @@
     <main>
       <div id="record-topbar">
         <h2>Records</h2>
-        <button id="record-add-button" class="main-button">Add Record</button>
+        <button id="record-add-button" class="main-button" onclick="openModal()">Add Record</button>
       </div>
       <table id="record-table">
         <tr>
