@@ -114,7 +114,7 @@ table tr {
 /* Modal */
 .modal{
   position: fixed;
-  display: flex;
+  display: none;
   flex-direction: column;
   border: 1px solid grey;
   border-radius: 5px;
@@ -130,6 +130,7 @@ table tr {
 
 .overlay {
   position: fixed;
+  display: none;
   top: 0;
   bottom: 0;
   left: 0;

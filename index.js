@@ -10,6 +10,7 @@ let nameDropdown = document.getElementById("modal-name-dropdown");
 
 // * Approach 1 to add functionality - You can write function here and then you can add event listener to the html element you want to implement functionality on
 function openModal() {
+  console.log('openmodal')
   modal.style.display = "block";
   overlay.style.display = "block";
 }
