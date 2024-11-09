@@ -3,41 +3,126 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./intro.css" />
-    <script src="./intro.js" defer></script>
-    <title>Introduction</title>
+    <link rel="stylesheet" href="./index.css" />
+    <script src="./index.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <title>CSC PMS</title>
   </head>
   <body>
-    
+    <header>
+      <h1 id="logo">CSC PMS</h1>
+      <a href="./intro.html"><button id="profile-button" class="main-button">Intro!</button></a>
+    </header>
+
     <div id="overlay" class="overlay"></div>
     <div id="modal" class="modal">
-      
+      <div class="modal-heading">
+        <h2>Add Record</h2>
+        <button
+          id="modal-close-btn"
+          class="close secondary-button"
+          onclick="closeModal()"
+        >
+          Close
+        </button>
+      </div>
       <div class="modal-body">
-        <p>The interface that you are getting redirected to is a demonstration of CSC PMS, the site is still being developed.</p>
-        <div style="display:flex; gap: 10px;">
-            <a href="./index.html"><button id="modal-save-btn" class="main-button">Continue</button></a>
-            <button class="secondary-button" onclick="closeModal()">Back</button>
+        <!-- <div class="modal-name"> -->
+        <div class="wrapper">
+          <input
+            type="text"
+            id="name"
+            class="modal-input"
+            placeholder="Enter customer's name..."
+            onchange="search()"
+          />
+          <div id="modal-name-dropdown" class="modal-name-dropdown">
+            <div>
+              <div id="namelist" class="name-display"></div>
+              <button>+ Add '<span id="name-suggest"></span>'</button>
+            </div>
+          </div>
         </div>
+        <textarea
+          name="desc"
+          id="desc"
+          class="modal-input"
+          placeholder="Enter description..."
+        ></textarea>
+        <div class="cat-amt-collection">
+          <select
+            name="category"
+            id="category"
+            class="select-input cat-amt-select"
+          >
+            <option value="select">Select Category</option>
+            <option value="adhar">Adhar Card</option>
+            <option value="shram">Shram Card</option>
+            <option value="pmkcy">PMKCY</option>
+            <option value="mudra">Mudra Yojana</option>
+          </select>
+          <input
+            type="number"
+            id="amt"
+            class="select-input amt"
+            placeholder="Enter amount recieved..."
+          />
+        </div>
+        <button id="modal-save-btn" class="main-button">Save Record</button>
       </div>
     </div>
 
-
-
-
-
-
-
-    <!-- ---------------------------------------------------------------------------------------- -->
     <main>
-      <h1>Welcome to CSC PMS!</h1>
-      <p>
-        Streamline your customer service operations with CSC PMS - where all
-        your records and insights come together in one place.
-      </p>
-        
-       <button class="main-button" onclick="openModal()">Get Started</button>
-    
-      
+      <div id="record-topbar">
+        <h2>Records</h2>
+        <button
+          id="record-add-button"
+          class="main-button"
+          onclick="openModal()"
+        >
+          Add Record
+        </button>
+      </div>
+      <table id="record-table">
+        <tr>
+          <th>Index</th>
+          <th>Name</th>
+          <th>Mobile No.</th>
+          <th>Category</th>
+          <th>Task</th>
+          <th>Description</th>
+          <th>Amount</th>
+          <th>Date</th>
+          <th>Time</th>
+        </tr>
+        <tr>
+          <td>I1</td>
+          <td>ABC</td>
+          <td>+91 9876543210</td>
+          <td>Adhar</td>
+          <td>Name Change</td>
+          <td>Adhar Update : Name Change</td>
+          <td>200</td>
+          <td>07/11/2024</td>
+          <td>11:39</td>
+        </tr>
+        <tr>
+          <td>I1</td>
+          <td>ABC</td>
+          <td>+91 9876543210</td>
+          <td>Adhar</td>
+          <td>Name Change</td>
+          <td>Adhar Update : Name Change</td>
+          <td>200</td>
+          <td>07/11/2024</td>
+          <td>11:39</td>
+        </tr>
+      </table>
     </main>
   </body>
 </html>
