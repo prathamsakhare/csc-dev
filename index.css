@@ -183,6 +183,10 @@ table tr {
 
 }
 
+.modal textarea{
+  font-family: "Roboto", sans-serif;;
+}
+
 /* In order to remove outline while focusing on element */
 .modal-input:focus{
   outline: none;
@@ -218,6 +222,11 @@ table tr {
   border-bottom: 1px solid grey;
   margin: 10px;
 }
+
+.select-input:focus{
+  outline : none;
+}
+
 .cat-amt-select{
   width: 50%;
 }
@@ -233,16 +242,16 @@ table tr {
 
 /* name search dropdowm */
 .modal-name-dropdown{
-  position: fixed;
+  position: absolute;
   background-color: white;
   border: 1px solid grey;
   border-radius: 5px;
-  max-height: 50%;
+  max-height: 200px;
   width: 50%;
-  margin-top: 55px;
-  display: flex;
+  /* margin-top: 55px; */
+  display: none;
   flex-direction: column;
-
+  overflow: auto;
   
 }
 
@@ -258,8 +267,23 @@ table tr {
 
 .modal-name-dropdown button{
   margin-top: 0px;
-  margin: 5px;
+  /* margin: 5px; */
   background-color: white;
+  color: var(--main-button-bgcolor);
   border: none;
   padding: 5px;
+  position:sticky;
+  /* top: 200px; */
+  bottom: 0px;
+  width: 100%;
+  height: 40px;
+  text-align: left;
+  font-weight: 700;
+  border-top: 1px solid black;
+  
+}
+
+
+.suggestion-item {
+  cursor: pointer;
 }

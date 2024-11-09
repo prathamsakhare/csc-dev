@@ -28,27 +28,25 @@
           class="close secondary-button"
           onclick="closeModal()"
         >
-          Close ..
+          Close
         </button>
       </div>
       <div class="modal-body">
         <!-- <div class="modal-name"> -->
-        <input
-          type="text"
-          id="name"
-          class="modal-input"
-          placeholder="Enter customer's name..."
-        />
-        <div id="modal-name-dropdown" class="modal-name-dropdown">
-          <div id="namelist" class="name-display">
-            <!-- <option value="select">Select Category...</option>
-            <option value="adhar">Adhar Card</option>
-            <option value="shram">Shram Card</option>
-            <option value="pmkcy">PMKCY</option>
-            <option value="mudra">Mudra Yojana</option>
-            <option value="mudra">Ladki Bahin</option> -->
+        <div class="wrapper">
+          <input
+            type="text"
+            id="name"
+            class="modal-input"
+            placeholder="Enter customer's name..."
+            onchange="search()"
+          />
+          <div id="modal-name-dropdown" class="modal-name-dropdown">
+            <div>
+              <div id="namelist" class="name-display"></div>
+              <button>+ Add '<span id="name-suggest"></span>'</button>
+            </div>
           </div>
-          <button >+ Add 'Change'</button>
         </div>
         <textarea
           name="desc"
@@ -57,8 +55,12 @@
           placeholder="Enter description..."
         ></textarea>
         <div class="cat-amt-collection">
-          <select name="category" id="category" class="select-input cat-amt-select">
-            <option value="select">Select Category...</option>
+          <select
+            name="category"
+            id="category"
+            class="select-input cat-amt-select"
+          >
+            <option value="select">Select Category</option>
             <option value="adhar">Adhar Card</option>
             <option value="shram">Shram Card</option>
             <option value="pmkcy">PMKCY</option>
