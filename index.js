@@ -44,6 +44,8 @@ const customerData = [
   { name: "Kapil Pandey", mobile: 1234567890 },
 ];
 
+
+// TODO : Implement functionality such that, as the user types in the input box the list should keep rendering with correct search results.
 function search() {
   console.log("search function is called");
 
@@ -60,11 +62,12 @@ function search() {
 
   console.log("searchResults : ", searchResults);
 
-  if (searchResults.length > 0) {
-    namelist.style.display = "block";
+  if (query.length > 0) {
+    nameDropdown.style.display = "block";
+    console.log('query length : ', query.length)
   } else {
     nameDropdown.style.display = "none";
-    nameDropdown.style.color = "red";
+    // nameDropdown.style.color = "red";
   }
   // return searchResults
   for (let i = 0; i < searchResults.length; i++) {
@@ -73,3 +76,5 @@ function search() {
     ].name.toLowerCase()}">${searchResults[i].name}</option>`;
   }
 }
+
+setInterval(search(), 100)
