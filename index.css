@@ -42,7 +42,7 @@ header {
   display: flex;
   flex-direction: row;
   height: 7vh;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 }
 
@@ -50,10 +50,8 @@ header {
   margin-left: 1rem;
 }
 
-header > #profile-button {
-  margin-left: auto;
+header >  #profile-button{
   margin-right: 15px;
-  /* height: 30px; */
 }
 
 main {
