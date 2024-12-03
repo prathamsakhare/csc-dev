@@ -113,14 +113,14 @@ table tr {
 .modal{
   position: fixed;
   display: none;
-  flex-direction: column;
+  /* flex-direction: column; */
   border: 1px solid grey;
   border-radius: 5px;
   width: 45%;
   height: 60vh;
   padding: 15px;
   margin-top: 4rem;
-  justify-content: space-evenly;
+  /* justify-content: space-evenly; */
   z-index: 6;
   transform: translate(50%, 0%);
   background-color: white;
@@ -168,8 +168,8 @@ table tr {
   display: flex;
   flex-direction: column;
   padding: 2rem;
-  height: 70%;
   justify-content: space-evenly;
+  height: 90%;
 }
 
 .modal-input{
@@ -184,6 +184,7 @@ table tr {
 .modal textarea{
   font-family: "Roboto", sans-serif;;
 }
+
 
 /* In order to remove outline while focusing on element */
 .modal-input:focus{
@@ -240,7 +241,7 @@ table tr {
 
 /* name search dropdowm */
 .modal-name-dropdown{
-  position: absolute;
+  position: relative;
   background-color: white;
   border: 1px solid grey;
   border-radius: 5px;
@@ -278,10 +279,49 @@ table tr {
   text-align: left;
   font-weight: 700;
   border-top: 1px solid black;
+  cursor: pointer;
   
 }
 
 
 .suggestion-item {
   cursor: pointer;
+}
+
+
+
+
+.addUserModal-body{
+  border: 1px solid red;
+  position:absolute;
+  top: 140px;
+  left : 330px;
+  background-color: white;
+  display: none;
+  /* flex-direction: column; */
+  border: 1px solid grey;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.addUserModal-input{
+  padding: 0.5rem;
+
+  width: 90%;
+  margin-top: 10px;
+  margin: 10px;
+  border: none;
+  border-bottom: 1px solid grey;
+}
+
+.addUserModal-input:focus{
+  outline: none;
+  background-color: #F1F3F4;
+}
+
+
+.addUserModal-body button{
+  margin: 10px;
+  
+  
 }
