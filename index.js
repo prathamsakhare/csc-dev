@@ -1,11 +1,12 @@
 // modals
 let modal = document.getElementById("modal");
 let overlay = document.getElementById("overlay");
+let addUserModal = document.getElementById("addUserModal")
+
+// buttons
 let addRecordButton = document.getElementById("record-add-button");
 let closeButton = document.getElementById("modal-close-btn");
 let saveButton = document.getElementById("modal-save-btn");
-
-let addUserModal = document.getElementById("addUserModal")
 
 // input fields for form of add records modal
 let customerName = document.getElementById("name");
@@ -14,9 +15,9 @@ let category = document.getElementById('category')
 let amount = document.getElementById("amt")
 
 // input fields for form of add user modal
-let cutomerName = document.getElementById("username")
-let customerEmail = document.getElementById("useremail")
-let customerNumber = document.getElementById("usernumber")
+let username = document.getElementById("username")
+let useremail = document.getElementById("useremail")
+let userphonenumber = document.getElementById("usernumber")
 
 
 // elements for suggestion list for names
@@ -63,14 +64,25 @@ function closeModal() {
 
 function openAddUserModal(){
   addUserModal.style.display = "block";
+
+  // taking entered username to add user modal
+  // making first letter of string capital
+  username.value = customerName.value[0].toUpperCase() + customerName.value.slice(1)
+  
+  
 }
 
 function closeAddUserModal(){
   addUserModal.style.display = "none";
 
-  customerName.value = ""
-  customerEmail.value = ""
-  customerNumber.value = ""
+  // hiding name dropdown since the user is added
+  if(username.value){
+    nameDropdown.style.display = "none"
+  }
+
+  username.value = ""
+  useremail.value = ""
+  userphonenumber.value = ""
 }
 
 // Optional feature - to hide modal whenever anywhere clicked on the screen
@@ -106,12 +118,8 @@ const customerData = [
 ];
 
 
-// TODO : Implement functionality such that, as the user types in the input box the list should keep rendering with correct search results.
+
 function search() {
-  console.log("search function is called");
-
- 
-
   let query = customerName.value.toLowerCase();
   namelist.innerHTML = "";
   nameDropdown.style.display = 'none'
@@ -124,13 +132,15 @@ function search() {
 
     const matchedNames = customerData
       .filter(customer => customer.name.toLowerCase().includes(query))
-      .map(customer => customer.name);
+      .map(customer => customer);
+
+      console.log(matchedNames)
 
     // Display matched names as suggestions
-    matchedNames.forEach(name => {
+    matchedNames.forEach(customer => {
       const suggestionItem = document.createElement("div");
-      suggestionItem.textContent = name;
-      namelist.innerHTML += (`<option class="suggestion-item" onclick="setCustomerName('${name}')" value="${name.toLowerCase()}">${name}</option>`);
+      suggestionItem.textContent = customer.name;
+      namelist.innerHTML += (`<option class="suggestion-item" onclick="setCustomerName('${customer.name}')" value="${customer.name.toLowerCase()}">${customer.name} <p>${customer.mobile}</p></option>`);
     });
 
     nameSuggest.innerText = customerName.value

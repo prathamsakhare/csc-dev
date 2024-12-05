@@ -116,7 +116,7 @@ table tr {
   /* flex-direction: column; */
   border: 1px solid grey;
   border-radius: 5px;
-  width: 45%;
+  width: 50%;
   height: 60vh;
   padding: 15px;
   margin-top: 4rem;
@@ -169,7 +169,13 @@ table tr {
   flex-direction: column;
   padding: 2rem;
   justify-content: space-evenly;
-  height: 90%;
+  /* height: 100%; */
+  position: absolute;
+  bottom: 10px;
+  top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  /* align-self: center; */
 }
 
 .modal-input{
@@ -241,7 +247,7 @@ table tr {
 
 /* name search dropdowm */
 .modal-name-dropdown{
-  position: relative;
+  position: absolute;
   background-color: white;
   border: 1px solid grey;
   border-radius: 5px;
@@ -296,12 +302,12 @@ table tr {
   position:absolute;
   top: 140px;
   left : 330px;
+  right: 20px;
   background-color: white;
   display: none;
-  /* flex-direction: column; */
-  border: 1px solid grey;
   border-radius: 5px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border: none;
 }
 
 .addUserModal-input{
