@@ -1,12 +1,16 @@
-
-// form input fields
+// form input fields for record
 const recordCustomer = document.getElementById("name")
 const recordDescription = document.getElementById("desc")
 const recordCategory = document.getElementById("category")
 const recordAmount = document.getElementById("amt")
 const recordCscHandler = 1
 
-// table 
+// form input fields for user
+const name = document.getElementById("username")
+const email = document.getElementById("useremail")
+const number = document.getElementById("usernumber")
+
+// record table 
 const recordTabel = document.getElementById("record-table")
 const noRecords = document.getElementById("no-records")
 
@@ -29,11 +33,16 @@ request.onupgradeneeded = (event) => {
   // Save the IDBDatabase interface
   const db = event.target.result;
 
-  // Create an objectStore for this database
+  // Create an objectStore for records
   const RecordsobjectStore = db.createObjectStore("records", { autoIncrement : true});
   RecordsobjectStore.createIndex("nameIndex", "name", { unique: false });
   RecordsobjectStore.createIndex("categoryIndex", "category", { unique: false });
-  // Create an index on the timestamp field
+
+  // Create an object store for users 
+  const usersobjectStore = db.createObjectStore("users", {autoIncrement : true})
+  usersobjectStore.createIndex("nameIndex", "name", { unique: false });
+  usersobjectStore.createIndex("emailIndex", "email", { unique: false });
+  usersobjectStore.createIndex("phoneIndex", "phoneNumber", { unique: false });
 
 };
 
@@ -107,6 +116,27 @@ function addRecord(record) {
   };
 }
 
+// add user
+function addUser(user){
+  const request = window.indexedDB.open(dbName, 1);
+
+  request.onsuccess = (event) => {
+    const db = event.target.result
+    console.log("db : ", db)
+
+    const userObjectStore = db
+      .transaction("users", "readwrite")
+      .objectStore("users");
+
+    userObjectStore.add(user)
+    //Getting The Data
+    const transaction = db.transaction(["users"]);
+    const store = transaction.objectStore("users");
+
+  }
+}
+// addUser({name : "user 1",email : "user1@gmail.com", "phoneNumber" : "9876543210"})
+
 // Delete Database
 function deleteDatabase(dbName) {
   var DBDeleteReq = window.indexedDB.deleteDatabase(dbName);
@@ -116,7 +146,7 @@ function deleteDatabase(dbName) {
   
 }
 
-
+// deleteDatabase("cscPms")
 // General functions 
 function closeModal() {
   modal.style.display = "none";
@@ -131,7 +161,8 @@ function closeModal() {
 
 }
 
-function getFormValues(){
+// Get form values of record
+function getRecordFormValues(){
   // current time
   let now = new Date();
   let hours = now.getHours();
@@ -167,3 +198,17 @@ function getFormValues(){
   console.log("Record added : ", record)
 }
 
+
+function getUserFormValues(){
+
+  const user = {
+    name : name.value,
+    email : email.value,
+    phoneNumber : number.value,
+    timeStamp : Date.now()
+  }
+
+  addUser(user)
+
+  closeAddUserModal()
+}

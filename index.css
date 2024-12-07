@@ -183,6 +183,8 @@ table tr {
   display: flex;
   flex-direction: column;
   padding: 2rem;
+  padding-top: 0px;
+  margin-top: 2rem;
   justify-content: space-evenly;
   /* height: 100%; */
   position: absolute;
