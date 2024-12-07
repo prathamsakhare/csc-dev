@@ -1,10 +1,10 @@
-<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./index.css" />
     <script src="./index.js" defer></script>
+    <script src="./indexeddb.js" defer></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -34,7 +34,7 @@
         </button>
       </div>
       <!-- Add Record Modal -->
-      <form id="recordInputForm">
+      <form id="recordInputForm" >
         <div class="modal-body">
           <!-- <div class="modal-name"> -->
             <div class="wrapper">
@@ -77,7 +77,7 @@
                 placeholder="Enter amount recieved..."
               />
             </div>
-            <button id="modal-save-btn" class="main-button">Save Record</button>
+            <button id="modal-save-btn" class="main-button" onclick="getFormValues()">Save Record</button>
           
         </div>
       </form>
@@ -89,13 +89,14 @@
               <input
                 type="text"
                 id="username"
+                name="username"
                 class="addUserModal-input"
                 placeholder="Enter customer's name..."
-                required
               />
               <input
                 type="email"
                 id="useremail"
+                name="useremail"
                 class="addUserModal-input"
                 placeholder="Enter email..."
                 
@@ -103,9 +104,9 @@
               <input
                 type="number"
                 id="usernumber"
+                name="usernumber"
                 class="addUserModal-input"
                 placeholder="Enter phone number..."
-                required
               />
              
             </div>
@@ -129,39 +130,20 @@
         </button>
       </div>
       <table id="record-table">
-        <tr>
-          <th>Index</th>
-          <th>Name</th>
-          <th>Mobile No.</th>
-          <th>Category</th>
-          <th>Task</th>
-          <th>Description</th>
-          <th>Amount</th>
-          <th>Date</th>
-          <th>Time</th>
-        </tr>
-        <tr>
-          <td>I1</td>
-          <td>ABC</td>
-          <td>+91 9876543210</td>
-          <td>Adhar</td>
-          <td>Name Change</td>
-          <td>Adhar Update : Name Change</td>
-          <td>200</td>
-          <td>07/11/2024</td>
-          <td>11:39</td>
-        </tr>
-        <tr>
-          <td>I1</td>
-          <td>ABC</td>
-          <td>+91 9876543210</td>
-          <td>Adhar</td>
-          <td>Name Change</td>
-          <td>Adhar Update : Name Change</td>
-          <td>200</td>
-          <td>07/11/2024</td>
-          <td>11:39</td>
-        </tr>
+        <tbody id="records">
+          <tr>
+            <th>Index</th>
+            <th>Name</th>
+            <th>Mobile No.</th>
+            <th>Category</th>
+            <th>Description</th>
+            <th>Amount</th>
+            <th>Date</th>
+            <th>Time</th>
+          </tr>
+        </tbody>
+       
+
       </table>
     </main>
   </body>

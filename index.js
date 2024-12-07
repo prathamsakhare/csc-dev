@@ -78,6 +78,7 @@ function closeAddUserModal(){
   // hiding name dropdown since the user is added
   if(username.value){
     nameDropdown.style.display = "none"
+    customerName.value = username.value
   }
 
   username.value = ""
@@ -86,13 +87,15 @@ function closeAddUserModal(){
 }
 
 // Optional feature - to hide modal whenever anywhere clicked on the screen
-// window.onclick = function(event) {
-//   if (event.target != modal) {
-//     modal.style.display = "none";
-//     overlay.style.display = "none"
+// if(modal.style.display == "block"){
+//   window.onclick = function(event) {
+//     if (event.target != modal) {
+//       modal.style.display = "none";
+//       overlay.style.display = "none"
+//     }
 //   }
+  
 // }
-
 // * Approach 2 - you can put on click event here itself, no need to add event listener to html element
 // addRecordButton.onclick = function(){
 //     modal.style.display = "block"
@@ -140,7 +143,7 @@ function search() {
     matchedNames.forEach(customer => {
       const suggestionItem = document.createElement("div");
       suggestionItem.textContent = customer.name;
-      namelist.innerHTML += (`<option class="suggestion-item" onclick="setCustomerName('${customer.name}')" value="${customer.name.toLowerCase()}">${customer.name} <p>${customer.mobile}</p></option>`);
+      namelist.innerHTML += (`<option class="suggestion-item" onclick="setCustomerName('${customer.name}')" value="${customer.name.toLowerCase()}">${customer.name} <p class="suggestion_mobile">${customer.mobile}</p></option>`);
     });
 
     nameSuggest.innerText = customerName.value
@@ -152,5 +155,6 @@ function setCustomerName(name){
   customerName.value = name;
   nameDropdown.style.display = 'none'
 }
+
 
 
