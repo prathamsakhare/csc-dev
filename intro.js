@@ -1,4 +1,4 @@
-
+//This is an intro file
 let modal = document.getElementById('modal')
 
 
