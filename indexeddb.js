@@ -8,6 +8,7 @@ const recordCscHandler = 1
 
 // table 
 const recordTabel = document.getElementById("record-table")
+const noRecords = document.getElementById("no-records")
 
 const dbName = "cscPms"
 
@@ -29,7 +30,7 @@ request.onupgradeneeded = (event) => {
   const db = event.target.result;
 
   // Create an objectStore for this database
-  const RecordsobjectStore = db.createObjectStore("records", { keyPath: "id" });
+  const RecordsobjectStore = db.createObjectStore("records", { keyPath: "id", autoIncrement : true});
   RecordsobjectStore.createIndex("nameIndex", "name", { unique: false });
   RecordsobjectStore.createIndex("categoryIndex", "category", { unique: false });
 };
@@ -50,9 +51,15 @@ function getAllRecords(){
         console.log("Records found:", getRequest.result);
 
         // TODO : Insert html into the table
-        getRequest.result.forEach(record => {
-          recordTabel.innerHTML += `<tr><td>${record.id}</td><td>${record.recordCustomer}</td><td>+91 9876543210</td><td>${record.recordCategory}</td><td>${record.recordDescription}</td><td>${record.recordAmount}</td><td>${record.recordDate}</td><td>${record.recordTime}</td></tr>`
-        });
+        if(getRequest.result.length > 0){
+          noRecords.style.display = "none"
+          getRequest.result.forEach(record => {
+            recordTabel.innerHTML += `<tr><td>${record.id}</td><td>${record.recordCustomer}</td><td>+91 9876543210</td><td>${record.recordCategory}</td><td>${record.recordDescription}</td><td>${record.recordAmount}</td><td>${record.recordDate}</td><td>${record.recordTime}</td></tr>`
+          });
+        }else{
+          recordTabel.style.display = "none"
+          noRecords.style.display = "block"
+        }
 
 //         id
 // : 
@@ -148,7 +155,25 @@ function closeModal() {
 }
 
 function getFormValues(){
-  
+  // current time
+  let now = new Date();
+  let hours = now.getHours();
+  let minutes = now.getMinutes();
+  let seconds = now.getSeconds();
+  let currentTime = `${hours}:${minutes}:${seconds}`;
+
+  // current date
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  let mm = today.getMonth() + 1; // Months start at 0!
+  let dd = today.getDate();
+
+  if (dd < 10) dd = '0' + dd;
+  if (mm < 10) mm = '0' + mm;
+
+  const formattedToday = dd + '/' + mm + '/' + yyyy;
+
+  // record object
   const record = {
     id : Math.random().toFixed(2),
     recordCustomer : recordCustomer.value,
@@ -156,8 +181,8 @@ function getFormValues(){
     recordCategory : recordCategory.value,
     recordAmount : recordAmount.value,
     recordCscHandler : recordCscHandler,
-    recordDate : Date.now(),
-    recordTime : ""
+    recordDate : formattedToday,
+    recordTime : currentTime
   } 
 
   addRecord(record)

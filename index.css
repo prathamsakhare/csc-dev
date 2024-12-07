@@ -50,8 +50,9 @@ header {
   margin-left: 1rem;
 }
 
-header >  #profile-button{
+#profile-button{
   margin-right: 15px;
+
 }
 
 main {
@@ -112,6 +113,16 @@ table tr {
 #record-table td {
   border-radius: 5px;
 }
+
+/* no records heading */
+#no-records{
+  position: absolute;
+  left : 50%;
+  transform: translate(-50%, 50%);
+  text-align: center;
+  /* border: 1px solid red; */
+}
+
 
 /* Modal */
 .modal{
