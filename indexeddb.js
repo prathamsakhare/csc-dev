@@ -51,6 +51,7 @@ request.onupgradeneeded = (event) => {
 
 };
 
+// general functions to work with strings
 function capitalizeFirstLetter(words){
   return words.charAt(0).toUpperCase() + words.slice(1);
 }
@@ -84,8 +85,8 @@ function getAllRecords(){
 
           let tempIndex = 1
 
-          getRequest.result.forEach(record => {
-            recordTabel.innerHTML += `<tr><td>${tempIndex}</td><td>${record.recordCustomer}</td><td>+91 9876543210</td><td>${record.recordCategory}</td><td>${record.recordDescription}</td><td>${record.recordAmount}</td><td>${record.recordDate}</td><td>${record.recordTime}</td></tr>`
+          getRequest.result.forEach((record, key) => {
+            recordTabel.innerHTML += `<tr key="${key}"><td>${tempIndex}</td><td>${record.recordCustomer}</td><td>+91 9876543210</td><td>${record.recordCategory}</td><td>${record.recordDescription}</td><td>${record.recordAmount}</td><td>${record.recordDate}</td><td>${record.recordTime}</td></tr>`
 
             tempIndex += 1
           });
@@ -106,6 +107,53 @@ function getAllRecords(){
 }
 getAllRecords()
 
+function getAllUsers(){
+  const request = window.indexedDB.open(dbName)
+  request.onsuccess = (event) => {
+    const db = event.target.result
+
+    const transaction = db.transaction("users", "readonly");
+    const userObjectStore = transaction.objectStore("users")
+
+    const getUserArray = userObjectStore.getAll()
+    
+    getUserArray.onsuccess = function() {
+      console.log("userArray : ", getUserArray.result)
+      search(getUserArray.result)
+
+    }
+
+    getUserArray.onerror = function (event) {
+      console.error("Error retrieving user:", event.target.errorCode);
+    };
+
+  }
+
+}
+getAllUsers()
+
+function getUser(id){
+  const request = window.indexedDB.open(dbName, 1)
+  request.onsuccess = (event) => {
+    const db = event.target.result
+    const transaction = db.transaction("users", "readonly")
+    const userObjectStore = transaction.objectStore("users")
+
+    const getUser = userObjectStore.get(id)
+
+    getUser.onsuccess = () => {
+      console.log("id : ", getUser)
+      return getUser.result
+    }
+
+    getUser.onerror = (event) => {
+      console.log("Error getting user : ", error.target.charCode)
+    }
+
+  }
+}
+
+getUser(3)
 // add record
 function addRecord(record) {
   const request = window.indexedDB.open(dbName, 1);
@@ -145,7 +193,7 @@ function addUser(user){
       .transaction("users", "readwrite")
       .objectStore("users");
 
-    userObjectStore.add(user)
+    userObjectStore.add(user, key)
     //Getting The Data
     const transaction = db.transaction(["users"]);
     const store = transaction.objectStore("users");
@@ -233,30 +281,6 @@ function getUserFormValues(){
   closeAddUserModal()
 }
 
-function getAllUsers(){
-  const request = window.indexedDB.open(dbName)
-  request.onsuccess = (event) => {
-    const db = event.target.result
-
-    const transaction = db.transaction("users", "readonly");
-    const userObjectStore = transaction.objectStore("users")
-
-    const getUserArray = userObjectStore.getAll()
-    
-    getUserArray.onsuccess = function() {
-      console.log("userArray : ", getUserArray.result)
-      search(getUserArray.result)
-
-    }
-
-    getUserArray.onerror = function (event) {
-      console.error("Error retrieving user:", event.target.errorCode);
-    };
-
-  }
-
-}
-
 function search(userArray) {
   let query = recordCustomer.value.toLowerCase();
   userNameList.innerHTML = "";
@@ -291,30 +315,4 @@ function setCustomerName(name){
   userNameDropdown.style.display = 'none'
 }
 
-getAllUsers()
 
-
-function getAllKeysFromDatabase(){
-  const request = window.indexedDB.open(dbName)
-
-  request.onsuccess = (event) => {
-    const db = event.target.result
-    const transaction = db.transaction("users", "readonly")
-
-    const keys = transaction.objectStore("users").getAllKeys()
-    console.log(keys)
-
-    keys.onsuccess = () => {
-      let _key = keys.result;
-      ob.id = _key;
-
-    console.log(_key)
-    editReq.onerror = function (e) {
-        console.log('error storing data');
-        console.error(e);
-    }
-    }
-  }
-}
-
-getAllKeysFromDatabase()
