@@ -30,9 +30,11 @@ request.onupgradeneeded = (event) => {
   const db = event.target.result;
 
   // Create an objectStore for this database
-  const RecordsobjectStore = db.createObjectStore("records", { keyPath: "id", autoIncrement : true});
+  const RecordsobjectStore = db.createObjectStore("records", { autoIncrement : true});
   RecordsobjectStore.createIndex("nameIndex", "name", { unique: false });
   RecordsobjectStore.createIndex("categoryIndex", "category", { unique: false });
+  // Create an index on the timestamp field
+
 };
 
 //On Success
@@ -53,39 +55,18 @@ function getAllRecords(){
         // TODO : Insert html into the table
         if(getRequest.result.length > 0){
           noRecords.style.display = "none"
+
+          let tempIndex = 1
+
           getRequest.result.forEach(record => {
-            recordTabel.innerHTML += `<tr><td>${record.id}</td><td>${record.recordCustomer}</td><td>+91 9876543210</td><td>${record.recordCategory}</td><td>${record.recordDescription}</td><td>${record.recordAmount}</td><td>${record.recordDate}</td><td>${record.recordTime}</td></tr>`
+            recordTabel.innerHTML += `<tr><td>${tempIndex}</td><td>${record.recordCustomer}</td><td>+91 9876543210</td><td>${record.recordCategory}</td><td>${record.recordDescription}</td><td>${record.recordAmount}</td><td>${record.recordDate}</td><td>${record.recordTime}</td></tr>`
+
+            tempIndex += 1
           });
         }else{
           recordTabel.style.display = "none"
           noRecords.style.display = "block"
         }
-
-//         id
-// : 
-// 0.17294111546490742
-// recordAmount
-// : 
-// "500"
-// recordCategory
-// : 
-// "pmkcy"
-// recordCscHandler
-// : 
-// 1
-// recordCustomer
-// : 
-// "Ankush Sharma"
-// recordDate
-// : 
-// 1733516616791
-// recordDescription
-// : 
-// "Sample Description 2"
-// recordTime
-// : 
-// ""
-
       } else {
         console.log("Records not found");
       }
@@ -117,6 +98,7 @@ function addRecord(record) {
 
       
     recordsObjectStore.add(record);
+    
 
     //Getting The Data
     const transaction = db.transaction(["records"]);
@@ -124,10 +106,6 @@ function addRecord(record) {
 
   };
 }
-
-
-
-
 
 // Delete Database
 function deleteDatabase(dbName) {
@@ -140,7 +118,6 @@ function deleteDatabase(dbName) {
 
 
 // General functions 
-
 function closeModal() {
   modal.style.display = "none";
   overlay.style.display = "none";
@@ -175,7 +152,6 @@ function getFormValues(){
 
   // record object
   const record = {
-    id : Math.random().toFixed(2),
     recordCustomer : recordCustomer.value,
     recordDescription : recordDescription.value,
     recordCategory : recordCategory.value,
