@@ -122,39 +122,7 @@ const customerData = [
 
 
 
-function search() {
-  let query = customerName.value.toLowerCase();
-  namelist.innerHTML = "";
-  nameDropdown.style.display = 'none'
-  console.log("query : ", query);
 
-  if (query) {
-    // Filter customerData array for matching names
-
-    nameDropdown.style.display = 'flex'
-
-    const matchedNames = customerData
-      .filter(customer => customer.name.toLowerCase().includes(query))
-      .map(customer => customer);
-
-      console.log(matchedNames)
-
-    // Display matched names as suggestions
-    matchedNames.forEach(customer => {
-      const suggestionItem = document.createElement("div");
-      suggestionItem.textContent = customer.name;
-      namelist.innerHTML += (`<option class="suggestion-item" onclick="setCustomerName('${customer.name}')" value="${customer.name.toLowerCase()}">${customer.name} <p class="suggestion_mobile">${customer.mobile}</p></option>`);
-    });
-
-    nameSuggest.innerText = customerName.value
-  }
-
-}
-
-function setCustomerName(name){
-  customerName.value = name;
-  nameDropdown.style.display = 'none'
-}
 
 
 
