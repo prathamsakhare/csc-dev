@@ -45,6 +45,7 @@ request.onupgradeneeded = (event) => {
 
   // Create an object store for users 
   const usersobjectStore = db.createObjectStore("users", {autoIncrement : true})
+  usersobjectStore.createIndex("idIndex", key, {unique : true})
   usersobjectStore.createIndex("nameIndex", "name", { unique: false });
   usersobjectStore.createIndex("emailIndex", "email", { unique: false });
   usersobjectStore.createIndex("phoneIndex", "phoneNumber", { unique: false });
@@ -153,7 +154,7 @@ function getUser(id){
   }
 }
 
-getUser(3)
+// getUser(3)
 // add record
 function addRecord(record) {
   const request = window.indexedDB.open(dbName, 1);
@@ -180,6 +181,10 @@ function addRecord(record) {
 
   };
 }
+function keyOfAddedUser(id){
+  console.log("key of added user : ", id)
+  
+}
 
 // add user
 function addUser(user){
@@ -193,7 +198,12 @@ function addUser(user){
       .transaction("users", "readwrite")
       .objectStore("users");
 
-    userObjectStore.add(user, key)
+    const getUserRequest = userObjectStore.add(user)
+    
+    getUserRequest.onsuccess = (event) => {
+      keyOfAddedUser(event.target.result)
+    }
+
     //Getting The Data
     const transaction = db.transaction(["users"]);
     const store = transaction.objectStore("users");
