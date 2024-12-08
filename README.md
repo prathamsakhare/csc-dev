@@ -6,3 +6,5 @@
 4) Box shadow : https://www.w3schools.com/css/css3_shadows_box.asp
 5) Getting current date in dd/mm/yyyy format : https://stackoverflow.com/questions/12409299/how-to-get-current-formatted-date-dd-mm-yyyy-in-javascript-and-append-it-to-an-i
 6) Get current time in hh mm ss format : https://www.geeksforgeeks.org/how-to-get-current-time-in-javascript/
+7) How to use git and github like a pro : https://www.freecodecamp.org/news/how-to-use-git-and-github-in-a-team-like-a-pro/
+8) How to update a branch with respect to another : https://stackoverflow.com/questions/26137852/how-to-update-my-working-git-branch-from-another-branch-develop

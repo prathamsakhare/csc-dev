@@ -6,13 +6,18 @@ const recordAmount = document.getElementById("amt")
 const recordCscHandler = 1
 
 // form input fields for user
-const name = document.getElementById("username")
-const email = document.getElementById("useremail")
-const number = document.getElementById("usernumber")
+const userName = document.getElementById("username")
+const userEmail = document.getElementById("useremail")
+const userNumber = document.getElementById("usernumber")
 
 // record table 
 const recordTabel = document.getElementById("record-table")
 const noRecords = document.getElementById("no-records")
+
+// elements for suggestion list for names
+let userNameList = document.getElementById("namelist");
+let userNameDropdown = document.getElementById("modal-name-dropdown");
+let userNameSuggest = document.getElementById("name-suggest")
 
 const dbName = "cscPms"
 
@@ -40,11 +45,25 @@ request.onupgradeneeded = (event) => {
 
   // Create an object store for users 
   const usersobjectStore = db.createObjectStore("users", {autoIncrement : true})
+  usersobjectStore.createIndex("idIndex", key, {unique : true})
   usersobjectStore.createIndex("nameIndex", "name", { unique: false });
   usersobjectStore.createIndex("emailIndex", "email", { unique: false });
   usersobjectStore.createIndex("phoneIndex", "phoneNumber", { unique: false });
 
 };
+
+// general functions to work with strings
+function capitalizeFirstLetter(words){
+  return words.charAt(0).toUpperCase() + words.slice(1);
+}
+
+function capitalizeFirstLetterOfEveryWord(words){
+  let wordCapitalized =  words
+        .split(' ') // Split the string into an array of words
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize each word
+        .join(' '); // Join the words back into a single string
+  return wordCapitalized
+}
 
 //On Success
 
@@ -67,8 +86,8 @@ function getAllRecords(){
 
           let tempIndex = 1
 
-          getRequest.result.forEach(record => {
-            recordTabel.innerHTML += `<tr><td>${tempIndex}</td><td>${record.recordCustomer}</td><td>+91 9876543210</td><td>${record.recordCategory}</td><td>${record.recordDescription}</td><td>${record.recordAmount}</td><td>${record.recordDate}</td><td>${record.recordTime}</td></tr>`
+          getRequest.result.forEach((record, key) => {
+            recordTabel.innerHTML += `<tr key="${key}"><td>${tempIndex}</td><td>${record.recordCustomer}</td><td>+91 9876543210</td><td>${record.recordCategory}</td><td>${record.recordDescription}</td><td>${record.recordAmount}</td><td>${record.recordDate}</td><td>${record.recordTime}</td></tr>`
 
             tempIndex += 1
           });
@@ -89,6 +108,53 @@ function getAllRecords(){
 }
 getAllRecords()
 
+function getAllUsers(){
+  const request = window.indexedDB.open(dbName)
+  request.onsuccess = (event) => {
+    const db = event.target.result
+
+    const transaction = db.transaction("users", "readonly");
+    const userObjectStore = transaction.objectStore("users")
+
+    const getUserArray = userObjectStore.getAll()
+    
+    getUserArray.onsuccess = function() {
+      console.log("userArray : ", getUserArray.result)
+      search(getUserArray.result)
+
+    }
+
+    getUserArray.onerror = function (event) {
+      console.error("Error retrieving user:", event.target.errorCode);
+    };
+
+  }
+
+}
+getAllUsers()
+
+function getUser(id){
+  const request = window.indexedDB.open(dbName, 1)
+  request.onsuccess = (event) => {
+    const db = event.target.result
+    const transaction = db.transaction("users", "readonly")
+    const userObjectStore = transaction.objectStore("users")
+
+    const getUser = userObjectStore.get(id)
+
+    getUser.onsuccess = () => {
+      console.log("id : ", getUser)
+      return getUser.result
+    }
+
+    getUser.onerror = (event) => {
+      console.log("Error getting user : ", error.target.charCode)
+    }
+
+  }
+}
+
+// getUser(3)
 // add record
 function addRecord(record) {
   const request = window.indexedDB.open(dbName, 1);
@@ -115,6 +181,10 @@ function addRecord(record) {
 
   };
 }
+function keyOfAddedUser(id){
+  console.log("key of added user : ", id)
+  
+}
 
 // add user
 function addUser(user){
@@ -128,7 +198,12 @@ function addUser(user){
       .transaction("users", "readwrite")
       .objectStore("users");
 
-    userObjectStore.add(user)
+    const getUserRequest = userObjectStore.add(user)
+    
+    getUserRequest.onsuccess = (event) => {
+      keyOfAddedUser(event.target.result)
+    }
+
     //Getting The Data
     const transaction = db.transaction(["users"]);
     const store = transaction.objectStore("users");
@@ -184,7 +259,7 @@ function getRecordFormValues(){
   // record object
   const record = {
     recordCustomer : recordCustomer.value,
-    recordDescription : recordDescription.value,
+    recordDescription : capitalizeFirstLetter(recordDescription.value),
     recordCategory : recordCategory.value,
     recordAmount : recordAmount.value,
     recordCscHandler : recordCscHandler,
@@ -201,10 +276,13 @@ function getRecordFormValues(){
 
 function getUserFormValues(){
 
+  let capitalizedName = capitalizeFirstLetterOfEveryWord(userName.value)
+  console.log(capitalizedName)
+
   const user = {
-    name : name.value,
-    email : email.value,
-    phoneNumber : number.value,
+    name : capitalizedName,
+    email : userEmail.value,
+    phoneNumber : userNumber.value,
     timeStamp : Date.now()
   }
 
@@ -212,3 +290,39 @@ function getUserFormValues(){
 
   closeAddUserModal()
 }
+
+function search(userArray) {
+  let query = recordCustomer.value.toLowerCase();
+  userNameList.innerHTML = "";
+  userNameDropdown.style.display = 'none'
+  
+
+  if (query) {
+    // Filter customerData array for matching names
+
+    userNameDropdown.style.display = 'flex'
+
+    const matchedNames = userArray
+      .filter(customer => customer.name.toLowerCase().includes(query))
+      .map(customer => customer);
+
+      console.log(matchedNames)
+
+    // Display matched names as suggestions
+    matchedNames.forEach(customer => {
+      const suggestionItem = document.createElement("div");
+      suggestionItem.textContent = customer.name;
+      userNameList.innerHTML += (`<option class="suggestion-item" onclick="setCustomerName('${customer.name}')" value="${customer.name.toLowerCase()}">${customer.name} <p class="suggestion_mobile">${customer.phoneNumber}</p></option>`);
+    });
+
+    userNameSuggest.innerText = recordCustomer.value
+  }
+
+}
+
+function setCustomerName(name){
+  recordCustomer.value = name;
+  userNameDropdown.style.display = 'none'
+}
+
+
