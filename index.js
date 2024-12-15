@@ -29,6 +29,11 @@ let nameSuggest = document.getElementById("name-suggest")
 let recordInputForm = document.getElementById("recordInputForm");
 let userInputForm = document.getElementById("userInputForm")
 
+
+// MongoDB code 
+
+
+
 // * Approach 1 to add functionality - You can write function here and then you can add event listener to the html element you want to implement functionality on
 function openModal() {
   console.log('openmodal')
