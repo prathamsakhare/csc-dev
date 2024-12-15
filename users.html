@@ -1,0 +1,166 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./users.css" />
+    <script src="./index.js" defer></script>
+    <script src="./indexeddb.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <title>CSC PMS</title>
+  </head>
+  <body>
+    <header>
+      <h1 id="logo">CSC<span>PMS</span></h1>
+      <a href="./index.html"
+        ><button id="profile-button" class="main-button">Intro!</button></a
+      >
+    </header>
+
+    <div id="overlay" class="overlay"></div>
+    <div id="modal" class="modal">
+      <div class="modal-heading">
+        <h2>Add Record</h2>
+        <button
+          id="modal-close-btn"
+          class="close secondary-button"
+          onclick="closeModal()"
+        >
+          Close
+        </button>
+      </div>
+      <!-- Add Record Modal -->
+      <form id="recordInputForm">
+        <div class="modal-body">
+          <!-- <div class="modal-name"> -->
+          <div class="wrapper">
+            <input
+              type="text"
+              id="name"
+              class="modal-input"
+              placeholder="Enter customer's name..."
+              oninput="getAllUsers()"
+            />
+            <div id="modal-name-dropdown" class="modal-name-dropdown">
+              <div>
+                <div id="namelist" class="name-display"></div>
+                <button class="add-user-btn" onclick="openAddUserModal()">
+                  + Add '<span id="name-suggest"></span>'
+                </button>
+              </div>
+            </div>
+          </div>
+          <textarea
+            name="desc"
+            id="desc"
+            class="modal-input"
+            placeholder="Enter description..."
+          ></textarea>
+          <div class="cat-amt-collection">
+            <select
+              name="category"
+              id="category"
+              class="select-input cat-amt-select"
+            >
+              <option value="select">Select Category</option>
+              <option value="Adhar Card">Adhar Card</option>
+              <option value="Shram Card">Shram Card</option>
+              <option value="PMKCY">PMKCY</option>
+              <option value="Mudra Yoajana">Mudra Yojana</option>
+            </select>
+            <input
+              type="number"
+              id="amt"
+              class="select-input amt"
+              placeholder="Enter amount recieved..."
+            />
+          </div>
+          <button
+            id="modal-save-btn"
+            class="main-button"
+            onclick="getRecordFormValues()"
+          >
+            Save Record
+          </button>
+        </div>
+      </form>
+      <!-- Add User Modal -->
+      <form id="userInputForm">
+        <div class="addUserModal-body" id="addUserModal">
+          <!-- <div class="modal-name"> -->
+          <div class="add-user-modal-heading"><h2 class="add-user-heading">Add User</h2>
+            <button
+              id="modal-close-btn"
+              class="close secondary-button"
+              onclick="closeAddUserModal()"
+            >
+              Close
+            </button></div>
+          <div class="wrapper">
+            <input
+              type="text"
+              id="username"
+              name="username"
+              class="addUserModal-input"
+              placeholder="Enter customer's name..."
+            />
+            <input
+              type="email"
+              id="useremail"
+              name="useremail"
+              class="addUserModal-input"
+              placeholder="Enter email..."
+            />
+            <input
+              type="number"
+              id="usernumber"
+              name="usernumber"
+              class="addUserModal-input"
+              placeholder="Enter phone number..."
+            />
+          </div>
+
+          <button
+            id="addUserModal-save-btn"
+            onclick="getUserFormValues()"
+            class="main-button"
+          >
+            Save User
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <main>
+      <div id="users-topbar">
+        <h2>Users</h2>
+        <button
+          id="users-add-button"
+          class="main-button"
+          onclick="openModal()"
+        >
+          Add User
+        </button>
+      </div>
+      <table id="users-table">
+        <tbody id="users">
+          <tr>
+            <th>Index</th>
+            <th>Name</th>
+            <th>Mobile No.</th>
+            <th>Email</th>
+            <th>Time</th>
+          </tr>
+        </tbody>
+      </table>
+      <div id="no-records">
+        <h1>No Users!</h1>
+        <p>Please click on 'Add User' button to add an user.</p>
+      </div>
+    </main>
+  </body>
+</html>

@@ -11,8 +11,12 @@ const userEmail = document.getElementById("useremail")
 const userNumber = document.getElementById("usernumber")
 
 // record table 
-const recordTabel = document.getElementById("record-table")
+const recordTable = document.getElementById("record-table")
 const noRecords = document.getElementById("no-records")
+
+// users table
+const usersTable = document.getElementById("users-table")
+
 
 // elements for suggestion list for names
 let userNameList = document.getElementById("namelist");
@@ -87,12 +91,12 @@ function getAllRecords(){
           let tempIndex = 1
 
           getRequest.result.forEach((record, key) => {
-            recordTabel.innerHTML += `<tr key="${key}"><td>${tempIndex}</td><td>${record.recordCustomer}</td><td>+91 9876543210</td><td>${record.recordCategory}</td><td>${record.recordDescription}</td><td>${record.recordAmount}</td><td>${record.recordDate}</td><td>${record.recordTime}</td></tr>`
+            recordTable.innerHTML += `<tr key="${key}"><td>${tempIndex}</td><td>${record.recordCustomer}</td><td>+91 9876543210</td><td>${record.recordCategory}</td><td>${record.recordDescription}</td><td>${record.recordAmount}</td><td>${record.recordDate}</td><td>${record.recordTime}</td></tr>`
 
             tempIndex += 1
           });
         }else{
-          recordTabel.style.display = "none"
+          recordTable.style.display = "none"
           noRecords.style.display = "block"
         }
       } else {
@@ -117,11 +121,36 @@ function getAllUsers(){
     const userObjectStore = transaction.objectStore("users")
 
     const getUserArray = userObjectStore.getAll()
-    
+
+    var keysArray = []
+
     getUserArray.onsuccess = function() {
-      console.log("userArray : ", getUserArray.result)
+
+      const getAllKeysOfUserArray = userObjectStore.getAllKeys()
+
+      getAllKeysOfUserArray.onsuccess = function(){
+        keysArray = getAllKeysOfUserArray.result
+
+      if(getUserArray.result.length > 0){
+        noRecords.style.display = "none"
+
+        let tempIndex = 1
+        let indexForKeysArray = 0
+        getUserArray.result.forEach((user, key) => {
+          usersTable.innerHTML += `<tr key="${key}" id="${keysArray[indexForKeysArray]}"><td>${tempIndex}</td><td>${user.name}</td><td>${user.phoneNumber}</td><td>${user.email}</td><td>${user.timeStamp}</td></tr>`
+
+          tempIndex += 1
+          indexForKeysArray+=1
+        });
+      }else{
+        usersTable.style.display = "none"
+        noRecords.style.display = "block"
+      }
+      }
+
       search(getUserArray.result)
 
+      
     }
 
     getUserArray.onerror = function (event) {
