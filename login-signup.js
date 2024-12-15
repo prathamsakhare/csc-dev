@@ -34,7 +34,7 @@ document.getElementById('signup-link').addEventListener('click', (e) => {
     loginForm.style.display = 'none';
     signupForm.style.display = 'block';
     formTitle.textContent = 'Sign up';
-    formTitle.classList.add('signup'); 
+    // formTitle.classList.add('signup'); 
 });
 
 document.getElementById('login-link').addEventListener('click', (e) => {
