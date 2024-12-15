@@ -276,8 +276,48 @@ function getRecordFormValues(){
 
 function getUserFormValues(){
 
-  let capitalizedName = capitalizeFirstLetterOfEveryWord(userName.value)
-  console.log(capitalizedName)
+  const emailError = document.getElementById('emailError');
+
+  //if user info passes criteria then make object
+  //what is criteria?
+  //name should be 100 chars max
+  //email should be verified using regex
+  //phone no should have exactly 10 digits
+  if (!userName.value || ( userName.value === '' || userName.value === null || userName.value === undefined)) {
+    console.error("All fields must be filled out before saving the user.");
+    return;
+  }else{
+    //name should be 100 chars max
+    if(userName.value.length<=100){
+    let capitalizedName = capitalizeFirstLetterOfEveryWord(userName.value)
+    console.log(capitalizedName)
+    }else{
+      console.log("userName.value is longer than 100 chars");
+      return;
+    }
+
+  }
+
+  //checking for user's email
+  //email should be verified using regex
+  if(isValidEmail(userEmail.value) == false){
+    console.log("Invalid email id entered.");
+    emailError.textContent = "Invalid email ID format";
+    emailError.style.display = "block";
+    return;
+  }else{
+    emailError.style.display = "none";
+  }
+
+  //Checking user's phone no.
+  //phone no should have exactly 10 digits
+  if (isValidPhoneNumber(userNumber.value) == false) {
+    console.log("Invalid phone no. entered.");
+    phoneError.textContent = "Invalid phone number";
+    phoneError.style.display = "block";
+    return;
+  }
+
 
   const user = {
     name : capitalizedName,
@@ -323,6 +363,63 @@ function search(userArray) {
 function setCustomerName(name){
   recordCustomer.value = name;
   userNameDropdown.style.display = 'none'
+}
+
+function saveUserToIndexedDB(dbName, storeName, user) {
+  // Validate that all fields have values
+  if (!user || Object.values(user).some(value => value === '' || value === null || value === undefined)) {
+      console.error("All fields must be filled out before saving the user.");
+      return;
+  }
+
+  //name should have 100 chars
+  //
+
+  // Open the database
+  const request = indexedDB.open(dbName);
+
+  request.onsuccess = function (event) {
+      const db = event.target.result;
+
+      // Start a transaction
+      const transaction = db.transaction(storeName, 'readwrite');
+      const objectStore = transaction.objectStore(storeName);
+
+      // Add the user object to the store
+      const addRequest = objectStore.add(user);
+
+      addRequest.onsuccess = function () {
+          console.log("User saved successfully:", user);
+      };
+
+      addRequest.onerror = function () {
+          console.error("Failed to save user:", addRequest.error);
+      };
+  };
+
+  request.onerror = function () {
+      console.error("Database error:", request.error);
+  };
+}
+
+function isValidEmail(email) {
+  if (!email || typeof email !== 'string') {
+      return false;
+  }
+
+  // Regular expression for email validation
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+function isValidPhoneNumber(phoneNumber) {
+  if (!phoneNumber || typeof phoneNumber !== 'string') {
+      return false;
+  }
+
+  // Regular expression for a 10-digit phone number
+  const phoneRegex = /^\d{10}$/;
+  return phoneRegex.test(phoneNumber);
 }
 
 
