@@ -359,3 +359,15 @@ table tr {
   
   
 }
+
+.add-user-heading{
+  margin-left: 15px;
+}
+
+.add-user-modal-heading{
+  display: flex;
+  flex-direction: row;
+  height: 4rem;
+  /* padding-left: 2rem; */
+  justify-content: space-between;
+}
