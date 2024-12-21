@@ -150,6 +150,15 @@
     <main>
       <div id="users-topbar">
         <h2>Users</h2>
+
+        <!-- Button to download Users table into a .xlsx file -->
+        <button
+          id="download-users-table-button"
+          onclick="exportTableToExcel('users-table', 'users')"
+        >
+          Download .xlsx
+        </button>
+        <!-- Button to add user  -->
         <button
           id="users-add-button"
           class="main-button"
@@ -174,5 +183,7 @@
         <p>Please click on 'Add User' button to add an user.</p>
       </div>
     </main>
+
+    <script src="users.js"></script>
   </body>
 </html>
