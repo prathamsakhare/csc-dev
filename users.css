@@ -75,7 +75,7 @@
     padding-top: 2rem;
     align-items: center;
     max-height: 100px;
-    justify-content: space-evenly;
+    justify-content: space-between;
   }
   
   #users-topbar > #users-add-button {

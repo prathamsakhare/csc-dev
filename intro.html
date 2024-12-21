@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="./index.css" />
     <script src="./index.js" defer></script>
     <script src="./indexeddb.js" defer></script>
+    <script src="./users.js" defer></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -97,7 +98,6 @@
       <form id="userInputForm">
         <div class="addUserModal-body" id="addUserModal">
           <!-- <div class="modal-name"> -->
-<<<<<<< HEAD
             <div class="wrapper">
               <input
                 type="text"
@@ -142,7 +142,6 @@
            
             <button id="addUserModal-save-btn" onclick="getUserFormValues()" class="main-button">Save User</button>
           
-=======
           <div class="add-user-modal-heading"><h2 class="add-user-heading">Add User</h2>
             <button
               id="modal-close-btn"
@@ -182,7 +181,6 @@
           >
             Save User
           </button>
->>>>>>> main
         </div>
       </form>
     </div>
@@ -190,6 +188,14 @@
     <main>
       <div id="record-topbar">
         <h2>Records</h2>
+        <div>
+
+          <button
+          id="download-users-table-button" class="main-button" style="background-color: #008000;"
+          onclick="exportTableToExcel('record-table', 'records')"
+        >
+          <i class="fa-solid fa-file-excel"></i>Export
+        </button>
         <button
           id="record-add-button"
           class="main-button"
@@ -197,6 +203,7 @@
         >
           Add Record
         </button>
+        </div>
       </div>
       <table id="record-table">
         <tbody id="records">

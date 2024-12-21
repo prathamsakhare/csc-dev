@@ -1,7 +1,7 @@
-function exportTableToExcel(usersTable, filename = ''){
+function exportTableToExcel(tableId, filename = ''){
     let downloadLink;
     const dataType = 'application/vnd.ms-excel';
-    const tableSelect = document.getElementById(users-table);
+    const tableSelect = document.getElementById(tableId);
     const tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
     
     // Specify file name

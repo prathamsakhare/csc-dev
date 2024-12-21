@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="./users.css" />
     <script src="./index.js" defer></script>
     <script src="./indexeddb.js" defer></script>
+    <script src="./users.js" defer></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -152,11 +153,12 @@
         <h2>Users</h2>
 
         <!-- Button to download Users table into a .xlsx file -->
-        <button
-          id="download-users-table-button"
+        <div>
+          <button
+          id="download-users-table-button" class="main-button" style="background-color: #008000;"
           onclick="exportTableToExcel('users-table', 'users')"
         >
-          Download .xlsx
+          Export
         </button>
         <!-- Button to add user  -->
         <button
@@ -166,6 +168,7 @@
         >
           Add User
         </button>
+        </div>
       </div>
       <table id="users-table">
         <tbody id="users">
@@ -184,6 +187,6 @@
       </div>
     </main>
 
-    <script src="users.js"></script>
+   
   </body>
 </html>
