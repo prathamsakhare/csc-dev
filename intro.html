@@ -6,6 +6,7 @@
     <script src="./index.js" defer></script>
     <script src="./indexeddb.js" defer></script>
     <script src="./users.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -98,6 +99,14 @@
       <form id="userInputForm">
         <div class="addUserModal-body" id="addUserModal">
           <!-- <div class="modal-name"> -->
+            <div class="add-user-modal-heading"><h2 class="add-user-heading">Add User</h2>
+              <button
+                id="modal-close-btn"
+                class="close secondary-button"
+                onclick="closeAddUserModal()"
+              >
+                Close
+              </button></div>
             <div class="wrapper">
               <input
                 type="text"
@@ -139,48 +148,10 @@
              
             </div>
             
+            
            
             <button id="addUserModal-save-btn" onclick="getUserFormValues()" class="main-button">Save User</button>
-          
-          <div class="add-user-modal-heading"><h2 class="add-user-heading">Add User</h2>
-            <button
-              id="modal-close-btn"
-              class="close secondary-button"
-              onclick="closeAddUserModal()"
-            >
-              Close
-            </button></div>
-          <div class="wrapper">
-            <input
-              type="text"
-              id="username"
-              name="username"
-              class="addUserModal-input"
-              placeholder="Enter customer's name..."
-            />
-            <input
-              type="email"
-              id="useremail"
-              name="useremail"
-              class="addUserModal-input"
-              placeholder="Enter email..."
-            />
-            <input
-              type="number"
-              id="usernumber"
-              name="usernumber"
-              class="addUserModal-input"
-              placeholder="Enter phone number..."
-            />
-          </div>
 
-          <button
-            id="addUserModal-save-btn"
-            onclick="getUserFormValues()"
-            class="main-button"
-          >
-            Save User
-          </button>
         </div>
       </form>
     </div>
@@ -194,7 +165,7 @@
           id="download-users-table-button" class="main-button" style="background-color: #008000;"
           onclick="exportTableToExcel('record-table', 'records')"
         >
-          <i class="fa-solid fa-file-excel"></i>Export
+          Export<i class="fa-regular fa-file-excel" style="padding-left: 5px;"></i>
         </button>
         <button
           id="record-add-button"
