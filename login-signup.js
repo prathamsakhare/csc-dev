@@ -70,11 +70,11 @@ signupForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const email = document.getElementById('signup-email').value;
     const password = document.getElementById('signup-password').value;
-    const confirmPassword = document.getElementById('confirm-password').value;
+    const confirmPassword = document.getElementById('phone-number').value;
 
     document.getElementById('signup-email-error').textContent = '';
     document.getElementById('signup-password-error').textContent = '';
-    document.getElementById('confirm-password-error').textContent = '';
+    document.getElementById('phone-number-error').textContent = '';
 
     if (!email) {
         document.getElementById('signup-email-error').textContent = 'Email is required.';
@@ -85,7 +85,7 @@ signupForm.addEventListener('submit', (e) => {
     }
 
     if (password !== confirmPassword) {
-        document.getElementById('confirm-password-error').textContent = 'Passwords do not match.';
+        document.getElementById('phone-number-error').textContent = 'Passwords do not match.';
     }
 
     if (email && password && password === confirmPassword) {
