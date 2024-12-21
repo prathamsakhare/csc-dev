@@ -13,6 +13,7 @@ body {
   padding: 0px;
   box-sizing: border-box;
   font-family: "Roboto", sans-serif;
+  background-color: white;
 }
 
 .main-button {
@@ -48,6 +49,11 @@ header {
 
 #logo {
   margin-left: 1rem;
+  /* background-color: var(--main-button-bgcolor);
+  color: white;
+  padding: 5px;
+  border: 1px white solid;
+  border-radius: 10px; */
 }
 
 #profile-button{
@@ -353,4 +359,16 @@ table tr {
   margin: 10px;
   
   
+}
+
+.add-user-heading{
+  margin-left: 15px;
+}
+
+.add-user-modal-heading{
+  display: flex;
+  flex-direction: row;
+  height: 4rem;
+  /* padding-left: 2rem; */
+  justify-content: space-between;
 }

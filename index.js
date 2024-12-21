@@ -1,3 +1,6 @@
+// mongoDB
+
+
 // modals
 let modal = document.getElementById("modal");
 let overlay = document.getElementById("overlay");
@@ -29,6 +32,12 @@ let nameSuggest = document.getElementById("name-suggest")
 let recordInputForm = document.getElementById("recordInputForm");
 let userInputForm = document.getElementById("userInputForm")
 
+
+
+
+
+
+
 // * Approach 1 to add functionality - You can write function here and then you can add event listener to the html element you want to implement functionality on
 function openModal() {
   console.log('openmodal')
@@ -36,7 +45,7 @@ function openModal() {
   overlay.style.display = "block";
 }
 
-recordInputForm.addEventListener("submit", function(event){
+recordInputForm?.addEventListener("submit", function(event){
   if (!event.submitter.matches('#modal-save-btn')) {
 		event.preventDefault();
 	}
@@ -124,5 +133,5 @@ const customerData = [
 
 
 
-
+// Change made to push the code into production
 

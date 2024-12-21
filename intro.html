@@ -15,10 +15,15 @@
   </head>
   <body>
     <header>
-      <h1 id="logo">CSC PMS</h1>
-      <a href="./index.html"
+      <h1 id="logo">CSC<span>PMS</span></h1>
+      <div>
+        <a href="./index.html"
         ><button id="profile-button" class="main-button">Intro!</button></a
       >
+      <a href="./users.html"
+        ><button id="profile-button" class="main-button">Users</button></a
+      >
+      </div>
     </header>
 
     <div id="overlay" class="overlay"></div>
@@ -37,54 +42,62 @@
       <form id="recordInputForm">
         <div class="modal-body">
           <!-- <div class="modal-name"> -->
-            <div class="wrapper">
-              <input
-                type="text"
-                id="name"
-                class="modal-input"
-                placeholder="Enter customer's name..."
-                oninput="getAllUsers()"
-              />
-              <div id="modal-name-dropdown" class="modal-name-dropdown">
-                <div>
-                  <div id="namelist" class="name-display"></div>
-                  <button class="add-user-btn" onclick="openAddUserModal()">+ Add '<span id="name-suggest"></span>'</button>
-                </div>
+          <div class="wrapper">
+            <input
+              type="text"
+              id="name"
+              class="modal-input"
+              placeholder="Enter customer's name..."
+              oninput="getAllUsers()"
+            />
+            <div id="modal-name-dropdown" class="modal-name-dropdown">
+              <div>
+                <div id="namelist" class="name-display"></div>
+                <button class="add-user-btn" onclick="openAddUserModal()">
+                  + Add '<span id="name-suggest"></span>'
+                </button>
               </div>
             </div>
-            <textarea
-              name="desc"
-              id="desc"
-              class="modal-input"
-              placeholder="Enter description..."
-            ></textarea>
-            <div class="cat-amt-collection">
-              <select
-                name="category"
-                id="category"
-                class="select-input cat-amt-select"
-              >
-                <option value="select">Select Category</option>
-                <option value="Adhar Card">Adhar Card</option>
-                <option value="Shram Card">Shram Card</option>
-                <option value="PMKCY">PMKCY</option>
-                <option value="Mudra Yoajana">Mudra Yojana</option>
-              </select>
-              <input
-                type="number"
-                id="amt"
-                class="select-input amt"
-                placeholder="Enter amount recieved..."
-              />
-            </div>
-            <button id="modal-save-btn" class="main-button" onclick="getRecordFormValues()">Save Record</button>
-          
+          </div>
+          <textarea
+            name="desc"
+            id="desc"
+            class="modal-input"
+            placeholder="Enter description..."
+          ></textarea>
+          <div class="cat-amt-collection">
+            <select
+              name="category"
+              id="category"
+              class="select-input cat-amt-select"
+            >
+              <option value="select">Select Category</option>
+              <option value="Adhar Card">Adhar Card</option>
+              <option value="Shram Card">Shram Card</option>
+              <option value="PMKCY">PMKCY</option>
+              <option value="Mudra Yoajana">Mudra Yojana</option>
+            </select>
+            <input
+              type="number"
+              id="amt"
+              class="select-input amt"
+              placeholder="Enter amount recieved..."
+            />
+          </div>
+          <button
+            id="modal-save-btn"
+            class="main-button"
+            onclick="getRecordFormValues()"
+          >
+            Save Record
+          </button>
         </div>
       </form>
       <!-- Add User Modal -->
       <form id="userInputForm">
         <div class="addUserModal-body" id="addUserModal">
           <!-- <div class="modal-name"> -->
+<<<<<<< HEAD
             <div class="wrapper">
               <input
                 type="text"
@@ -129,6 +142,47 @@
            
             <button id="addUserModal-save-btn" onclick="getUserFormValues()" class="main-button">Save User</button>
           
+=======
+          <div class="add-user-modal-heading"><h2 class="add-user-heading">Add User</h2>
+            <button
+              id="modal-close-btn"
+              class="close secondary-button"
+              onclick="closeAddUserModal()"
+            >
+              Close
+            </button></div>
+          <div class="wrapper">
+            <input
+              type="text"
+              id="username"
+              name="username"
+              class="addUserModal-input"
+              placeholder="Enter customer's name..."
+            />
+            <input
+              type="email"
+              id="useremail"
+              name="useremail"
+              class="addUserModal-input"
+              placeholder="Enter email..."
+            />
+            <input
+              type="number"
+              id="usernumber"
+              name="usernumber"
+              class="addUserModal-input"
+              placeholder="Enter phone number..."
+            />
+          </div>
+
+          <button
+            id="addUserModal-save-btn"
+            onclick="getUserFormValues()"
+            class="main-button"
+          >
+            Save User
+          </button>
+>>>>>>> main
         </div>
       </form>
     </div>
@@ -157,8 +211,6 @@
             <th>Time</th>
           </tr>
         </tbody>
-       
-
       </table>
       <div id="no-records">
         <h1>No Records!</h1>
