@@ -29,7 +29,7 @@
     <div id="overlay" class="overlay"></div>
     <div id="modal" class="modal">
       <div class="modal-heading">
-        <h2>Add Record</h2>
+        <h2>Add User</h2>
         <button
           id="modal-close-btn"
           class="close secondary-button"
@@ -38,34 +38,41 @@
           Close
         </button>
       </div>
-      <!-- Add Record Modal -->
-      <form id="recordInputForm">
+      <!-- Add User Modal -->
+      <form id="userInputForm">
         <div class="modal-body">
           <!-- <div class="modal-name"> -->
           <div class="wrapper">
             <input
               type="text"
-              id="name"
+              id="username"
               class="modal-input"
               placeholder="Enter customer's name..."
-              oninput="getAllUsers()"
             />
             <div id="modal-name-dropdown" class="modal-name-dropdown">
               <div>
                 <div id="namelist" class="name-display"></div>
-                <button class="add-user-btn" onclick="openAddUserModal()">
+                <!-- <button class="add-user-btn" onclick="openAddUserModal()">
                   + Add '<span id="name-suggest"></span>'
-                </button>
+                </button> -->
               </div>
             </div>
           </div>
-          <textarea
-            name="desc"
-            id="desc"
+          <input
+            name="usermail"
+            id="useremail"
+            type="email"
             class="modal-input"
-            placeholder="Enter description..."
-          ></textarea>
-          <div class="cat-amt-collection">
+            placeholder="Enter Email Address..."
+          ></input>
+          <input
+            name="usernumber"
+            type="number"
+            id="usernumber"
+            class="modal-input"
+            placeholder="Enter Phone Number..."
+          ></input>
+          <!-- <div class="cat-amt-collection">
             <select
               name="category"
               id="category"
@@ -83,13 +90,13 @@
               class="select-input amt"
               placeholder="Enter amount recieved..."
             />
-          </div>
+          </div> -->
           <button
             id="modal-save-btn"
             class="main-button"
-            onclick="getRecordFormValues()"
+            onclick="getUserFormValues()"
           >
-            Save Record
+            Save User
           </button>
         </div>
       </form>
@@ -158,7 +165,7 @@
             <th>Name</th>
             <th>Mobile No.</th>
             <th>Email</th>
-            <th>Time</th>
+            <th>Date</th>
           </tr>
         </tbody>
       </table>

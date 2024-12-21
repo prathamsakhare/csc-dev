@@ -17,6 +17,8 @@ const noRecords = document.getElementById("no-records")
 // users table
 const usersTable = document.getElementById("users-table")
 
+// users form
+const userForm = document.getElementById("userInputForm")
 
 // elements for suggestion list for names
 let userNameList = document.getElementById("namelist");
@@ -305,14 +307,33 @@ function getRecordFormValues(){
 
 function getUserFormValues(){
 
-  let capitalizedName = capitalizeFirstLetterOfEveryWord(userName.value)
+    // current time
+  let now = new Date();
+  let hours = now.getHours();
+  let minutes = now.getMinutes();
+  let seconds = now.getSeconds();
+  let currentTime = `${hours}:${minutes}:${seconds}`;
+
+  // current date
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  let mm = today.getMonth() + 1; // Months start at 0!
+  let dd = today.getDate();
+
+  if (dd < 10) dd = '0' + dd;
+  if (mm < 10) mm = '0' + mm;
+
+  const formattedToday = dd + '/' + mm + '/' + yyyy;
+
+  // TODO : get value from only one input field for adding various values, 
+  let capitalizedName = userName.value
   console.log(capitalizedName)
 
   const user = {
     name : capitalizedName,
     email : userEmail.value,
     phoneNumber : userNumber.value,
-    timeStamp : Date.now()
+    timeStamp : formattedToday
   }
 
   addUser(user)
@@ -321,7 +342,7 @@ function getUserFormValues(){
 }
 
 function search(userArray) {
-  let query = recordCustomer.value.toLowerCase();
+  let query = recordCustomer?.value.toLowerCase();
   userNameList.innerHTML = "";
   userNameDropdown.style.display = 'none'
   

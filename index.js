@@ -41,7 +41,7 @@ function openModal() {
   overlay.style.display = "block";
 }
 
-recordInputForm.addEventListener("submit", function(event){
+recordInputForm?.addEventListener("submit", function(event){
   if (!event.submitter.matches('#modal-save-btn')) {
 		event.preventDefault();
 	}
