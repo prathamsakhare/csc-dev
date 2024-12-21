@@ -8,3 +8,6 @@
 6) Get current time in hh mm ss format : https://www.geeksforgeeks.org/how-to-get-current-time-in-javascript/
 7) How to use git and github like a pro : https://www.freecodecamp.org/news/how-to-use-git-and-github-in-a-team-like-a-pro/
 8) How to update a branch with respect to another : https://stackoverflow.com/questions/26137852/how-to-update-my-working-git-branch-from-another-branch-develop
+9) document is not defined, when mongodb connection code put into index.js that has id selectors of JavaScript : https://stackoverflow.com/questions/32126003/node-js-document-is-not-defined
+10) Basic CRUD with MongoDB : https://dev.to/danmusembi/beginners-tutorial-for-crud-operations-in-nodejs-and-mongodb-k7k
+11) px to rem converter : https://nekocalc.com/px-to-rem-converter

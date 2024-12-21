@@ -1,3 +1,6 @@
+// mongoDB
+
+
 // modals
 let modal = document.getElementById("modal");
 let overlay = document.getElementById("overlay");
@@ -30,7 +33,8 @@ let recordInputForm = document.getElementById("recordInputForm");
 let userInputForm = document.getElementById("userInputForm")
 
 
-// MongoDB code 
+
+
 
 
 
