@@ -16,7 +16,7 @@ const noRecords = document.getElementById("no-records")
 
 // users table
 const usersTable = document.getElementById("users-table")
-
+const noUsers = document.getElementById("no-users")
 // users form
 const userForm = document.getElementById("userInputForm")
 
@@ -134,7 +134,7 @@ function getAllUsers(){
         keysArray = getAllKeysOfUserArray.result
 
       if(getUserArray.result.length > 0){
-        noRecords.style.display = "none"
+        noUsers.style.display = "none"
 
         let tempIndex = 1
         let indexForKeysArray = 0
@@ -146,7 +146,7 @@ function getAllUsers(){
         });
       }else{
         usersTable.style.display = "none"
-        noRecords.style.display = "block"
+        noUsers.style.display = "block"
       }
       }
 
@@ -308,7 +308,7 @@ function getRecordFormValues(){
 function getUserFormValues(){
 
   const emailError = document.getElementById('emailError');
-
+  let capitalizedName = capitalizeFirstLetterOfEveryWord(userName.value)
   //if user info passes criteria then make object
   //what is criteria?
   //name should be 100 chars max
@@ -319,8 +319,8 @@ function getUserFormValues(){
     return;
   }else{
     //name should be 100 chars max
-    if(userName.value.length<=100){
-    let capitalizedName = capitalizeFirstLetterOfEveryWord(userName.value)
+    if(capitalizedName.length<=100){
+      
     console.log(capitalizedName)
     }else{
       console.log("userName.value is longer than 100 chars");
@@ -346,7 +346,7 @@ function getUserFormValues(){
     console.log("Invalid phone no. entered.");
     phoneError.textContent = "Invalid phone number";
     phoneError.style.display = "block";
-    return;
+    // return;
   }
 
 
@@ -354,7 +354,7 @@ function getUserFormValues(){
     name : capitalizedName,
     email : userEmail.value,
     phoneNumber : userNumber.value,
-    timeStamp : formattedToday
+    timeStamp : Date.now()
   }
 
   addUser(user)
