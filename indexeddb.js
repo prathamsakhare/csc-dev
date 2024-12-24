@@ -25,6 +25,11 @@ let userNameList = document.getElementById("namelist");
 let userNameDropdown = document.getElementById("modal-name-dropdown");
 let userNameSuggest = document.getElementById("name-suggest")
 
+// Error elements
+let usernameError = document.getElementById("usernameError")
+let emailError = document.getElementById("emailError")
+let phoneError = document.getElementById("phoneError")
+
 const dbName = "cscPms"
 
 // Setting The Instance For IndexDB
@@ -307,7 +312,6 @@ function getRecordFormValues(){
 
 function getUserFormValues(){
 
-  const emailError = document.getElementById('emailError');
   let capitalizedName = capitalizeFirstLetterOfEveryWord(userName.value)
   //if user info passes criteria then make object
   //what is criteria?

@@ -118,6 +118,10 @@ table tr {
 
 #record-table td {
   border-radius: 5px;
+  max-width: 20ch;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* no records heading */
