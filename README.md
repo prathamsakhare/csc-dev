@@ -11,3 +11,5 @@
 9) document is not defined, when mongodb connection code put into index.js that has id selectors of JavaScript : https://stackoverflow.com/questions/32126003/node-js-document-is-not-defined
 10) Basic CRUD with MongoDB : https://dev.to/danmusembi/beginners-tutorial-for-crud-operations-in-nodejs-and-mongodb-k7k
 11) px to rem converter : https://nekocalc.com/px-to-rem-converter
+12) Limiting characters to be shown : https://stackoverflow.com/questions/74195319/how-to-limit-the-amount-of-characters-and-put-at-the-end
+

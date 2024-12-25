@@ -34,6 +34,19 @@ body {
   font-weight: bold;
 }
 
+.danger-button {
+  background-color: red;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.small{
+  padding: 10px 10px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
 .main-button:hover, .secondary-button:hover {
   cursor: pointer;
 }

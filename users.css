@@ -25,6 +25,18 @@
     font-weight: bold;
   }
   
+  .danger-button {
+    background-color: red;
+    
+  }
+
+  .small{
+    padding: 10px 10px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+
   .secondary-button {
     background-color: var(--secondary-button-bgcolor);
     border: 1px solid var(--secondary-button-color);

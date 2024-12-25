@@ -87,28 +87,39 @@ function getAllRecords(){
     const recordObjectStore = transaction.objectStore("records")
 
     const getRequest = recordObjectStore.getAll()
+
+    var recordsKeysArray = []
+
     getRequest.onsuccess = function () {
-      if (getRequest.result) {
-        console.log("Records found:", getRequest.result);
+      
+      const getAllKeysOfRecordsArray = recordObjectStore.getAllKeys()
+      getAllKeysOfRecordsArray.onsuccess = function(){
+        recordsKeysArray = getAllKeysOfRecordsArray.result
 
-        // TODO : Insert html into the table
-        if(getRequest.result.length > 0){
-          noRecords.style.display = "none"
-
-          let tempIndex = 1
-
-          getRequest.result.forEach((record, key) => {
-            recordTable.innerHTML += `<tr key="${key}"><td>${tempIndex}</td><td>${record.recordCustomer}</td><td>+91 9876543210</td><td>${record.recordCategory}</td><td>${record.recordDescription}</td><td>${record.recordAmount}</td><td>${record.recordDate}</td><td>${record.recordTime}</td></tr>`
-
-            tempIndex += 1
-          });
-        }else{
-          recordTable.style.display = "none"
-          noRecords.style.display = "block"
+        if (getRequest.result) {
+          if(getRequest.result.length > 0){
+            noRecords.style.display = "none"
+  
+            let tempIndex = 1
+            let indexForRecordsArray = 0
+            getRequest.result.forEach((record, key) => {
+  
+        
+              recordTable.innerHTML += `<tr id="${recordsKeysArray[indexForRecordsArray]}"><td>${tempIndex}</td><td>${record.recordCustomer}</td><td>+91 9876543210</td><td>${record.recordCategory}</td><td>${record.recordDescription}</td><td>${record.recordAmount}</td><td>${record.recordDate}</td><td>${record.recordTime}</td><td><img src="./assets/delete.png" class="small" onclick="deleteRecord(${recordsKeysArray[indexForRecordsArray]})" /></td></tr>`
+  
+              tempIndex += 1
+              indexForRecordsArray += 1
+            });
+          }else{
+            recordTable.style.display = "none"
+            noRecords.style.display = "block"
+          }
+        } else {
+          console.log("Records not found");
         }
-      } else {
-        console.log("Records not found");
       }
+
+      
     };
 
     getRequest.onerror = function (event) {
@@ -129,14 +140,14 @@ function getAllUsers(){
 
     const getUserArray = userObjectStore.getAll()
 
-    var keysArray = []
+    var userKeysArray = []
 
     getUserArray.onsuccess = function() {
 
       const getAllKeysOfUserArray = userObjectStore.getAllKeys()
 
       getAllKeysOfUserArray.onsuccess = function(){
-        keysArray = getAllKeysOfUserArray.result
+        userKeysArray = getAllKeysOfUserArray.result
 
       if(getUserArray.result.length > 0){
         noUsers.style.display = "none"
@@ -144,7 +155,7 @@ function getAllUsers(){
         let tempIndex = 1
         let indexForKeysArray = 0
         getUserArray.result.forEach((user, key) => {
-          usersTable.innerHTML += `<tr key="${key}" id="${keysArray[indexForKeysArray]}"><td>${tempIndex}</td><td>${user.name}</td><td>${user.phoneNumber}</td><td>${user.email}</td><td>${user.timeStamp}</td></tr>`
+          usersTable.innerHTML += `<tr key="${key}" id="${userKeysArray[indexForKeysArray]}"><td>${tempIndex}</td><td>${user.name}</td><td>${user.phoneNumber}</td><td>${user.email}</td><td>${user.timeStamp}</td><td><img class="small" src="./assets/delete.png" style="width:20px" onclick="deleteUser(${userKeysArray[indexForKeysArray]})" /></td><td><img src="./assets/edit.png" class="small"style="width:30px"id="${userKeysArray[indexForKeysArray]}" /></td></tr>`
 
           tempIndex += 1
           indexForKeysArray+=1
@@ -217,9 +228,29 @@ function addRecord(record) {
 
   };
 }
+
+function deleteRecord(id){
+  const request = indexedDB.open(dbName,1)
+
+  request.onsuccess = function(event){
+    const db = event.target.result
+    const transaction = db.transaction("records", "readwrite");
+    const objectStore = transaction.objectStore("records");
+    const deleteRequest = objectStore.delete(id);
+
+    deleteRequest.onsuccess = function () {
+      console.log("Record deleted with ID:", id);
+      location.reload()
+    };
+
+    deleteRequest.onerror = function (event) {
+      console.error("Error deleting user:", event.target.errorCode);
+    };
+  }
+}
+
 function keyOfAddedUser(id){
-  
-  
+
 }
 
 // add user
@@ -238,6 +269,7 @@ function addUser(user){
     
     getUserRequest.onsuccess = (event) => {
       keyOfAddedUser(event.target.result)
+      console.log("key of added user : ", event.target.result)
     }
 
     //Getting The Data
@@ -247,6 +279,47 @@ function addUser(user){
   }
 }
 // addUser({name : "user 1",email : "user1@gmail.com", "phoneNumber" : "9876543210"})
+
+function deleteUser(id){
+  const request = indexedDB.open(dbName,1)
+
+  request.onsuccess = function(event){
+    const db = event.target.result
+    const transaction = db.transaction("users", "readwrite");
+    const objectStore = transaction.objectStore("users");
+    const deleteRequest = objectStore.delete(id);
+
+    deleteRequest.onsuccess = function () {
+      console.log("User deleted with ID:", id);
+      location.reload()
+    };
+
+    deleteRequest.onerror = function (event) {
+      console.error("Error deleting user:", event.target.errorCode);
+    };
+  }
+}
+
+function updateUser(id, updatedData){
+    const request = indexedDB.open("MyDatabase", 1);
+  
+    request.onsuccess = function (event) {
+      const db = event.target.result;
+      const transaction = db.transaction("users", "readwrite");
+      const objectStore = transaction.objectStore("users");
+  
+      const putRequest = objectStore.put({ ...updatedData, id });
+  
+      putRequest.onsuccess = function () {
+        console.log("User updated:", { ...updatedData, id });
+      };
+  
+      putRequest.onerror = function (event) {
+        console.error("Error updating user:", event.target.errorCode);
+      };
+    };
+  
+}
 
 // Delete Database
 function deleteDatabase(dbName) {
@@ -337,15 +410,26 @@ function getUserFormValues(){
   //email should be verified using regex
   if(isValidEmail(userEmail.value) == false){
     console.log("Invalid email id entered.");
-    emailError.textContent = "Invalid email ID format";
-    emailError.style.display = "block";
+    try {
+      emailError.textContent = "Invalid email ID format";
+      emailError.style.display = "block";
+    } catch (error) {
+      
+    }
+    
     return;
   }else{
-    emailError.style.display = "none";
+    try {
+      emailError.style.display = "none";
+    } catch (error) {
+      
+    }
+   
   }
 
   //Checking user's phone no.
   //phone no should have exactly 10 digits
+  // TODO : Fix the issue, the phone number is not getting validated
   if (isValidPhoneNumber(userNumber.value) == false) {
     console.log("Invalid phone no. entered.");
     phoneError.textContent = "Invalid phone number";
@@ -370,6 +454,7 @@ function search(userArray) {
   let query = recordCustomer?.value.toLowerCase();
   userNameList.innerHTML = "";
   userNameDropdown.style.display = 'none'
+  
   
 
   if (query) {
