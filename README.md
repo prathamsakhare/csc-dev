@@ -29,3 +29,4 @@ const originalInnerHTML = myElement.innerHTML;
 myElement.innerHTML = originalInnerHTML;
 ```
 16) To keep autosuggestions from browser off, for input fields, set autocomplete="off"
+17) How to merge detached head to main branch : https://www.geeksforgeeks.org/how-to-reconcile-detached-head-with-master-origin-in-git/
