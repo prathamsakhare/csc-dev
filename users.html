@@ -98,7 +98,7 @@
             class="main-button"
             onclick="getUserFormValues()"
           >
-            Update User
+            Add User
           </button>
         </div>
       </form>
@@ -220,6 +220,14 @@
       
     </div>
     <main>
+      <div class="searchBar">
+        <input type="text" id="searchbar" placeholder="Search Users..." oninput="searchUsers()" />
+        <div id="userlist" class="userList" style="display: none;">
+          <h3 id="noUsersWarning" class="noUsersWarning" style="display: none;">No Users!</h3>
+          <!-- <div class="search-result-option" ><p class="search-result-option-name">Random Name</p> <p class="search-result-option-number">9356524183</p></div> -->
+         
+        </div>
+      </div>
       <div id="users-topbar">
         <h2>Users</h2>
 

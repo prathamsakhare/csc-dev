@@ -42,6 +42,11 @@ const userNumberUpdate = document.getElementById("updateusernumber")
 let exportRecordsButton = document.getElementById("download-records-table-button")
 let exportUsersButton = document.getElementById("download-users-table-button") 
 
+// Search bar
+let searchBar = document.getElementById('searchbar')
+let userList = document.getElementById('userlist')
+let noUsersWarning = document.getElementById("noUsersWarning")
+
 const dbName = "cscPms"
 
 // Setting The Instance For IndexDB
@@ -613,6 +618,48 @@ function getUserFormValues(){
 //   console.log("updatedUser : ", user)
 //   closeAddUserModal()
 // }
+
+function searchUsers(){
+
+  let query = searchBar?.value.toLowerCase()
+  userList.innerHTML = ''
+  // noUsersWarning.style.display = 'block'
+  userList.style.display = 'none'
+  console.log("searchUsers called...")
+  const request = window.indexedDB.open(dbName)
+  request.onsuccess = (event) => {
+    const db = event.target.result
+
+    const transaction = db.transaction("users", "readonly");
+    const userObjectStore = transaction.objectStore("users")
+
+    const getUserArray = userObjectStore.getAll()
+
+    getUserArray.onsuccess = (event) => {
+      if(query){
+        userList.style.display = "block"
+        console.log(getUserArray.result)
+        
+        const matchedNames = getUserArray.result
+        .filter(customer => customer.name.toLowerCase().includes(query))
+        .map(customer => customer);
+          console.log("matchedNames : ", matchedNames.length)
+        if(matchedNames.length > 0){
+          matchedNames.forEach(user => {
+            userList.innerHTML += (`<div class="search-result-option" ><p class="search-result-option-name">${user.name}</p> <p class="search-result-option-number">${user.phoneNumber}</p></div>`)
+    
+            // <div class="search-result-option" ><p class="search-result-option-name">Random Name</p> <p class="search-result-option-number">9356524183</p></div>
+          })
+        }else{
+          noUsersWarning.style.display = "block"
+        }
+
+        
+      }
+    }
+  }
+}
+
 
 function search(userArray) {
   let query = recordCustomer?.value.toLowerCase();

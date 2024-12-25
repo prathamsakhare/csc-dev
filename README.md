@@ -13,3 +13,4 @@
 11) px to rem converter : https://nekocalc.com/px-to-rem-converter
 12) Limiting characters to be shown : https://stackoverflow.com/questions/74195319/how-to-limit-the-amount-of-characters-and-put-at-the-end
 13) Getting event.target.result from events of indexedDB : https://stackoverflow.com/questions/76051025/how-can-i-get-return-value-from-onsuccess-event-in-indexeddb
+14) Ways to solve problem of overflow in css : https://dev.to/tammibriggs/two2-ways-to-prevent-padding-from-causing-an-overflow-in-css-4ain
