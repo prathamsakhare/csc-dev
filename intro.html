@@ -6,7 +6,13 @@
     <script src="./index.js" defer></script>
     <script src="./indexeddb.js" defer></script>
     <script src="./users.js" defer></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -20,11 +26,11 @@
       <h1 id="logo">CSC<span>PMS</span></h1>
       <div>
         <a href="./index.html"
-        ><button id="profile-button" class="main-button">Intro!</button></a
-      >
-      <a href="./users.html"
-        ><button id="profile-button" class="main-button">Users</button></a
-      >
+          ><button id="profile-button" class="main-button">Intro!</button></a
+        >
+        <a href="./users.html"
+          ><button id="profile-button" class="main-button">Users</button></a
+        >
       </div>
     </header>
 
@@ -41,7 +47,7 @@
         </button>
       </div>
       <!-- Add Record Modal -->
-      <form id="recordInputForm" >
+      <form id="recordInputForm">
         <div class="modal-body">
           <!-- <div class="modal-name"> -->
           <div class="wrapper">
@@ -96,67 +102,81 @@
         </div>
       </form>
       <!-- Add User Modal -->
-      <form id="userInputForm"  >
+      <form id="userInputForm">
         <div class="addUserModal-body" id="addUserModal">
           <!-- <div class="modal-name"> -->
-            <div class="add-user-modal-heading"><h2 class="add-user-heading">Add User</h2>
-              <button
-                id="modal-close-btn"
-                class="close secondary-button"
-                onclick="closeAddUserModal()"
-              >
-                Close
-              </button></div>
-            <div class="wrapper">
-              <input
-                type="text"
-                id="username"
-                name="username"
-                class="addUserModal-input"
-                placeholder="Enter customer's name..."
-              />
-              <div id="usernameError" 
-                style="color: red; 
-                      font-size: 12px; 
-                      display: none; 
-                      padding-left: 10px;
-                      padding-right: 10px;">
-              </div>
-              <input
-                type="email"
-                id="useremail"
-                name="useremail"
-                class="addUserModal-input"
-                placeholder="Enter email..."
-                
-              />
-              <div id="emailError" 
-                style="color: red; 
-                      font-size: 12px; 
-                      display: none; 
-                      padding-left: 10px;
-                      padding-right: 10px;">
-              </div>
+          <div class="add-user-modal-heading">
+            <h2 class="add-user-heading">Add User</h2>
+            <button
+              id="modal-close-btn"
+              class="close secondary-button"
+              onclick="closeAddUserModal()"
+            >
+              Close
+            </button>
+          </div>
+          <div class="wrapper">
+            <input
+              type="text"
+              id="username"
+              name="username"
+              class="addUserModal-input"
+              placeholder="Enter customer's name..."
+            />
+            <div
+              id="usernameError"
+              style="
+                color: red;
+                font-size: 12px;
+                display: none;
+                padding-left: 10px;
+                padding-right: 10px;
+              "
+            ></div>
+            <input
+              type="email"
+              id="useremail"
+              name="useremail"
+              class="addUserModal-input"
+              placeholder="Enter email..."
+            />
+            <div
+              id="emailError"
+              style="
+                color: red;
+                font-size: 12px;
+                display: none;
+                padding-left: 10px;
+                padding-right: 10px;
+              "
+            ></div>
 
-              <input
-                type="number"
-                id="usernumber"
-                name="usernumber"
-                class="addUserModal-input"
-                placeholder="Enter phone number..."
-              />
-              <div id="phoneError" 
-                style="color: red; 
-                      font-size: 12px; 
-                      display: none; 
-                      padding-left: 10px;
-                      padding-right: 10px;">
-              </div>
-             
-            </div>
+            <input
+              type="number"
+              id="usernumber"
+              name="usernumber"
+              class="addUserModal-input"
+              placeholder="Enter phone number..."
+            />
+            <div
+              id="phoneError"
+              style="
+                color: red;
+                font-size: 12px;
+                display: none;
+                padding-left: 10px;
+                padding-right: 10px;
+              "
+            ></div>
+          </div>
 
-            <button id="addUserModal-save-btn" onclick="getUserFormValues()" class="main-button">Save User</button>
-
+          <button
+            id="addUserModal-save-btn"
+            onclick="getUserFormValues()"
+            class="main-button"
+          >
+            Save User
+          </button>
         </div>
       </form>
     </div>
@@ -165,20 +185,24 @@
       <div id="record-topbar">
         <h2>Records</h2>
         <div>
-
           <button
-          id="download-records-table-button" class="main-button" style="background-color: #008000;"
-          onclick="exportTableToExcel('record-table', 'records')"
-        >
-          Export<i class="fa-regular fa-file-excel" style="padding-left: 5px;"></i>
-        </button>
-        <button
-          id="record-add-button"
-          class="main-button"
-          onclick="openModal()"
-        >
-          Add Record
-        </button>
+            id="download-records-table-button"
+            class="main-button"
+            style="background-color: #008000"
+            onclick="exportTableToExcel('record-table', 'records')"
+          >
+            Export<i
+              class="fa-regular fa-file-excel"
+              style="padding-left: 5px"
+            ></i>
+          </button>
+          <button
+            id="record-add-button"
+            class="main-button"
+            onclick="openModal()"
+          >
+            Add Record
+          </button>
         </div>
       </div>
       <table id="record-table">
@@ -196,6 +220,7 @@
           </tr>
         </tbody>
       </table>
+      <div style="height: 2rem;"></div>
       <div id="no-records">
         <h1>No Records!</h1>
         <p>Please click on 'Add Record' button to add a record.</p>
