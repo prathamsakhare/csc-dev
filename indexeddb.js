@@ -38,8 +38,9 @@ const userNameUpdate = document.getElementById("updateusername")
 const userEmailUpdate = document.getElementById("updateuseremail")
 const userNumberUpdate = document.getElementById("updateusernumber")
 
-
-
+// Export table button 
+let exportRecordsButton = document.getElementById("download-records-table-button")
+let exportUsersButton = document.getElementById("download-users-table-button") 
 
 const dbName = "cscPms"
 
@@ -106,17 +107,14 @@ function getAllRecords(){
       const getAllKeysOfRecordsArray = recordObjectStore.getAllKeys()
       getAllKeysOfRecordsArray.onsuccess = function(){
         recordsKeysArray = getAllKeysOfRecordsArray.result
-
+        
         if (getRequest.result) {
           if(getRequest.result.length > 0){
             noRecords.style.display = "none"
-  
             let tempIndex = 1
             let indexForRecordsArray = 0
             getRequest.result.forEach((record, key) => {
-  
-        
-              recordTable.innerHTML += `<tr id="${recordsKeysArray[indexForRecordsArray]}"><td>${tempIndex}</td><td>${record.recordCustomer}</td><td>+91 9876543210</td><td>${record.recordCategory}</td><td>${record.recordDescription}</td><td>${record.recordAmount}</td><td>${record.recordDate}</td><td>${record.recordTime}</td><td><img src="./assets/delete.png" class="small" onclick="deleteRecord(${recordsKeysArray[indexForRecordsArray]})" /></td></tr>`
+              recordTable.innerHTML += `<tr id="${recordsKeysArray[indexForRecordsArray]}"><td>${tempIndex}</td><td>${record.recordCustomer}</td><td>${record.recordCategory}</td><td>${record.recordDescription}</td><td>${record.recordAmount}</td><td>${record.recordDate}</td><td>${record.recordTime}</td><td><img src="./assets/delete.png" class="small" onclick="deleteRecord(${recordsKeysArray[indexForRecordsArray]})" /></td></tr>`
   
               tempIndex += 1
               indexForRecordsArray += 1
@@ -124,10 +122,15 @@ function getAllRecords(){
           }else{
             recordTable.style.display = "none"
             noRecords.style.display = "block"
+            exportRecordsButton.disabled = true
+            exportRecordsButton.style.backgroundColor = 'grey'
+
           }
         } else {
           console.log("Records not found");
+          
         }
+        
       }
 
       
@@ -174,6 +177,8 @@ function getAllUsers(){
       }else{
         usersTable.style.display = "none"
         noUsers.style.display = "block"
+        exportUsersButton.disabled = true
+        exportUsersButton.style.backgroundColor = 'grey'
       }
       }
 
