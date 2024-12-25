@@ -12,4 +12,4 @@
 10) Basic CRUD with MongoDB : https://dev.to/danmusembi/beginners-tutorial-for-crud-operations-in-nodejs-and-mongodb-k7k
 11) px to rem converter : https://nekocalc.com/px-to-rem-converter
 12) Limiting characters to be shown : https://stackoverflow.com/questions/74195319/how-to-limit-the-amount-of-characters-and-put-at-the-end
-
+13) Getting event.target.result from events of indexedDB : https://stackoverflow.com/questions/76051025/how-can-i-get-return-value-from-onsuccess-event-in-indexeddb

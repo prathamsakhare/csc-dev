@@ -30,6 +30,17 @@ let usernameError = document.getElementById("usernameError")
 let emailError = document.getElementById("emailError")
 let phoneError = document.getElementById("phoneError")
 
+// user update modal
+let updateUserModal = document.getElementById("updateUserModal")
+let overlayOfUpdateUserModal = document.getElementById("overlay")
+let userUpdateModalSaveBtn = document.getElementById('modal-update-btn')
+const userNameUpdate = document.getElementById("updateusername")
+const userEmailUpdate = document.getElementById("updateuseremail")
+const userNumberUpdate = document.getElementById("updateusernumber")
+
+
+
+
 const dbName = "cscPms"
 
 // Setting The Instance For IndexDB
@@ -50,7 +61,7 @@ request.onupgradeneeded = (event) => {
   const db = event.target.result;
 
   // Create an objectStore for records
-  const RecordsobjectStore = db.createObjectStore("records", { autoIncrement : true});
+  const RecordsobjectStore = db.createObjectStore("records", { keyPath : "id", autoIncrement : true});
   RecordsobjectStore.createIndex("nameIndex", "name", { unique: false });
   RecordsobjectStore.createIndex("categoryIndex", "category", { unique: false });
 
@@ -155,8 +166,8 @@ function getAllUsers(){
         let tempIndex = 1
         let indexForKeysArray = 0
         getUserArray.result.forEach((user, key) => {
-          usersTable.innerHTML += `<tr key="${key}" id="${userKeysArray[indexForKeysArray]}"><td>${tempIndex}</td><td>${user.name}</td><td>${user.phoneNumber}</td><td>${user.email}</td><td>${user.timeStamp}</td><td><img class="small" src="./assets/delete.png" style="width:20px" onclick="deleteUser(${userKeysArray[indexForKeysArray]})" /></td><td><img src="./assets/edit.png" class="small"style="width:30px"id="${userKeysArray[indexForKeysArray]}" /></td></tr>`
-
+          usersTable.innerHTML += `<tr key="${key}" id="${userKeysArray[indexForKeysArray]}"><td>${tempIndex}</td><td>${user.name}</td><td>${user.phoneNumber}</td><td>${user.email}</td><td>${user.timeStamp}</td><td><img class="small" src="./assets/delete.png" style="width:20px" onclick="deleteUser(${userKeysArray[indexForKeysArray]})" /></td></tr>`
+          // <td><img src="./assets/edit.png" class="small"style="width:30px"id="${userKeysArray[indexForKeysArray]}" onclick="openUserUpdateModal(${userKeysArray[indexForKeysArray]})" /></td>
           tempIndex += 1
           indexForKeysArray+=1
         });
@@ -180,26 +191,45 @@ function getAllUsers(){
 }
 getAllUsers()
 
+
+
 function getUser(id){
-  const request = window.indexedDB.open(dbName, 1)
-  request.onsuccess = (event) => {
-    const db = event.target.result
-    const transaction = db.transaction("users", "readonly")
-    const userObjectStore = transaction.objectStore("users")
+  return new Promise((resolve, reject) => {
+    const request = window.indexedDB.open(dbName, 1)
 
-    const getUser = userObjectStore.get(id)
+    request.onsuccess = (event) => {
+      const db = event.target.result
+      const transaction = db.transaction("users", "readonly")
+      const userObjectStore = transaction.objectStore("users")
+      // console.log("userObjectStore : ",userObjectStore)
 
-    getUser.onsuccess = () => {
-      console.log("id : ", getUser)
-      return getUser.result
+      const getUser = userObjectStore.get(id)
+      // console.log(getUser)
+      getUser.onsuccess = (event) => {
+        // console.log("user : ", getUser.result)
+        // return getUser.result
+        // TODO : Carry the value of event.target.result (user object) and return it
+        const user = event.target.result
+        resolve(user)
+      }
+
+      getUser.onerror = (event) => {
+        reject("Error getting user : ", event.target.charCode)
+      }
+
     }
-
-    getUser.onerror = (event) => {
-      console.log("Error getting user : ", error.target.charCode)
-    }
-
-  }
+  })
 }
+
+// The wrapper function is used to get a resolved result from a promise since the getUser is asynchronous, the onsuccess event returns result through an event handler, Refer here : https://stackoverflow.com/questions/76051025/how-can-i-get-return-value-from-onsuccess-event-in-indexeddb
+
+function getUserWrapper(id){
+    let result = getUser(id)
+  return result
+}
+
+
+
 
 // getUser(3)
 // add record
@@ -300,25 +330,58 @@ function deleteUser(id){
   }
 }
 
-function updateUser(id, updatedData){
-    const request = indexedDB.open("MyDatabase", 1);
+
+
+var tempUserData = []
+
+function openUserUpdateModal(id){
+
+  // Opens the modal
+  updateUserModal.style.display = "block"
+  overlayOfUpdateUserModal.style.display = "block"
+
+  // Populates the values
+  getUserWrapper(id).then(user => {
+    userNameUpdate.value = user.name
+    userEmailUpdate.value = user.email
+    userNumberUpdate.value = user.phoneNumber
+
+    tempUserData.push(id)
+    tempUserData.push({name : user.name, email: user.email, phoneNumber :user.phoneNumber})
+  })
+
+
+}
+// Testing...
+function updateUser(){
+  const request = indexedDB.open(dbName, 1);
+
+  const id = tempUserData[0]
+  const updatedData = tempUserData[1]
+
+  console.log(id, updatedData)
+
   
-    request.onsuccess = function (event) {
-      const db = event.target.result;
-      const transaction = db.transaction("users", "readwrite");
-      const objectStore = transaction.objectStore("users");
-  
-      const putRequest = objectStore.put({ ...updatedData, id });
-  
-      putRequest.onsuccess = function () {
-        console.log("User updated:", { ...updatedData, id });
-      };
-  
-      putRequest.onerror = function (event) {
-        console.error("Error updating user:", event.target.errorCode);
-      };
+
+  request.onsuccess = function (event) {
+    const db = event.target.result;
+    const transaction = db.transaction("users", "readwrite");
+    const objectStore = transaction.objectStore("users");
+
+    const putRequest = objectStore.put({ ...updatedData}, id );
+
+    putRequest.onsuccess = function () {
+      console.log("User updated:", { ...updatedData}, id );
     };
-  
+
+    putRequest.onerror = function (event) {
+      console.error("Error updating user:", event.target.errorCode);
+    };
+
+    tempUserData = []
+  };
+updateUserModal.style.display = "none"
+overlayOfUpdateUserModal.style.display = "none"
 }
 
 // Delete Database
@@ -336,6 +399,9 @@ function closeModal() {
   modal.style.display = "none";
   overlay.style.display = "none";
 
+  updateUserModal.style.display = "none"
+
+
   // clearing entered text 
   recordCustomer.value = ''
   recordDescription.value = ''
@@ -343,17 +409,19 @@ function closeModal() {
   recordAmount.value = ''
   
 
+
 }
 
 // Get form values of record
 function getRecordFormValues(){
+  
   // current time
   let now = new Date();
   let hours = now.getHours();
   let minutes = now.getMinutes();
   let seconds = now.getSeconds();
   let currentTime = `${hours}:${minutes}:${seconds}`;
-
+  
   // current date
   const today = new Date();
   const yyyy = today.getFullYear();
@@ -384,6 +452,18 @@ function getRecordFormValues(){
 
 
 function getUserFormValues(){
+
+  // current date
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  let mm = today.getMonth() + 1; // Months start at 0!
+  let dd = today.getDate();
+
+  if (dd < 10) dd = '0' + dd;
+  if (mm < 10) mm = '0' + mm;
+
+  const formattedToday = dd + '/' + mm + '/' + yyyy;
+
 
   let capitalizedName = capitalizeFirstLetterOfEveryWord(userName.value)
   //if user info passes criteria then make object
@@ -442,13 +522,92 @@ function getUserFormValues(){
     name : capitalizedName,
     email : userEmail.value,
     phoneNumber : userNumber.value,
-    timeStamp : Date.now()
+    timeStamp : formattedToday
   }
 
   addUser(user)
 
   closeAddUserModal()
 }
+
+// function getUpdateUserFormValues(){
+
+//   // current date
+//   const today = new Date();
+//   const yyyy = today.getFullYear();
+//   let mm = today.getMonth() + 1; // Months start at 0!
+//   let dd = today.getDate();
+
+//   if (dd < 10) dd = '0' + dd;
+//   if (mm < 10) mm = '0' + mm;
+
+//   const formattedToday = dd + '/' + mm + '/' + yyyy;
+
+
+//   let capitalizedName = capitalizeFirstLetterOfEveryWord(userName.value)
+//   //if user info passes criteria then make object
+//   //what is criteria?
+//   //name should be 100 chars max
+//   //email should be verified using regex
+//   //phone no should have exactly 10 digits
+//   if (!userName.value || ( userName.value === '' || userName.value === null || userName.value === undefined)) {
+//     console.error("All fields must be filled out before saving the user.");
+//     return;
+//   }else{
+//     //name should be 100 chars max
+//     if(capitalizedName.length<=100){
+      
+//     console.log(capitalizedName)
+//     }else{
+//       console.log("userName.value is longer than 100 chars");
+//       return;
+//     }
+
+//   }
+
+//   //checking for user's email
+//   //email should be verified using regex
+//   if(isValidEmail(userEmail.value) == false){
+//     console.log("Invalid email id entered.");
+//     try {
+//       emailError.textContent = "Invalid email ID format";
+//       emailError.style.display = "block";
+//     } catch (error) {
+      
+//     }
+    
+//     return;
+//   }else{
+//     try {
+//       emailError.style.display = "none";
+//     } catch (error) {
+      
+//     }
+   
+//   }
+
+//   //Checking user's phone no.
+//   //phone no should have exactly 10 digits
+//   // TODO : Fix the issue, the phone number is not getting validated
+//   if (isValidPhoneNumber(userNumber.value) == false) {
+//     console.log("Invalid phone no. entered.");
+//     phoneError.textContent = "Invalid phone number";
+//     phoneError.style.display = "block";
+//     // return;
+//   }
+
+
+//   const user = {
+//     name : capitalizedName,
+//     email : userEmail.value,
+//     phoneNumber : userNumber.value,
+//     timeStamp : formattedToday
+//   }
+
+//   // updateUser(user)
+//   console.log("updatedUser : ", user)
+//   closeAddUserModal()
+// }
 
 function search(userArray) {
   let query = recordCustomer?.value.toLowerCase();
