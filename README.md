@@ -28,3 +28,4 @@ const originalInnerHTML = myElement.innerHTML;
 // Restore the original innerHTML
 myElement.innerHTML = originalInnerHTML;
 ```
+16) To keep autosuggestions from browser off, for input fields, set autocomplete="off"
