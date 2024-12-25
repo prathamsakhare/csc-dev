@@ -14,3 +14,17 @@
 12) Limiting characters to be shown : https://stackoverflow.com/questions/74195319/how-to-limit-the-amount-of-characters-and-put-at-the-end
 13) Getting event.target.result from events of indexedDB : https://stackoverflow.com/questions/76051025/how-can-i-get-return-value-from-onsuccess-event-in-indexeddb
 14) Ways to solve problem of overflow in css : https://dev.to/tammibriggs/two2-ways-to-prevent-padding-from-causing-an-overflow-in-css-4ain
+15) If you want to preserve the innerHTML of an HTML element while manipulating other parts of the DOM, you can store its value in a variable and then reassign it after your modifications. Here's an example:
+
+```
+// Get the element
+const myElement = document.getElementById("myElement");
+
+// Store the innerHTML
+const originalInnerHTML = myElement.innerHTML;
+
+// Make changes to the DOM...
+
+// Restore the original innerHTML
+myElement.innerHTML = originalInnerHTML;
+```

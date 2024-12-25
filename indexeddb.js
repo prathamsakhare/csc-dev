@@ -47,6 +47,10 @@ let searchBar = document.getElementById('searchbar')
 let userList = document.getElementById('userlist')
 let noUsersWarning = document.getElementById("noUsersWarning")
 
+// Global State
+
+var GLOBALUSERTABLE = ''
+
 const dbName = "cscPms"
 
 // Setting The Instance For IndexDB
@@ -179,6 +183,8 @@ function getAllUsers(){
           tempIndex += 1
           indexForKeysArray+=1
         });
+
+        GLOBALUSERTABLE = usersTable.innerHTML
       }else{
         usersTable.style.display = "none"
         noUsers.style.display = "block"
@@ -188,7 +194,7 @@ function getAllUsers(){
       }
 
       search(getUserArray.result)
-
+      
       
     }
 
@@ -619,11 +625,18 @@ function getUserFormValues(){
 //   closeAddUserModal()
 // }
 
+
+
 function searchUsers(){
 
   let query = searchBar?.value.toLowerCase()
-  userList.innerHTML = ''
+  // userList.innerHTML = ''
   // noUsersWarning.style.display = 'block'
+
+  
+  usersTable.innerHTML = GLOBALUSERTABLE
+
+// usersTable.innerHTML = ''
   userList.style.display = 'none'
   console.log("searchUsers called...")
   const request = window.indexedDB.open(dbName)
@@ -635,24 +648,48 @@ function searchUsers(){
 
     const getUserArray = userObjectStore.getAll()
 
+    var userKeysArrayForSearch = []
+
     getUserArray.onsuccess = (event) => {
       if(query){
-        userList.style.display = "block"
+        // userList.style.display = "block"
         console.log(getUserArray.result)
-        
-        const matchedNames = getUserArray.result
-        .filter(customer => customer.name.toLowerCase().includes(query))
-        .map(customer => customer);
-          console.log("matchedNames : ", matchedNames.length)
-        if(matchedNames.length > 0){
-          matchedNames.forEach(user => {
-            userList.innerHTML += (`<div class="search-result-option" ><p class="search-result-option-name">${user.name}</p> <p class="search-result-option-number">${user.phoneNumber}</p></div>`)
-    
-            // <div class="search-result-option" ><p class="search-result-option-name">Random Name</p> <p class="search-result-option-number">9356524183</p></div>
-          })
-        }else{
-          noUsersWarning.style.display = "block"
+
+        const getAllUserKeys = userObjectStore.getAllKeys()
+
+        getAllUserKeys.onsuccess = (event) => {
+
+
+
+          const matchedNames = getUserArray.result
+          .filter(customer => customer.name.toLowerCase().includes(query))
+          .map(customer => customer);
+            console.log("matchedNames : ", matchedNames.length)
+          if(matchedNames.length > 0){
+            let tempIndex = 1
+            let index = 0
+            matchedNames.forEach(user => {
+              usersTable.innerHTML = `<tbody id="users">
+          <tr>
+            <th>Index</th>
+            <th>Name</th>
+            <th>Mobile No.</th>
+            <th>Email</th>
+            <th>Date</th>
+            <th>Delete</th>
+          </tr>
+        </tbody><tr"><td>${tempIndex}</td><td>${user.name}</td><td>${user.phoneNumber}</td><td>${user.email}</td><td>${user.timeStamp}</td><td><img class="small" src="./assets/delete.png" style="width:20px" onclick="deleteUser(${userKeysArrayForSearch[index]})" /></td></tr>`
+  
+              tempIndex += 1
+              index+=1
+            })
+          }else{
+            
+          }
         }
+        
+        
+        
 
         
       }
