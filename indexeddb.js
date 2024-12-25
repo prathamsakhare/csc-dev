@@ -56,7 +56,7 @@ request.onupgradeneeded = (event) => {
 
   // Create an object store for users 
   const usersobjectStore = db.createObjectStore("users", {autoIncrement : true})
-  usersobjectStore.createIndex("idIndex", key, {unique : true})
+  // usersobjectStore.createIndex("idIndex", {unique : true})
   usersobjectStore.createIndex("nameIndex", "name", { unique: false });
   usersobjectStore.createIndex("emailIndex", "email", { unique: false });
   usersobjectStore.createIndex("phoneIndex", "phoneNumber", { unique: false });
