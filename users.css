@@ -82,7 +82,7 @@
 
 .searchBar{
   margin-top: 20px;
-  width: 400px;
+  width: 100%;
   
 }
 .searchBar input {
@@ -92,6 +92,17 @@
   border: 1px solid grey;
   padding: 10px;
   /* background-color: #A8A8A8; */
+}
+
+.searchBar input:focus {
+  background-color: #d1c9c9;
+  color: black;
+  border: none;
+  outline: none;
+}
+
+.searchBar input::placeholder:focus{
+  color : white
 }
 
 .userList{
@@ -151,6 +162,7 @@
     /* border: 1px solid black; */
     border-collapse: collapse;
     border: 1px solid var(--table-border-color);
+    margin-bottom: 3rem;
   }
   
   #users-table tr {

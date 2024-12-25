@@ -668,17 +668,9 @@ function searchUsers(){
           if(matchedNames.length > 0){
             let tempIndex = 1
             let index = 0
+            usersTable.innerHTML='<tbody id="users"><tr><th>Index</th><th>Name</th><th>Mobile No.</th><th>Email</th><th>Date</th><th>Delete</th></tr></tbody>'
             matchedNames.forEach(user => {
-              usersTable.innerHTML = `<tbody id="users">
-          <tr>
-            <th>Index</th>
-            <th>Name</th>
-            <th>Mobile No.</th>
-            <th>Email</th>
-            <th>Date</th>
-            <th>Delete</th>
-          </tr>
-        </tbody><tr"><td>${tempIndex}</td><td>${user.name}</td><td>${user.phoneNumber}</td><td>${user.email}</td><td>${user.timeStamp}</td><td><img class="small" src="./assets/delete.png" style="width:20px" onclick="deleteUser(${userKeysArrayForSearch[index]})" /></td></tr>`
+              usersTable.innerHTML += `<tr"><td>${tempIndex}</td><td>${user.name}</td><td>${user.phoneNumber}</td><td>${user.email}</td><td>${user.timeStamp}</td><td><img class="small" src="./assets/delete.png" style="width:20px" onclick="deleteUser(${userKeysArrayForSearch[index]})" /></td></tr>`
   
               tempIndex += 1
               index+=1

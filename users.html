@@ -50,6 +50,7 @@
               id="username"
               class="modal-input"
               placeholder="Enter customer's name..."
+              autocomplete="off"
             />
             <div id="modal-name-dropdown" class="modal-name-dropdown">
               <div>
@@ -66,6 +67,7 @@
             type="email"
             class="modal-input"
             placeholder="Enter Email Address..."
+            autocomplete="off"
           ></input>
           <input
             name="usernumber"
@@ -73,6 +75,7 @@
             id="usernumber"
             class="modal-input"
             placeholder="Enter Phone Number..."
+            autocomplete="off"
           ></input>
           <!-- <div class="cat-amt-collection">
             <select
@@ -103,50 +106,7 @@
         </div>
       </form>
       <!-- Add User Modal -->
-      <form id="userInputForm">
-        <div class="addUserModal-body" id="addUserModal">
-          <!-- <div class="modal-name"> -->
-          <div class="add-user-modal-heading"><h2 class="add-user-heading">Add User</h2>
-            <button
-              id="modal-close-btn"
-              class="close secondary-button"
-              onclick="closeAddUserModal()"
-            >
-              Close
-            </button></div>
-          <div class="wrapper">
-            <input
-              type="text"
-              id="username"
-              name="username"
-              class="addUserModal-input"
-              placeholder="Enter customer's name..."
-            />
-            <input
-              type="email"
-              id="useremail"
-              name="useremail"
-              class="addUserModal-input"
-              placeholder="Enter email..."
-            />
-            <input
-              type="number"
-              id="usernumber"
-              name="usernumber"
-              class="addUserModal-input"
-              placeholder="Enter phone number..."
-            />
-          </div>
-
-          <button
-            id="addUserModal-save-btn"
-            onclick="getUserFormValues()"
-            class="main-button"
-          >
-            Save User
-          </button>
-        </div>
-      </form>
+      
     </div>
     <div id="updateUserModal" class="modal">
       <div class="modal-heading">
@@ -169,6 +129,7 @@
               id="updateusername"
               class="modal-input"
               placeholder="Enter customer's name..."
+              autocomplete="off"
             />
             <div id="modal-name-dropdown" class="modal-name-dropdown">
               <div>
@@ -185,6 +146,7 @@
             type="email"
             class="modal-input"
             placeholder="Enter Email Address..."
+            autocomplete="off"
           ></input>
           <input
             name="usernumber"
@@ -192,6 +154,7 @@
             id="updateusernumber"
             class="modal-input"
             placeholder="Enter Phone Number..."
+            autocomplete="off"
           ></input>
           <!-- <div class="cat-amt-collection">
             <select
@@ -221,7 +184,7 @@
     </div>
     <main>
       <div class="searchBar">
-        <input type="text" id="searchbar" placeholder="Search Users..." oninput="searchUsers()" />
+        <input type="text" id="searchbar" placeholder="Search Users..." oninput="searchUsers()" autocomplete="off" />
         <div id="userlist" class="userList" style="display: none;">
           <h3 id="noUsersWarning" class="noUsersWarning" style="display: none;">No Users!</h3>
           <!-- <div class="search-result-option" ><p class="search-result-option-name">Random Name</p> <p class="search-result-option-number">9356524183</p></div> -->
@@ -262,6 +225,7 @@
           </tr>
         </tbody>
       </table>
+      <div style="height: 1rem;"></div>
       <div id="no-users">
         <h1>No Users!</h1>
         <p>Please click on 'Add User' button to add an user.</p>
