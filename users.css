@@ -398,3 +398,30 @@ table tr {
   height: 4rem;
   justify-content: space-between;
 }
+
+#delete-user-permission{
+  width: 30%;
+  padding: 1rem 2rem;
+  text-align: center;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 10px;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  position:fixed;
+  z-index:999999;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+
+}
+
+.delete-user-button-grp {
+  display: flex;
+  justify-content: space-between;
+  width: 40%;
+  padding: 10px;
+  
+  
+}

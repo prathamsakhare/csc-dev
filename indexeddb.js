@@ -1,5 +1,6 @@
 // form input fields for record
 const recordCustomer = document.getElementById("name");
+let GLOBALTEMPORARYCUSTOMERNUMBER = ""
 const recordDescription = document.getElementById("desc");
 const recordCategory = document.getElementById("category");
 const recordAmount = document.getElementById("amt");
@@ -176,7 +177,7 @@ function getAllUsers() {
           let tempIndex = 1;
           let indexForKeysArray = 0;
           getUserArray.result.forEach((user, key) => {
-            usersTable.innerHTML += `<tr key="${key}" id="${userKeysArray[indexForKeysArray]}"><td>${tempIndex}</td><td>${user.name}</td><td>${user.phoneNumber}</td><td>${user.email}</td><td>${user.timeStamp}</td><td><img class="small" src="./assets/delete.png" style="width:20px" onclick="deleteUser(${userKeysArray[indexForKeysArray]})" /></td></tr>`;
+            usersTable.innerHTML += `<tr key="${key}" id="${userKeysArray[indexForKeysArray]}"><td>${tempIndex}</td><td>${user.name}</td><td>${user.phoneNumber}</td><td>${user.email}</td><td>${user.timeStamp}</td><td><img class="small" src="./assets/delete.png" style="width:20px" onclick="deleteUserPermission(${userKeysArray[indexForKeysArray]})" /></td></tr>`;
 
             tempIndex += 1;
             indexForKeysArray += 1;
@@ -225,7 +226,7 @@ function getUser(id) {
 // The wrapper function is used to get a resolved result from a promise since the getUser is asynchronous, the onsuccess event returns result through an event handler, Refer here : https://stackoverflow.com/questions/76051025/how-can-i-get-return-value-from-onsuccess-event-in-indexeddb
 
 function getUserWrapper(id) {
-  let result = getUser(id);
+  let result = getUser(id)
   return result;
 }
 
@@ -265,7 +266,7 @@ function deleteRecord(id) {
     };
 
     deleteRequest.onerror = function (event) {
-      console.error("Error deleting user:", event.target.errorCode);
+      console.alert("Error deleting user:", event.target.errorCode);
     };
   };
 }
@@ -305,7 +306,9 @@ function deleteUser(id) {
     const objectStore = transaction.objectStore("users");
     const deleteRequest = objectStore.delete(id);
 
+    // TODO : Upon deleting the user, all records associated with it should be deleted as well.
     deleteRequest.onsuccess = function () {
+
       location.reload();
     };
 
@@ -313,6 +316,31 @@ function deleteUser(id) {
       console.error("Error deleting user:", event.target.errorCode);
     };
   };
+}
+
+// Function to seek permission to delete all records of user that is being deleted
+function deleteUserPermission(id){
+  return new Promise((resolve, reject) => {
+    const request = window.indexedDB.open(dbName, 1);
+
+    request.onsuccess = (event) => {
+      const db = event.target.result;
+      const transaction = db.transaction("users", "readonly");
+      const userObjectStore = transaction.objectStore("users");
+
+      const getUser = userObjectStore.get(id);
+      getUser.onsuccess = (event) => {
+        const user = event.target.result;
+        // resolve(user);
+        console.log(user.email)
+        
+      };
+
+      getUser.onerror = (event) => {
+        reject("Error getting user : ", event.target.charCode);
+      };
+    };
+  });
 }
 
 var tempUserData = [];
@@ -417,9 +445,12 @@ function getRecordFormValues() {
     recordCscHandler: recordCscHandler,
     recordDate: formattedToday,
     recordTime: currentTime,
+    recordCustomerPhoneNumber : GLOBALTEMPORARYCUSTOMERNUMBER 
   };
 
   addRecord(record);
+
+  GLOBALTEMPORARYCUSTOMERNUMBER = ''
 
   closeModal();
 }
@@ -536,6 +567,7 @@ function searchUsers() {
   };
 }
 
+// To search users while adding record
 function search(userArray) {
   let query = recordCustomer?.value.toLowerCase();
   userNameList.innerHTML = "";
@@ -550,9 +582,11 @@ function search(userArray) {
       .map((customer) => customer);
 
     // Display matched names as suggestions
+
     matchedNames.forEach((customer) => {
       const suggestionItem = document.createElement("div");
       suggestionItem.textContent = customer.name;
+      GLOBALTEMPORARYCUSTOMERNUMBER = customer.phoneNumber
       userNameList.innerHTML += `<option class="suggestion-item" onclick="setCustomerName('${
         customer.name
       }')" value="${customer.name.toLowerCase()}">${
@@ -566,6 +600,7 @@ function search(userArray) {
 
 function setCustomerName(name) {
   recordCustomer.value = name;
+  
   userNameDropdown.style.display = "none";
 }
 
@@ -577,7 +612,7 @@ function saveUserToIndexedDB(dbName, storeName, user) {
       (value) => value === "" || value === null || value === undefined
     )
   ) {
-    console.error("All fields must be filled out before saving the user.");
+    console.alert("All fields must be filled out before saving the user.");
     return;
   }
 
