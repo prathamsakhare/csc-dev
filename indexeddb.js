@@ -134,7 +134,7 @@ function getAllRecords() {
             let tempIndex = 1;
             let indexForRecordsArray = 0;
             getRequest.result.forEach((record, key) => {
-              recordTable.innerHTML += `<tr id="${recordsKeysArray[indexForRecordsArray]}"><td>${tempIndex}</td><td>${record.recordCustomer}</td><td>${record.recordCustomerPhoneNumber}</td><td>${record.recordCategory}</td><td>${record.recordDescription}</td><td>${record.recordAmount}</td><td>${record.recordDate}</td><td>${record.recordTime}</td><td><img src="./assets/delete.png" class="small" onclick="deleteRecord(${recordsKeysArray[indexForRecordsArray]})" /></td></tr>`;
+              recordTable.innerHTML += `<tr id="${recordsKeysArray[indexForRecordsArray]}"><td>${tempIndex}</td><td>${record.recordCustomer}</td><td>${record.recordCustomerPhoneNumber}</td><td>${record.recordCategory}</td><td><abbr title="${record.recordDescription}">${record.recordDescription}</abbr></td><td>${record.recordAmount}</td><td>${record.recordDate}</td><td>${record.recordTime}</td><td><img src="./assets/delete.png" class="small" onclick="deleteRecord(${recordsKeysArray[indexForRecordsArray]})" /></td></tr>`;
 
               tempIndex += 1;
               indexForRecordsArray += 1;
@@ -523,6 +523,14 @@ function getRecordFormValues() {
 
   const formattedToday = dd + "/" + mm + "/" + yyyy;
   console.log('GLOBALTEMPORARYCUSTOMERNUMBER in getrecordformvalues : ', GLOBALTEMPORARYCUSTOMERNUMBER)
+
+  // Alerts for input fields if the values are not inputted
+  if ((recordCustomer.value.length <= 0) || (recordDescription.value.length <= 0) || (recordCategory.value == 'select') || (recordAmount.value <= 0)){
+    // TODO : Use any library / functionality to show notifications instead of alerts
+    console.alert("Please enter customer name")
+  }
+
+
   // record object
   const record = {
     recordCustomer: recordCustomer.value,

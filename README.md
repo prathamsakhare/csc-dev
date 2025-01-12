@@ -30,3 +30,10 @@ myElement.innerHTML = originalInnerHTML;
 ```
 16) To keep autosuggestions from browser off, for input fields, set autocomplete="off"
 17) How to merge detached head to main branch : https://www.geeksforgeeks.org/how-to-reconcile-detached-head-with-master-origin-in-git/
+
+
+<!-- TODOs  -->
+<!-- Implement checks that without selecting required fields, record cannot be added (shows warnings) -->
+<!-- Feature that lets user add / remove categories -->
+<!-- Implement loader and animation -->
+<!-- Implement pagination for records and users -->
