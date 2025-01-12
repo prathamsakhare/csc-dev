@@ -39,6 +39,11 @@ const userNameUpdate = document.getElementById("updateusername");
 const userEmailUpdate = document.getElementById("updateuseremail");
 const userNumberUpdate = document.getElementById("updateusernumber");
 
+// user delete permission modal
+const deleteUserPermissionModal = document.getElementById("delete-user-permission")
+const deleteUserPermissionYes = document.getElementById("delete-user-permission-yes")
+const deleteUserPermissionNo = document.getElementById("delete-user-permission-no")
+
 // Export table button
 let exportRecordsButton = document.getElementById(
   "download-records-table-button"
@@ -177,7 +182,7 @@ function getAllUsers() {
           let tempIndex = 1;
           let indexForKeysArray = 0;
           getUserArray.result.forEach((user, key) => {
-            usersTable.innerHTML += `<tr key="${key}" id="${userKeysArray[indexForKeysArray]}"><td>${tempIndex}</td><td>${user.name}</td><td>${user.phoneNumber}</td><td>${user.email}</td><td>${user.timeStamp}</td><td><img class="small" src="./assets/delete.png" style="width:20px" onclick="deleteUserPermission(${userKeysArray[indexForKeysArray]})" /></td></tr>`;
+            usersTable.innerHTML += `<tr key="${key}" id="${userKeysArray[indexForKeysArray]}"><td>${tempIndex}</td><td>${user.name}</td><td>${user.phoneNumber}</td><td>${user.email}</td><td>${user.timeStamp}</td><td><img class="small" src="./assets/delete.png" style="width:20px" onclick="openDeleteUserPermissionModal(${userKeysArray[indexForKeysArray]})" /></td></tr>`;
 
             tempIndex += 1;
             indexForKeysArray += 1;
@@ -306,7 +311,6 @@ function deleteUser(id) {
     const objectStore = transaction.objectStore("users");
     const deleteRequest = objectStore.delete(id);
 
-    // TODO : Upon deleting the user, all records associated with it should be deleted as well.
     deleteRequest.onsuccess = function () {
 
       location.reload();
@@ -318,8 +322,29 @@ function deleteUser(id) {
   };
 }
 
+// opens up delete user permission modal
+function openDeleteUserPermissionModal(id){
+  deleteUserPermissionModal.style.display = 'block'
+  deleteUserPermissionModal.innerHTML = `<p>Upon deleting the user, all records associated with it will be deleted, do you still want to proceed?</p><div class="delete-user-button-grp"><button id="delete-user-permission-yes" class="main-button" onclick="deleteUserAndRecords(${id})" >Yes</button><button id="delete-user-permission-no" class="main-button danger-button" onclick="closeDeleteUserPermissionModal()">No</button></div>`
+  overlay.style.display = 'block'
+}
+
+function closeDeleteUserPermissionModal(){
+  deleteUserPermissionModal.style.display = 'none'
+  overlay.style.display = 'none'
+}
+
+function deleteUserAndRecords(id){
+  // TODO : Delete All Records associated with the user
+  deleteAllRecordsOfUser(id)
+  deleteUser(id)
+}
+
 // Function to seek permission to delete all records of user that is being deleted
-function deleteUserPermission(id){
+// gets called if the users clicks on 'yes' for a warning
+
+// TODO : Upon deleting the user, all records associated with it should be deleted as well.
+function deleteAllRecordsOfUser(id){
   return new Promise((resolve, reject) => {
     const request = window.indexedDB.open(dbName, 1);
 
@@ -329,12 +354,74 @@ function deleteUserPermission(id){
       const userObjectStore = transaction.objectStore("users");
 
       const getUser = userObjectStore.get(id);
+
+      
       getUser.onsuccess = (event) => {
         const user = event.target.result;
         // resolve(user);
-        console.log(user.email)
+        let targetPhoneNumber = user.phoneNumber
+        // Function to delete records with a specific phone number
+          // Open a connection to the IndexedDB database
+          const request = indexedDB.open(dbName);
+      
+          request.onsuccess = function (event) {
+              const db = event.target.result;
+      
+              // Start a new transaction with readwrite access
+              const transaction = db.transaction('records', "readwrite");
+              const objectStore = transaction.objectStore('records');
+      
+              // Open a cursor to iterate through the records
+              const cursorRequest = objectStore.openCursor();
+      
+              cursorRequest.onsuccess = function (event) {
+                  const cursor = event.target.result;
+      
+                  if (cursor) {
+                      const record = cursor.value;
+                      console.log('record : ', record)
+                      console.log('record phone number : ', record.recordCustomerPhoneNumber)
+                      // Check if the record's phone number matches the target
+                      if (record.recordCustomerPhoneNumber == targetPhoneNumber) {
+                          // Delete the record
+                          const deleteRequest = cursor.delete();
+
+                          deleteRequest.onsuccess = function () {
+                              console.log(`Record with phone number ${targetPhoneNumber} deleted.`);
+                          };
+      
+                          deleteRequest.onerror = function (err) {
+                              console.error("Error deleting record:", err);
+                          };
+                      }
+      
+                      // Continue to the next record
+                      cursor.continue();
+                  } else {
+                      console.log("Finished checking all records.");
+                  }
+              };
+      
+              cursorRequest.onerror = function (err) {
+                  console.error("Error opening cursor:", err);
+              };
+      
+              transaction.oncomplete = function () {
+                  console.log("Transaction completed successfully.");
+              };
+      
+              transaction.onerror = function (err) {
+                  console.error("Transaction error:", err);
+              };
+          };
+      
+          request.onerror = function (err) {
+              console.error("Error opening database:", err);
+          };
+      }
+      
+
         
-      };
 
       getUser.onerror = (event) => {
         reject("Error getting user : ", event.target.charCode);
@@ -435,7 +522,7 @@ function getRecordFormValues() {
   if (mm < 10) mm = "0" + mm;
 
   const formattedToday = dd + "/" + mm + "/" + yyyy;
-
+  console.log('GLOBALTEMPORARYCUSTOMERNUMBER in getrecordformvalues : ', GLOBALTEMPORARYCUSTOMERNUMBER)
   // record object
   const record = {
     recordCustomer: recordCustomer.value,
@@ -554,7 +641,7 @@ function searchUsers() {
             usersTable.innerHTML =
               '<tbody id="users"><tr><th>Index</th><th>Name</th><th>Mobile No.</th><th>Email</th><th>Date</th><th>Delete</th></tr></tbody>';
             matchedNames.forEach((user) => {
-              usersTable.innerHTML += `<tr"><td>${tempIndex}</td><td>${user.name}</td><td>${user.phoneNumber}</td><td>${user.email}</td><td>${user.timeStamp}</td><td><img class="small" src="./assets/delete.png" style="width:20px" onclick="deleteUser(${userKeysArrayForSearch[index]})" /></td></tr>`;
+              usersTable.innerHTML += `<tr"><td>${tempIndex}</td><td>${user.name}</td><td>${user.phoneNumber}</td><td>${user.email}</td><td>${user.timeStamp}</td><td><img class="small" src="./assets/delete.png" style="width:20px" onclick="openDeleteUserPermissionModal(${userKeysArrayForSearch[index]})" /></td></tr>`;
 
               tempIndex += 1;
               index += 1;
@@ -587,20 +674,23 @@ function search(userArray) {
       const suggestionItem = document.createElement("div");
       suggestionItem.textContent = customer.name;
       GLOBALTEMPORARYCUSTOMERNUMBER = customer.phoneNumber
+      console.log('GLOBALTEMPORARYCUSTOMERNUMBER in search : ', GLOBALTEMPORARYCUSTOMERNUMBER)
       userNameList.innerHTML += `<option class="suggestion-item" onclick="setCustomerName('${
         customer.name
-      }')" value="${customer.name.toLowerCase()}">${
+      }', ${customer.phoneNumber})" value="${customer.name.toLowerCase()}">${
         customer.name
       } <p class="suggestion_mobile">${customer.phoneNumber}</p></option>`;
     });
 
     userNameSuggest.innerText = recordCustomer.value;
+    GLOBALTEMPORARYCUSTOMERNUMBER = ''
   }
 }
 
-function setCustomerName(name) {
+function setCustomerName(name, number) {
+  console.log('name and number in setCustomerName : ', name, ' ', number)
   recordCustomer.value = name;
-  
+  GLOBALTEMPORARYCUSTOMERNUMBER = number
   userNameDropdown.style.display = "none";
 }
 
