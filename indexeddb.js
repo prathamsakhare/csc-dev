@@ -134,7 +134,7 @@ function getAllRecords() {
             let tempIndex = 1;
             let indexForRecordsArray = 0;
             getRequest.result.forEach((record, key) => {
-              recordTable.innerHTML += `<tr id="${recordsKeysArray[indexForRecordsArray]}"><td>${tempIndex}</td><td>${record.recordCustomer}</td><td>${record.recordCategory}</td><td>${record.recordDescription}</td><td>${record.recordAmount}</td><td>${record.recordDate}</td><td>${record.recordTime}</td><td><img src="./assets/delete.png" class="small" onclick="deleteRecord(${recordsKeysArray[indexForRecordsArray]})" /></td></tr>`;
+              recordTable.innerHTML += `<tr id="${recordsKeysArray[indexForRecordsArray]}"><td>${tempIndex}</td><td>${record.recordCustomer}</td><td>${record.recordCustomerPhoneNumber}</td><td>${record.recordCategory}</td><td>${record.recordDescription}</td><td>${record.recordAmount}</td><td>${record.recordDate}</td><td>${record.recordTime}</td><td><img src="./assets/delete.png" class="small" onclick="deleteRecord(${recordsKeysArray[indexForRecordsArray]})" /></td></tr>`;
 
               tempIndex += 1;
               indexForRecordsArray += 1;
@@ -536,6 +536,7 @@ function getRecordFormValues() {
   };
 
   addRecord(record);
+  
 
   GLOBALTEMPORARYCUSTOMERNUMBER = ''
 
@@ -606,6 +607,7 @@ function getUserFormValues() {
   };
 
   addUser(user);
+  setCustomerName(capitalizedName, userNumber.value)
 
   closeAddUserModal();
 }
