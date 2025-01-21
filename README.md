@@ -33,7 +33,7 @@ myElement.innerHTML = originalInnerHTML;
 
 
 <!-- TODOs  -->
-<!-- Implement checks that without selecting required fields, record cannot be added (shows warnings) -->
+<!-- (temporarily done : Implement checks that without selecting required fields, record cannot be added (shows warnings) -->
 <!-- Feature that lets user add / remove categories -->
 <!-- Implement loader and animation -->
-<!-- Implement pagination for records and users -->
+<!-- @SrishtiRaut : Implement pagination for records and users -->
