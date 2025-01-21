@@ -7,6 +7,7 @@
     <script src="./indexeddb.js" defer></script>
     <script src="./users.js" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/6.0.0/introjs.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -20,10 +21,10 @@
       <h1 id="logo">CSC<span>PMS</span></h1>
       <div>
         <a href="./index.html"
-        ><button id="profile-button" class="main-button">Intro!</button></a
+        ><button id="profile-button" class="main-button intro-btn">Intro!</button></a
       >
       <a href="./users.html"
-        ><button id="profile-button" class="main-button">Users</button></a
+        ><button id="profile-button" class="main-button users-btn">Users</button></a
       >
       </div>
     </header>
@@ -194,4 +195,32 @@
       </div>
     </main>
   </body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/6.0.0/intro.min.js"></script>
+  <script>
+    introJs().setOptions({
+      steps:[
+              {
+                element: document.querySelector('#record-table'),
+                intro: 'All record details are visible here.'
+              },
+              {
+                element: document.querySelector('#record-add-button'),
+                intro: 'Click here to create a new record.'
+              },
+              {
+                element: document.querySelector('#download-users-table-button'),
+                intro: 'Click here to download all records into a .xls file.'
+              },
+              {
+                element: document.querySelector('.users-btn'),
+                intro: 'Click here to go to the Users tab.'
+              },
+              {
+                element: document.querySelector('.intro-btn'),
+                intro: 'Click here to return to the Welcome page.'
+              }
+            ],
+            dontShowAgain: true,
+    }).start();
+  </script>
 </html>

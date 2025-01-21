@@ -243,6 +243,7 @@ function addUser(user){
 }
 // addUser({name : "user 1",email : "user1@gmail.com", "phoneNumber" : "9876543210"})
 
+
 // Delete Database
 function deleteDatabase(dbName) {
   var DBDeleteReq = window.indexedDB.deleteDatabase(dbName);
