@@ -372,3 +372,18 @@ table tr {
   /* padding-left: 2rem; */
   justify-content: space-between;
 }
+
+/* TODO : Add background color as primary which will be shown all the time (also upon hovering) */
+.introjs-tooltipbuttons a{
+  background-color: var(--main-button-bgcolor);
+  color: white;
+  text-decoration: none;
+  font-weight: 300;
+}
+
+.introjs-tooltipbuttons a:hover{
+  background-color: var(--main-button-bgcolor);
+  color: white;
+  text-decoration: none;
+  font-weight: 300;
+}
