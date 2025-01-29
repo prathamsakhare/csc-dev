@@ -54,6 +54,8 @@ document.addEventListener("click", function(event){
 
 <!-- TODOs  -->
 <!-- (temporarily done : Implement checks that without selecting required fields, record cannot be added (shows warnings) -->
-<!-- Feature that lets user add / remove categories -->
+<!-- Feature that lets user add / remove categories : DONE -->
+<!-- Feature to display warning if no category exists -->
+<!-- Give an option in selector in records page, for categories, to add categories if no categories are added -->
 <!-- Implement loader and animation -->
 <!-- @SrishtiRaut : Implement pagination for records and users -->

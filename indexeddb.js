@@ -389,7 +389,7 @@ function deleteUser(id) {
 // opens up delete user permission modal
 function openDeleteUserPermissionModal(id){
   deleteUserPermissionModal.style.display = 'block'
-  deleteUserPermissionModal.innerHTML = `<p>Upon deleting the user, all records associated with it will be deleted, do you still want to proceed?</p><div class="delete-user-button-grp"><button id="delete-user-permission-yes" class="main-button" onclick="deleteUserAndRecords(${id})" >Yes</button><button id="delete-user-permission-no" class="main-button danger-button" onclick="closeDeleteUserPermissionModal()">No</button></div>`
+  deleteUserPermissionModal.innerHTML = `<p>Upon deleting the user, all records associated with it will be deleted, do you still want to proceed?</p><div class="delete-user-button-grp"><button id="delete-user-permission-yes" class="main-button danger-button" onclick="deleteUserAndRecords(${id})" >Yes</button><button id="delete-user-permission-no" class="main-button" onclick="closeDeleteUserPermissionModal()">No</button></div>`
   overlay.style.display = 'block'
 }
 
