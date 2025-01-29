@@ -158,9 +158,9 @@ function addCategory() {
 
   const formattedToday = dd + "/" + mm + "/" + yyyy;
 
-  let categoryName = categoryName.value.trim()
+  let trimmedCategoryName = categoryName.value.trim()
 
-  if(categoryName.length > 0 == false){
+  if(trimmedCategoryName.length > 0 == false){
     console.error("Please enter correct name!")
     // return
   }
