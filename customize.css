@@ -23,6 +23,7 @@
     color: white;
     border-radius: 3px;
     font-weight: bold;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
   
   .secondary-button {
@@ -270,26 +271,31 @@
   .modal-name-dropdown{
     position: absolute;
     background-color: white;
+    margin-top: 10px;
     border: none;
     border-radius: 5px;
-    max-height: 200px;
-    width: 50%;
-    display: none;
+    width: 20%;
+    display: block;
     flex-direction: column;
     overflow: auto;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    /* NOTE : If you want to display category list while adding a new category, you can uncomment the below line */
+    z-index: 10;
+  }
+
+  .modal-name-dropdown::-webkit-scrollbar{
+    display: none;
+  }
+
+  #add-category-btn{
+    display: none;
+  }
+  .name-display {
+    display: none;
+    /* transition: all .5s ease; */
     
   }
   
-  .name-display option{
-    border: 1px solid grey;
-    padding-left: 10px;
-    padding-top: 7px;
-    padding-bottom: 7px;
-    border: none;
-    border-bottom: 1px solid rgb(150, 143, 143);
-    
-  }
   
   .modal-name-dropdown button{
     margin-top: 0px;
@@ -309,7 +315,15 @@
   
   
   .suggestion-item {
-    cursor: pointer;
+    /* cursor: pointer; */
+    display: flex;
+    /* border: 0.5px solid black; */
+    align-items: center;
+    justify-content: space-between;
+    height: 1.875rem;
+    padding: 5px;
+    border-bottom: 1px solid grey;
+    
   }
   
   /* not working */
@@ -320,46 +334,47 @@
   
   
   
-  .addUserModal-body{
+  .addCategoryModal-body{
     border: 1px solid red;
     position:absolute;
-    top: 140px;
-    left : 330px;
-    right: 20px;
+    top: 50%;
+    left : 50%;
+    width: 350px;
+    transform: translate(-50%, -50%);
     background-color: white;
     display: none;
     border-radius: 5px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border: none;
+    z-index: 10;
   }
   
-  .addUserModal-input{
+  .addCategoryModal-input{
+    box-sizing: border-box;
     padding: 0.5rem;
-  
-    width: 90%;
+    width: 80%;
+    align-self: center;
     margin-top: 10px;
     margin: 10px;
     border: none;
     border-bottom: 1px solid grey;
   }
   
-  .addUserModal-input:focus{
+  .addCategoryModal-input:focus{
     outline: none;
     background-color: #F1F3F4;
   }
   
   
-  .addUserModal-body button{
+  .addCategoryModal-body button{
     margin: 10px;
-    
-    
   }
   
-  .add-user-heading{
+  .add-category-heading{
     margin-left: 15px;
   }
   
-  .add-user-modal-heading{
+  .add-category-modal-heading{
     display: flex;
     flex-direction: row;
     height: 4rem;
@@ -369,3 +384,20 @@
   abbr[title]{
     text-decoration: none;
   }
+
+#modal-close-btn:hover{
+  cursor: pointer;
+}
+
+#categories-add-button{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.icon-dropdown{
+  height: 15px;
+  width: 15px;
+}
+

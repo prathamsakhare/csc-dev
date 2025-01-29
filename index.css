@@ -23,6 +23,7 @@ body {
   color: white;
   border-radius: 3px;
   font-weight: bold;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .secondary-button {
@@ -94,6 +95,8 @@ main {
   text-align: center;
   border-collapse: collapse;
   border: 1px solid var(--table-border-color);
+  /* TODO : Box shadow for records table : try */
+  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
 }
 
 #record-table tr {

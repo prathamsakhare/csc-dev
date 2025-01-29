@@ -30,7 +30,27 @@ myElement.innerHTML = originalInnerHTML;
 ```
 16) To keep autosuggestions from browser off, for input fields, set autocomplete="off"
 17) How to merge detached head to main branch : https://www.geeksforgeeks.org/how-to-reconcile-detached-head-with-master-origin-in-git/
+18) Creating new object store in database : https://stackoverflow.com/questions/38852012/how-to-add-a-new-objectstore-to-an-existing-indexeddb
 
+19) To hide the default scrollbar by browser :
+```
+.divclass::-webkit-scrollbar{
+    display:none
+}
+```
+20) Hiding modal / element upon clicking anywhere else on screen : 
+```
+document.addEventListener("click", function(event){
+  console.log("event : ", event.target)
+  if(event.target.matches("#categories-add-button") == true || event.target.matches("#modal-name-dropdown") == true || event.target.matches(".icon-dropdown")== true || event.target.matches("#add-category-btn")== true || event.target.matches("#addCategoryModal") == true || event.target.matches("#categoryName") || event.target.matches(".add-category-heading") == true){
+    categoryList.style.display = "block"
+    addCategoryButton.style.display = "block"
+  }else{
+    categoryList.style.display = "none"
+    addCategoryButton.style.display = "none"
+  }
+})
+```
 
 <!-- TODOs  -->
 <!-- (temporarily done : Implement checks that without selecting required fields, record cannot be added (shows warnings) -->

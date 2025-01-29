@@ -14,10 +14,12 @@ const userNumber = document.getElementById("usernumber");
 // record table
 const recordTable = document.getElementById("record-table");
 const noRecords = document.getElementById("no-records");
+const categoryList = document.getElementById("category")
 
 // users table
 const usersTable = document.getElementById("users-table");
 const noUsers = document.getElementById("no-users");
+
 // users form
 const userForm = document.getElementById("userInputForm");
 
@@ -58,6 +60,7 @@ let noUsersWarning = document.getElementById("noUsersWarning");
 // Global State of tables
 var GLOBALUSERTABLE = "";
 
+
 const dbName = "cscPms";
 
 // Setting The Instance For IndexDB
@@ -68,7 +71,7 @@ const request = window.indexedDB.open(dbName, 1);
 
 //Error On Creation Of The DB or Some Other Kind Of Error
 request.onerror = (error) => {
-  console(`Error opening ${dbName} : `, error);
+  console.log(`Error opening ${dbName} : `, error);
 };
 
 //When you create a new database or increase the version number of an existing database.
@@ -94,6 +97,10 @@ request.onupgradeneeded = (event) => {
   usersobjectStore.createIndex("nameIndex", "name", { unique: false });
   usersobjectStore.createIndex("emailIndex", "email", { unique: false });
   usersobjectStore.createIndex("phoneIndex", "phoneNumber", { unique: false });
+
+  const categoriesObjectStore = db.createObjectStore( "categories", {autoIncrement: true} );
+  categoriesObjectStore.createIndex("nameIndex", "name", { unique: false });
+  
 };
 
 // general functions to work with strings
@@ -110,7 +117,6 @@ function capitalizeFirstLetterOfEveryWord(words) {
 }
 
 //On Success
-
 // get records
 function getAllRecords() {
   const request = window.indexedDB.open(dbName);
@@ -127,12 +133,13 @@ function getAllRecords() {
       const getAllKeysOfRecordsArray = recordObjectStore.getAllKeys();
       getAllKeysOfRecordsArray.onsuccess = function () {
         recordsKeysArray = getAllKeysOfRecordsArray.result;
-
+        
         if (getRequest.result) {
           if (getRequest.result.length > 0) {
             noRecords.style.display = "none";
             let tempIndex = 1;
-            let indexForRecordsArray = 0;
+            let indexForRecordsArray = 0
+            
             getRequest.result.forEach((record, key) => {
               recordTable.innerHTML += `<tr id="${recordsKeysArray[indexForRecordsArray]}"><td>${tempIndex}</td><td>${record.recordCustomer}</td><td>${record.recordCustomerPhoneNumber}</td><td>${record.recordCategory}</td><td><abbr title="${record.recordDescription}">${record.recordDescription}</abbr></td><td>${record.recordAmount}</td><td>${record.recordDate}</td><td>${record.recordTime}</td><td><img src="./assets/delete.png" class="small" onclick="deleteRecord(${recordsKeysArray[indexForRecordsArray]})" /></td></tr>`;
 
@@ -156,11 +163,14 @@ function getAllRecords() {
     };
   };
 }
-getAllRecords();
 
+
+getAllRecords();
+// console.log(getAllRecords())
 function getAllUsers() {
-  const request = window.indexedDB.open(dbName);
-  request.onsuccess = (event) => {
+    const request = window.indexedDB.open(dbName);
+
+    request.onsuccess = (event) => {
     const db = event.target.result;
 
     const transaction = db.transaction("users", "readonly");
@@ -178,6 +188,8 @@ function getAllUsers() {
 
         if (getUserArray.result.length > 0) {
           noUsers.style.display = "none";
+
+          
 
           let tempIndex = 1;
           let indexForKeysArray = 0;
@@ -205,6 +217,58 @@ function getAllUsers() {
   };
 }
 getAllUsers();
+
+function getAllCategories() {
+  const request = window.indexedDB.open(dbName);
+  
+  request.onsuccess = (event) => {
+  const db = event.target.result;
+
+  const transaction = db.transaction("categories", "readonly");
+  const categoriesObjectStore = transaction.objectStore("categories");
+
+  const getCategoryArray = categoriesObjectStore.getAll();
+
+  var categoryKeysArray = [];
+
+  getCategoryArray.onsuccess = function () {
+    const getAllKeysOfCategoryArray = categoriesObjectStore.getAllKeys();
+
+    getAllKeysOfCategoryArray.onsuccess = function () {
+      categoryKeysArray = getAllKeysOfCategoryArray.result;
+
+      if (getCategoryArray.result.length > 0) {
+        // TODO : Make a warning to show if no categories exist
+        // noUsers.style.display = "none";
+
+        let tempIndex = 1;
+        let indexForKeysArray = 0;
+
+        getCategoryArray.result.forEach((category, key) => {
+
+          categoryList.innerHTML += `<option key="${key}" value="${category.name}" class="suggestion-item" id="${categoryKeysArray[indexForKeysArray]}">${category.name}</option>`
+
+          tempIndex += 1;
+          indexForKeysArray += 1;
+        });
+
+        // GLOBALUSERTABLE = usersTable.innerHTML;
+      } else {
+        // usersTable.style.display = "none";
+        // noUsers.style.display = "block";
+        // exportUsersButton.disabled = true;
+        // exportUsersButton.style.backgroundColor = "grey";
+      }
+    };
+
+    // search(getUserArray.result);
+  };
+  getCategoryArray.onerror = function (event) {
+    console.error("Error retrieving categories:", event.target.errorCode);
+  };
+};
+}
+getAllCategories();
 
 function getUser(id) {
   return new Promise((resolve, reject) => {
