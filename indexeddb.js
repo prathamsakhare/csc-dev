@@ -19,9 +19,6 @@ const categoryList = document.getElementById("category")
 // users table
 const usersTable = document.getElementById("users-table");
 const noUsers = document.getElementById("no-users");
-const startDate = document.getElementById("startDate")
-const endDate = document.getElementById("endDate")
-
 
 // users form
 const userForm = document.getElementById("userInputForm");
@@ -59,6 +56,10 @@ let exportUsersButton = document.getElementById("download-users-table-button");
 let searchBar = document.getElementById("searchbar");
 let userList = document.getElementById("userlist");
 let noUsersWarning = document.getElementById("noUsersWarning");
+const startDate = document.getElementById("startDate")
+const endDate = document.getElementById("endDate")
+const clearFilterButton = document.getElementById("filter-clear-btn")
+
 
 // Global State of tables
 var GLOBALUSERTABLE = "";
@@ -298,9 +299,11 @@ function filterCustomersByDate(customers, startDate, endDate) {
 }
 
 
+
 // TODO : Implement filter for filtering data by date
 function filterDataByDate(){
   usersTable.innerHTML = GLOBALUSERTABLE;
+  checkFilterStatus()
 
   userList.style.display = "none";
   const request = window.indexedDB.open(dbName);
@@ -338,6 +341,7 @@ function filterDataByDate(){
               index += 1;
             });
           } else {
+            
             usersTable.innerHTML = ""
             noUsers.style.display = "block"
           }
@@ -350,6 +354,29 @@ function filterDataByDate(){
 filterDataByDate()
 
 // TODO : Create a button to clear all the filters
+function checkFilterStatus(){
+  // If all filters are empty already, the clear filter button is disabled
+if (searchBar.value == "" && startDate.value == "" && endDate.value == ""){
+  console.log("all empty")
+  clearFilterButton.style.backgroundColor="grey"
+  clearFilterButton.addEventListener('onmouseover', function(){
+    clearFilterButton.style.boxShadow="none"
+  })
+  clearFilterButton.disabled = true
+}else{
+  clearFilterButton.disabled = false
+  clearFilterButton.style.backgroundColor = "red"
+}
+}
+
+function clearAllFilters(){
+  searchBar.value = ""
+  startDate.value = ""
+  endDate.value = ""
+  location.reload()
+  // getAllUsers()
+}
+
 
 function getUser(id) {
   return new Promise((resolve, reject) => {
@@ -771,6 +798,7 @@ function searchUsers() {
 
   // Calling this function here because everytime the search field gets empty / cleared, the result shows all users (because after clearing the search input it should show all users, but if the date is applied, that should work too)
   filterDataByDate()
+  checkFilterStatus()
 
   userList.style.display = "none";
   const request = window.indexedDB.open(dbName);
