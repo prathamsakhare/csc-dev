@@ -76,7 +76,7 @@ main {
 
 .searchBar {
   margin-top: 20px;
-  width: 100%;
+  width: 70%;
   
 }
 .searchBar input {
@@ -96,6 +96,24 @@ main {
 
 .searchBar input::placeholder:focus {
   color: white;
+}
+.filters{
+  display: flex;
+  gap: 10px; 
+  max-width: 100%; 
+}
+
+.filter-date{
+  margin-left: auto;
+  display: flex;
+  gap: 10px;
+}
+
+.filter-date-from{
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  align-items: center;
 }
 
 .userList {

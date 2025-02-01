@@ -181,16 +181,26 @@
               placeholder="Enter amount recieved..."
             />
           </div> -->
-          <button id="modal-update-btn" class="main-button" onclick="updateUser()">
+          <!-- <button id="modal-update-btn" class="main-button" onclick="updateUser()">
             Update User
-          </button>
+          </button> -->
         </div>
       </form>
       
     </div>
     <main>
       <div class="searchBar">
-        <input type="text" id="searchbar" placeholder="Search Users..." oninput="searchUsers()" autocomplete="off" />
+        <div class="filters">
+          <input type="text" id="searchbar" placeholder="Search Users..." oninput="searchUsers()" autocomplete="off" />
+          <div class="filter-date">
+            <div class="filter-date-from">
+              <span>From </span> <input id="startDate" type="date" onchange="filterDataByDate()" />
+            </div>
+            <div class="filter-date-from">
+              <span>To </span> <input id="endDate" type="date" onchange="filterDataByDate()" />
+            </div>
+          </div>
+        </div>
         <div id="userlist" class="userList" style="display: none;">
           <h3 id="noUsersWarning" class="noUsersWarning" style="display: none;">No Users!</h3>
           <!-- <div class="search-result-option" ><p class="search-result-option-name">Random Name</p> <p class="search-result-option-number">9356524183</p></div> -->

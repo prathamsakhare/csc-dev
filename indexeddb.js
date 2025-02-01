@@ -19,6 +19,9 @@ const categoryList = document.getElementById("category")
 // users table
 const usersTable = document.getElementById("users-table");
 const noUsers = document.getElementById("no-users");
+const startDate = document.getElementById("startDate")
+const endDate = document.getElementById("endDate")
+
 
 // users form
 const userForm = document.getElementById("userInputForm");
@@ -189,8 +192,6 @@ function getAllUsers() {
         if (getUserArray.result.length > 0) {
           noUsers.style.display = "none";
 
-          
-
           let tempIndex = 1;
           let indexForKeysArray = 0;
           getUserArray.result.forEach((user, key) => {
@@ -252,7 +253,7 @@ function getAllCategories() {
           indexForKeysArray += 1;
         });
 
-        // GLOBALUSERTABLE = usersTable.innerHTML;
+        GLOBALUSERTABLE = usersTable.innerHTML;
       } else {
         // usersTable.style.display = "none";
         // noUsers.style.display = "block";
@@ -269,6 +270,86 @@ function getAllCategories() {
 };
 }
 getAllCategories();
+
+
+// Function to parse date from 'dd/mm/yyyy' format to 'yyyy/mm/dd' format
+function parseDateDMY(dateStr) {
+  const [day, month, year] = dateStr.split("/").map(Number);
+  return new Date(year, month - 1, day).getTime();
+}
+
+// Function to parse date from 'yyyy/mm/dd' format to 'yyyy/mm/dd' format
+function parseDateYMD(dateStr) {
+  const [year, month, day] = dateStr.split("-").map(Number);
+  return new Date(year, month - 1, day).getTime();
+}
+
+
+function filterCustomersByDate(customers, startDate, endDate) {
+  // Convert startDate and endDate from yyyy-mm-dd format to timestamps
+  const startTimestamp = startDate ? parseDateYMD(startDate) : null;
+  const endTimestamp = endDate ? parseDateYMD(endDate) : null;
+
+  return customers.filter(customer => {
+      const customerTimestamp = parseDateDMY(customer.timeStamp);
+      return (startTimestamp === null || customerTimestamp >= startTimestamp) &&
+             (endTimestamp === null || customerTimestamp <= endTimestamp);
+  });
+}
+
+
+// TODO : Implement filter for filtering data by date
+function filterDataByDate(){
+  usersTable.innerHTML = GLOBALUSERTABLE;
+
+  userList.style.display = "none";
+  const request = window.indexedDB.open(dbName);
+  request.onsuccess = (event) => {
+    const db = event.target.result;
+
+    const transaction = db.transaction("users", "readonly");
+    const userObjectStore = transaction.objectStore("users");
+
+    const getUserArray = userObjectStore.getAll();
+
+
+    getUserArray.onsuccess = () => {
+
+        const getAllUserKeys = userObjectStore.getAllKeys();
+
+        var userKeysArrayForSearch = [];
+        getAllUserKeys.onsuccess = () => {
+          
+          const filteredCustomers = filterCustomersByDate(getUserArray.result, startDate.value, endDate.value);
+          
+          if (filteredCustomers.length > 0) {
+            let tempIndex = 1;
+            let index = 0;
+            
+            // Hiding no users warning whenever users associated with filters found
+            noUsers.style.display = "none"
+
+            usersTable.innerHTML =
+              '<tbody id="users"><tr><th>Index</th><th>Name</th><th>Mobile No.</th><th>Email</th><th>Date</th><th>Delete</th></tr></tbody>';
+            filteredCustomers.forEach((user) => {
+              usersTable.innerHTML += `<tr"><td>${tempIndex}</td><td>${user.name}</td><td>${user.phoneNumber}</td><td>${user.email}</td><td>${user.timeStamp}</td><td><img class="small" src="./assets/delete.png" style="width:20px" onclick="openDeleteUserPermissionModal(${userKeysArrayForSearch[index]})" /></td></tr>`;
+
+              tempIndex += 1;
+              index += 1;
+            });
+          } else {
+            usersTable.innerHTML = ""
+            noUsers.style.display = "block"
+          }
+
+        };
+      }
+    };
+}
+
+filterDataByDate()
+
+// TODO : Create a button to clear all the filters
 
 function getUser(id) {
   return new Promise((resolve, reject) => {
@@ -688,6 +769,9 @@ function searchUsers() {
   let query = searchBar?.value.toLowerCase();
   usersTable.innerHTML = GLOBALUSERTABLE;
 
+  // Calling this function here because everytime the search field gets empty / cleared, the result shows all users (because after clearing the search input it should show all users, but if the date is applied, that should work too)
+  filterDataByDate()
+
   userList.style.display = "none";
   const request = window.indexedDB.open(dbName);
   request.onsuccess = (event) => {
@@ -712,6 +796,9 @@ function searchUsers() {
           if (matchedNames.length > 0) {
             let tempIndex = 1;
             let index = 0;
+
+            noUsers.style.display = "none"
+
             usersTable.innerHTML =
               '<tbody id="users"><tr><th>Index</th><th>Name</th><th>Mobile No.</th><th>Email</th><th>Date</th><th>Delete</th></tr></tbody>';
             matchedNames.forEach((user) => {
@@ -721,6 +808,8 @@ function searchUsers() {
               index += 1;
             });
           } else {
+            usersTable.innerHTML = ""
+            noUsers.style.display = "block"
           }
         };
       }
