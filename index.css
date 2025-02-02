@@ -39,6 +39,9 @@ body {
   padding: 5px 10px;
   cursor: pointer;
 }
+.disabled-button{
+  background-color: grey;
+}
 
 .small{
   padding: 10px 10px;
@@ -47,7 +50,7 @@ body {
   cursor: pointer;
 }
 
-.main-button:hover, .secondary-button:hover {
+.main-button:hover, .secondary-button:hover, .disabled-button:hover {
   cursor: pointer;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
@@ -76,6 +79,137 @@ main {
   margin-left: 15%;
   margin-right: 15%;
 }
+
+/* NOTE : In Dev */
+.searchBar {
+  margin-top: 20px;
+  width: 70%;
+  
+}
+.searchBar input {
+  width: 100%;
+  height: 2rem;
+  border-radius: 5px;
+  border: 1px solid grey;
+  padding: 10px;
+}
+
+.searchBar input:focus {
+  background-color: #d1c9c9;
+  color: black;
+  border: none;
+  outline: none;
+}
+
+.searchBar input::placeholder:focus {
+  color: white;
+}
+.filters{
+  display: flex;
+  gap: 10px; 
+  max-width: 100%; 
+  align-items: center;
+}
+
+.filter-date{
+  margin-left: auto;
+  display: flex;
+  gap: 10px;
+}
+
+.filter-date-from{
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  align-items: center;
+}
+
+.userList {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 5px;
+  min-height: 4rem;
+  text-align: center;
+  position: fixed;
+  z-index: 5000;
+  background-color: white;
+  width: 400px;
+}
+
+.noUsersWarning {
+  margin: 0px;
+  padding-top: 20px;
+}
+
+.search-result-option {
+  width: calc(100% - 10px - 10px);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 25px;
+  padding: 10px;
+}
+
+.search-result-option-name,
+.search-result-option-number {
+  padding-top: 0px;
+  margin-top: 0px;
+  padding: 5px;
+}
+
+#users-topbar {
+  display: flex;
+  flex-direction: row;
+  padding-top: 2rem;
+  align-items: center;
+  max-height: 100px;
+  justify-content: space-between;
+}
+
+#users-topbar > #users-add-button {
+  margin-left: auto;
+}
+
+#users-table {
+  width: 100%;
+  text-align: center;
+  border-collapse: collapse;
+  border: 1px solid var(--table-border-color);
+  margin-bottom: 3rem;
+  /* TODO : Box shadow for table : try */
+  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+}
+
+#users-table tr {
+  width: 100%;
+}
+
+#users-table td,
+#users-table th {
+  padding: 10px;
+}
+
+table tr {
+  border-bottom: 1px solid var(--table-border-color);
+}
+
+#users-table th {
+  padding: 20px 10px;
+  background-color: var(--table-header-bgcolor);
+  max-width: 100%;
+}
+
+#users-table td {
+  border-radius: 5px;
+}
+
+/* no records heading */
+#no-users {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  text-align: center;
+}
+
 
 #record-topbar {
   display: flex;

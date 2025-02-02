@@ -63,6 +63,7 @@ const clearFilterButton = document.getElementById("filter-clear-btn")
 
 // Global State of tables
 var GLOBALUSERTABLE = "";
+var GLOBALRECORDTABLE = "";
 
 
 const dbName = "cscPms";
@@ -150,6 +151,7 @@ function getAllRecords() {
               tempIndex += 1;
               indexForRecordsArray += 1;
             });
+            GLOBALRECORDTABLE = recordTable.innerHTML
           } else {
             recordTable.style.display = "none";
             noRecords.style.display = "block";
@@ -254,7 +256,7 @@ function getAllCategories() {
           indexForKeysArray += 1;
         });
 
-        GLOBALUSERTABLE = usersTable.innerHTML;
+        // GLOBALUSERTABLE = usersTable.innerHTML;
       } else {
         // usersTable.style.display = "none";
         // noUsers.style.display = "block";
@@ -272,7 +274,7 @@ function getAllCategories() {
 }
 getAllCategories();
 
-
+// TODO : Update all the functions related to filters to work for records along with users
 // Function to parse date from 'dd/mm/yyyy' format to 'yyyy/mm/dd' format
 function parseDateDMY(dateStr) {
   const [day, month, year] = dateStr.split("/").map(Number);
@@ -285,24 +287,27 @@ function parseDateYMD(dateStr) {
   return new Date(year, month - 1, day).getTime();
 }
 
-
-function filterCustomersByDate(customers, startDate, endDate) {
+function filterCustomersByDate(tableName, customers, startDate, endDate) {
   // Convert startDate and endDate from yyyy-mm-dd format to timestamps
   const startTimestamp = startDate ? parseDateYMD(startDate) : null;
   const endTimestamp = endDate ? parseDateYMD(endDate) : null;
-
+  let customerTimestamp = ""
   return customers.filter(customer => {
-      const customerTimestamp = parseDateDMY(customer.timeStamp);
+      if(tableName == "users"){
+        customerTimestamp = parseDateDMY(customer.timeStamp);
+      }else{
+        customerTimestamp = parseDateDMY(customer.recordDate);
+      }
       return (startTimestamp === null || customerTimestamp >= startTimestamp) &&
              (endTimestamp === null || customerTimestamp <= endTimestamp);
   });
 }
 
-
-
-// TODO : Implement filter for filtering data by date
+// TODO : If start date is smaller than end date, display a warning
 function filterDataByDate(){
   usersTable.innerHTML = GLOBALUSERTABLE;
+
+  // function continously checks the status of filters, if all filters are empty, disables 'clear filters' button and make it grey, otherwise enables it and keep red
   checkFilterStatus()
 
   userList.style.display = "none";
@@ -323,7 +328,7 @@ function filterDataByDate(){
         var userKeysArrayForSearch = [];
         getAllUserKeys.onsuccess = () => {
           
-          const filteredCustomers = filterCustomersByDate(getUserArray.result, startDate.value, endDate.value);
+          const filteredCustomers = filterCustomersByDate("users", getUserArray.result, startDate.value, endDate.value);
           
           if (filteredCustomers.length > 0) {
             let tempIndex = 1;
@@ -353,20 +358,19 @@ function filterDataByDate(){
 
 filterDataByDate()
 
-// TODO : Create a button to clear all the filters
+// function gets called upon a button to clear all the filters
 function checkFilterStatus(){
   // If all filters are empty already, the clear filter button is disabled
-if (searchBar.value == "" && startDate.value == "" && endDate.value == ""){
-  console.log("all empty")
-  clearFilterButton.style.backgroundColor="grey"
-  clearFilterButton.addEventListener('onmouseover', function(){
-    clearFilterButton.style.boxShadow="none"
-  })
-  clearFilterButton.disabled = true
-}else{
-  clearFilterButton.disabled = false
-  clearFilterButton.style.backgroundColor = "red"
-}
+  if (searchBar.value == "" && startDate.value == "" && endDate.value == ""){
+    clearFilterButton.style.backgroundColor="grey"
+    clearFilterButton.addEventListener('onmouseover', function(){
+      clearFilterButton.style.boxShadow="none"
+    })
+    clearFilterButton.disabled = true
+  }else{
+    clearFilterButton.disabled = false
+    clearFilterButton.style.backgroundColor = "red"
+  }
 }
 
 function clearAllFilters(){
@@ -374,7 +378,85 @@ function clearAllFilters(){
   startDate.value = ""
   endDate.value = ""
   location.reload()
-  // getAllUsers()
+}
+
+// TODO : If start date is smaller than end date, display a warning
+function filterDataByDateForRecords(){
+  recordTable.innerHTML = GLOBALRECORDTABLE;
+
+  // function continously checks the status of filters, if all filters are empty, disables 'clear filters' button and make it grey, otherwise enables it and keep red
+  checkFilterStatusForRecords()
+
+  // userList.style.display = "none";
+  const request = window.indexedDB.open(dbName);
+  request.onsuccess = (event) => {
+    const db = event.target.result;
+
+    const transaction = db.transaction("records", "readonly");
+    const recordsObjectStore = transaction.objectStore("records");
+
+    const getRecordsArray = recordsObjectStore.getAll();
+
+
+    getRecordsArray.onsuccess = () => {
+
+        const getAllRecordsKeys = recordsObjectStore.getAllKeys();
+
+        var recordsKeysArrayForSearch = [];
+        getAllRecordsKeys.onsuccess = () => {
+          
+          const filteredCustomers = filterCustomersByDate("records", getRecordsArray.result, startDate.value, endDate.value);
+          
+          if (filteredCustomers.length > 0) {
+            let tempIndex = 1;
+            let index = 0;
+            
+            // Hiding no users warning whenever users associated with filters found
+            noRecords.style.display = "none"
+
+            recordTable.innerHTML ='<tbody id="records"><tr><th>Index</th><th>Name</th><th>Mobile No.</th><th>Category</th><th>Description</th><th>Amount</th><th>Date</th><th>Time</th><th>Delete</th></tr></tbody>';
+            filteredCustomers.forEach((record) => {
+              recordTable.innerHTML += `<tr id="${recordsKeysArrayForSearch[index]}"><td>${tempIndex}</td><td>${record.recordCustomer}</td><td>${record.recordCustomerPhoneNumber}</td><td>${record.recordCategory}</td><td><abbr title="${record.recordDescription}">${record.recordDescription}</abbr></td><td>${record.recordAmount}</td><td>${record.recordDate}</td><td>${record.recordTime}</td><td><img src="./assets/delete.png" class="small" onclick="deleteRecord(${recordsKeysArrayForSearch[index]})" /></td></tr>`;
+
+              tempIndex += 1;
+              index += 1;
+            });
+          } else {
+            
+            recordTable.innerHTML = ""
+            noRecords.style.display = "block"
+          }
+
+        };
+      }
+    };
+}
+
+filterDataByDate()
+
+// function gets called upon a button to clear all the filters
+function checkFilterStatusForRecords(){
+  console.log("checkFilterStatusForRecords function is running...")
+  // If all filters are empty already, the clear filter button is disabled
+  if (searchBar.value == "" && startDate.value == "" && endDate.value == ""){
+    console.log("Inside if condition...")
+    clearFilterButton.style.backgroundColor="grey"
+    clearFilterButton.addEventListener('onmouseover', function(){
+      clearFilterButton.style.boxShadow="none"
+    })
+    clearFilterButton.disabled = true
+  }else{
+    console.log("Inside else condition...")
+    clearFilterButton.disabled = false
+    clearFilterButton.style.backgroundColor = "red"
+  }
+}
+
+function clearAllFiltersForRecords(){
+  searchBar.value = ""
+  startDate.value = ""
+  endDate.value = ""
+  location.reload()
 }
 
 
@@ -515,7 +597,6 @@ function deleteUserAndRecords(id){
 // Function to seek permission to delete all records of user that is being deleted
 // gets called if the users clicks on 'yes' for a warning
 
-// TODO : Upon deleting the user, all records associated with it should be deleted as well.
 function deleteAllRecordsOfUser(id){
   return new Promise((resolve, reject) => {
     const request = window.indexedDB.open(dbName, 1);
@@ -845,6 +926,59 @@ function searchUsers() {
   };
 }
 
+function searchRecords() {
+  let query = searchBar?.value.toLowerCase();
+  recordTable.innerHTML = GLOBALRECORDTABLE;
+
+  // Calling this function here because everytime the search field gets empty / cleared, the result shows all users (because after clearing the search input it should show all users, but if the date is applied, that should work too)
+  filterDataByDateForRecords()
+  checkFilterStatusForRecords()
+
+  // userList.style.display = "none";
+  const request = window.indexedDB.open(dbName);
+
+  request.onsuccess = (event) => {
+    const db = event.target.result;
+
+    const transaction = db.transaction("records", "readonly");
+    const userObjectStore = transaction.objectStore("records");
+
+    const getUserArray = userObjectStore.getAll();
+
+    var recordsKeysArray = [];
+
+    getUserArray.onsuccess = (event) => {
+      if (query.length > 0) {
+        const getAllUserKeys = userObjectStore.getAllKeys();
+
+        getAllUserKeys.onsuccess = (event) => {
+          const matchedNames = getUserArray.result
+            .filter((customer) => customer.recordCategory.toLowerCase().includes(query))
+            .map((customer) => customer);
+
+          if (matchedNames.length > 0) {
+            let tempIndex = 1;
+            let index = 0;
+
+            noRecords.style.display = "none"
+
+            recordTable.innerHTML ='<tbody id="records"><tr><th>Index</th><th>Name</th><th>Mobile No.</th><th>Category</th><th>Description</th><th>Amount</th><th>Date</th><th>Time</th><th>Delete</th></tr></tbody>';
+            matchedNames.forEach((record) => {
+              recordTable.innerHTML += `<tr id="${recordsKeysArray[index]}"><td>${tempIndex}</td><td>${record.recordCustomer}</td><td>${record.recordCustomerPhoneNumber}</td><td>${record.recordCategory}</td><td><abbr title="${record.recordDescription}">${record.recordDescription}</abbr></td><td>${record.recordAmount}</td><td>${record.recordDate}</td><td>${record.recordTime}</td><td><img src="./assets/delete.png" class="small" onclick="deleteRecord(${recordsKeysArray[index]})" /></td></tr>`;
+
+              tempIndex += 1;
+              index += 1;
+            
+            });
+          } else {
+            recordTable.innerHTML = ""
+            noRecords.style.display = "block"
+          }
+        };
+      }
+    };
+  };
+}
 // To search users while adding record
 function search(userArray) {
   let query = recordCustomer?.value.toLowerCase();

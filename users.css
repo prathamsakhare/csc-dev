@@ -29,6 +29,10 @@ body {
   background-color: red;
 }
 
+.disabled-button{
+  background-color: grey;
+}
+
 .small {
   padding: 10px 10px;
   width: 20px;
@@ -46,7 +50,9 @@ body {
 }
 
 .main-button:hover,
-.secondary-button:hover {
+.secondary-button:hover,
+.danger-button:hover,
+.disabled-button:hover {
   cursor: pointer;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }

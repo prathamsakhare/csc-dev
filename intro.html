@@ -199,6 +199,26 @@
     </div>
 
     <main>
+      <!-- NOTE : In Dev -->
+      <div class="searchBar">
+        <div class="filters">
+          <input type="text" id="searchbar" placeholder="Search Records by Category..." oninput="searchRecords()" autocomplete="off" />
+          <div class="filter-date">
+            <div class="filter-date-from">
+              <span>From </span> <input id="startDate" type="date" onchange="filterDataByDateForRecords()" />
+            </div>
+            <div class="filter-date-from">
+              <span>To </span> <input id="endDate" type="date" onchange="filterDataByDateForRecords()" />
+            </div>
+          </div>
+          <button id="filter-clear-btn" class="main-button disabled-button" onclick="clearAllFiltersForRecords()" style="width: 15rem; padding: 0.5rem;">Clear Filters</button>
+        </div>
+        <div id="userlist" class="userList" style="display: none;">
+          <h3 id="noUsersWarning" class="noUsersWarning" style="display: none;">No Users!</h3>
+          <!-- <div class="search-result-option" ><p class="search-result-option-name">Random Name</p> <p class="search-result-option-number">9356524183</p></div> -->
+         
+        </div>
+      </div>
       <div id="record-topbar">
         <h2>Records</h2>
         <div>
