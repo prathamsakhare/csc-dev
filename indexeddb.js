@@ -1115,6 +1115,11 @@ function checkIfValid(inputId, warningId, inputType, length=null, addUserButtonI
   const inputElement = document.getElementById(inputId)
   const warningElement = document.getElementById(warningId)
   const addUserButton = document.getElementById(addUserButtonId)
+
+  if(addUserButton.disabled){
+    return false
+  }
+
   // if input component's value's length becomes zero after focusing on input
   if(inputElement.value.length == 0){
     warningElement.style.display = "block";
@@ -1134,7 +1139,8 @@ function checkIfValid(inputId, warningId, inputType, length=null, addUserButtonI
       addUserButton.style.backgroundColor = "grey"
       addUserButton.disabled = true
       return true
-    }else{
+    }
+    else{
       warningElement.style.display = "none"
       addUserButton.style.backgroundColor = "#4285f4"
       addUserButton.disabled = false
@@ -1151,7 +1157,8 @@ function checkIfValid(inputId, warningId, inputType, length=null, addUserButtonI
         addUserButton.style.backgroundColor = "grey"
         addUserButton.disabled = true
         return true
-      }else{
+      }
+      else{
         warningElement.style.display = "none"
         addUserButton.style.backgroundColor = "#4285f4"
         addUserButton.disabled = false
@@ -1167,7 +1174,8 @@ function checkIfValid(inputId, warningId, inputType, length=null, addUserButtonI
       addUserButton.style.backgroundColor = "grey";
       addUserButton.disabled = true;
       return true
-    }else{
+    }
+    else{
       warningElement.style.display = "none";
       addUserButton.style.backgroundColor = "#4285f4"
       addUserButton.disabled = false
