@@ -134,7 +134,7 @@
               class="addUserModal-input"
               placeholder="Enter customer's name..."
               autocomplete="off"
-              oninput="checkIfValid('username', 'name-warning', 'string', 50, 'addUserModal-save-btn')"
+              oninput="checkIfValid('username', 'name-warning', 'string', 50, 'addUserModal-save-btn', ['name-warning', 'email-warning', 'number-warning'])"
             />
             <div id="name-warning" class="warning"><span>Please Enter Valid Name (Less than 50 characters)</span></div>
             <!-- <div
@@ -154,7 +154,7 @@
               class="addUserModal-input"
               placeholder="Enter email..."
               autocomplete="off"
-              oninput="checkIfValid('useremail', 'email-warning', 'string', null, 'addUserModal-save-btn')"
+              oninput="checkIfValid('useremail', 'email-warning', 'string', null, 'addUserModal-save-btn', ['name-warning', 'email-warning', 'number-warning'])"
             />
             <div id="email-warning" class="warning"><span>Please Enter Valid Email (Example : test@gmail.com)</span></div>
             <!-- <div
@@ -175,7 +175,7 @@
               class="addUserModal-input"
               placeholder="Enter phone number..."
               autocomplete="off"
-              oninput="checkIfValid('usernumber', 'number-warning', 'number', null, 'addUserModal-save-btn')"
+              oninput="checkIfValid('usernumber', 'number-warning', 'number', null, 'addUserModal-save-btn', ['name-warning', 'email-warning', 'number-warning'])"
             />
             <div id="number-warning" class="warning"><span>Please Enter Valid Phone Number (+91 is already added)</span></div>
             <!-- <div

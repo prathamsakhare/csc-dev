@@ -1110,22 +1110,29 @@ function isValidPhoneNumber(number){
   return !regexForPhoneNumber.test(number) 
 }
 
+function isFormSubmittable(...ids){
+  if(ids.length == 0){return false}
+  for(let i =0; i<ids.length; i++){
+    let component = document.getElementById(ids[i])
 
-function checkIfValid(inputId, warningId, inputType, length=null, addUserButtonId){
+    if(component.style.display  == 'block'){
+      return false
+    }
+  }
+  return true
+}
+
+function checkIfValid(inputId, warningId, inputType, length=null, addUserButtonId, warningIdsArray){
   const inputElement = document.getElementById(inputId)
   const warningElement = document.getElementById(warningId)
   const addUserButton = document.getElementById(addUserButtonId)
-
-  if(addUserButton.disabled){
-    return false
-  }
 
   // if input component's value's length becomes zero after focusing on input
   if(inputElement.value.length == 0){
     warningElement.style.display = "block";
     addUserButton.style.backgroundColor = "grey"
     addUserButton.disabled = true
-    return true
+    // return true
   }else{
     addUserButton.style.backgroundColor = "#4285f4"
     addUserButton.disabled = false
@@ -1138,13 +1145,12 @@ function checkIfValid(inputId, warningId, inputType, length=null, addUserButtonI
       warningElement.style.display = "block"
       addUserButton.style.backgroundColor = "grey"
       addUserButton.disabled = true
-      return true
-    }
-    else{
+      // return true
+    }else{
       warningElement.style.display = "none"
       addUserButton.style.backgroundColor = "#4285f4"
       addUserButton.disabled = false
-      return false
+      // return false
     }
     
   }
@@ -1156,13 +1162,12 @@ function checkIfValid(inputId, warningId, inputType, length=null, addUserButtonI
         warningElement.style.display = "block";
         addUserButton.style.backgroundColor = "grey"
         addUserButton.disabled = true
-        return true
-      }
-      else{
+        // return true
+      }else{
         warningElement.style.display = "none"
         addUserButton.style.backgroundColor = "#4285f4"
         addUserButton.disabled = false
-        return false
+        // return false
       }
     }
   }
@@ -1173,14 +1178,24 @@ function checkIfValid(inputId, warningId, inputType, length=null, addUserButtonI
       warningElement.style.display = "block";
       addUserButton.style.backgroundColor = "grey";
       addUserButton.disabled = true;
-      return true
-    }
-    else{
+      // return true
+    }else{
       warningElement.style.display = "none";
       addUserButton.style.backgroundColor = "#4285f4"
       addUserButton.disabled = false
-      return false
+      // return false
     }
+  }
+
+  console.log(isFormSubmittable(...warningIdsArray))
+  if(isFormSubmittable(...warningIdsArray) == true){
+    addUserButton.style.backgroundColor = "#4285f4"
+    addUserButton.disabled = false
+    // return
+  }else{
+    addUserButton.style.backgroundColor = "grey"
+    addUserButton.disabled = true
+    // return 
   }
 
 }

@@ -57,7 +57,7 @@
               class="modal-input"
               placeholder="Enter customer's name..."
               autocomplete="off"
-              oninput="checkIfValid('username', 'name-warning', 'string', 50, 'modal-save-btn')"
+              oninput="checkIfValid('username', 'name-warning', 'string', 50, 'modal-save-btn', ['name-warning', 'email-warning', 'number-warning'])"
             />
             <div id="name-warning" class="warning"><span>Please Enter Valid Name (Less than 50 characters)</span></div>
             <div id="modal-name-dropdown" class="modal-name-dropdown">
@@ -76,7 +76,7 @@
             class="modal-input"
             placeholder="Enter Email Address..."
             autocomplete="off"
-            oninput="checkIfValid('useremail', 'email-warning', 'string', null, 'modal-save-btn')"
+            oninput="checkIfValid('useremail', 'email-warning', 'string', null, 'modal-save-btn', ['name-warning', 'email-warning', 'number-warning'])"
           ></input>
           <div id="email-warning" class="warning"><span>Please Enter Valid Email (Example : test@gmail.com)</span></div>
           <input
@@ -86,7 +86,7 @@
             class="modal-input"
             placeholder="Enter Phone Number..."
             autocomplete="off"
-            oninput="checkIfValid('usernumber', 'number-warning', 'number', null, 'modal-save-btn')"
+            oninput="checkIfValid('usernumber', 'number-warning', 'number', null, 'modal-save-btn', ['name-warning', 'email-warning', 'number-warning'])"
           ></input>
           <div id="number-warning" class="warning"><span>Please Enter Valid Phone Number (+91 is already added)</span></div>
           <!-- <div class="cat-amt-collection">
@@ -111,6 +111,8 @@
           <button
             id="modal-save-btn"
             class="main-button"
+            style="background-color: grey;"
+            disabled
             onclick="getUserFormValues()"
           >
             Add User
