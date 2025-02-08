@@ -64,6 +64,8 @@ const endDate = document.getElementById("endDate")
 const clearFilterButton = document.getElementById("filter-clear-btn")
 
 
+const newest = document.getElementById('modal')
+
 // Global State of tables
 var GLOBALUSERTABLE = "";
 var GLOBALRECORDTABLE = "";
@@ -122,6 +124,16 @@ function capitalizeFirstLetterOfEveryWord(words) {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize each word
     .join(" "); // Join the words back into a single string
   return wordCapitalized;
+}
+
+
+function closeUserModal(){
+  username.value =''
+  useremail.value = ''
+  usernumber.value = ''
+  overlayOfUpdateUserModal.style.display = 'none'
+  newest.style.display = 'none'
+  location.reload()
 }
 
 //On Success
@@ -758,13 +770,14 @@ function closeModal() {
   modal.style.display = "none";
   overlay.style.display = "none";
 
-  updateUserModal.style.display = "none";
-
   // clearing entered text
   recordCustomer.value = "";
   recordDescription.value = "";
   recordCategory.value = "select";
   recordAmount.value = "";
+
+  userNameList.style.display = 'none'
+  addUserFromRecordFormButton.style.display = 'none'
 }
 
 
