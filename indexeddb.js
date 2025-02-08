@@ -22,6 +22,7 @@ const noUsers = document.getElementById("no-users");
 
 // users form
 const userForm = document.getElementById("userInputForm");
+const addUserButton = document.getElementById("modal-save-btn")
 
 // elements for suggestion list for names
 let userNameList = document.getElementById("namelist");
@@ -194,14 +195,20 @@ function getAllUsers() {
 
         if (getUserArray.result.length > 0) {
           noUsers.style.display = "none";
+          
 
           let tempIndex = 1;
           let indexForKeysArray = 0;
+          console.log("getAllUsersCalled")
           getUserArray.result.forEach((user, key) => {
-            usersTable.innerHTML += `<tr key="${key}" id="${userKeysArray[indexForKeysArray]}"><td>${tempIndex}</td><td>${user.name}</td><td>${user.phoneNumber}</td><td>${user.email}</td><td>${user.timeStamp}</td><td><img class="small" src="./assets/delete.png" style="width:20px" onclick="openDeleteUserPermissionModal(${userKeysArray[indexForKeysArray]})" /></td></tr>`;
+            console.log(user, " : ", userKeysArray[indexForKeysArray], " : ", key)
+            usersTable.innerHTML += `<tr key="${key}" id="${userKeysArray[indexForKeysArray]}"><td>${tempIndex}</td><td>${user.name}</td><td>${user.phoneNumber}</td><td>${user.email}</td><td>${user.timeStamp}</td><td><img class="small" src="./assets/delete.png" style="width:20px" onclick="openDeleteUserPermissionModal(${userKeysArray[key]})" /></td></tr>`;
+
 
             tempIndex += 1;
             indexForKeysArray += 1;
+
+
           });
 
           GLOBALUSERTABLE = usersTable.innerHTML;
@@ -256,7 +263,7 @@ function getAllCategories() {
           indexForKeysArray += 1;
         });
 
-        // GLOBALUSERTABLE = usersTable.innerHTML;
+        GLOBALUSERTABLE = usersTable.innerHTML;
       } else {
         // usersTable.style.display = "none";
         // noUsers.style.display = "block";
@@ -327,7 +334,7 @@ function filterDataByDate(){
 
         var userKeysArrayForSearch = [];
         getAllUserKeys.onsuccess = () => {
-          
+          userKeysArrayForSearch = getAllUserKeys.result
           const filteredCustomers = filterCustomersByDate("users", getUserArray.result, startDate.value, endDate.value);
           
           if (filteredCustomers.length > 0) {
@@ -340,7 +347,7 @@ function filterDataByDate(){
             usersTable.innerHTML =
               '<tbody id="users"><tr><th>Index</th><th>Name</th><th>Mobile No.</th><th>Email</th><th>Date</th><th>Delete</th></tr></tbody>';
             filteredCustomers.forEach((user) => {
-              usersTable.innerHTML += `<tr"><td>${tempIndex}</td><td>${user.name}</td><td>${user.phoneNumber}</td><td>${user.email}</td><td>${user.timeStamp}</td><td><img class="small" src="./assets/delete.png" style="width:20px" onclick="openDeleteUserPermissionModal(${userKeysArrayForSearch[index]})" /></td></tr>`;
+              usersTable.innerHTML += `<tr id="${userKeysArrayForSearch[index]}"><td>${tempIndex}</td><td>${user.name}</td><td>${user.phoneNumber}</td><td>${user.email}</td><td>${user.timeStamp}</td><td><img class="small" src="./assets/delete.png" style="width:20px" onclick="openDeleteUserPermissionModal(${userKeysArrayForSearch[index]})" /></td></tr>`;
 
               tempIndex += 1;
               index += 1;
@@ -818,47 +825,47 @@ function getUserFormValues() {
 
   let capitalizedName = capitalizeFirstLetterOfEveryWord(userName.value);
 
-  if (
-    !userName.value ||
-    userName.value === "" ||
-    userName.value === null ||
-    userName.value === undefined
-  ) {
-    console.error("All fields must be filled out before saving the user.");
-    return;
-  } else {
-    //name should be 100 chars max
-    if (capitalizedName.length <= 100 == false) {
-      console.log("userName.value is longer than 100 chars");
-      return;
-    }
-  }
+  // if (
+  //   !userName.value ||
+  //   userName.value === "" ||
+  //   userName.value === null ||
+  //   userName.value === undefined
+  // ) {
+  //   console.error("All fields must be filled out before saving the user.");
+  //   return;
+  // } else {
+  //   //name should be 100 chars max
+  //   if (capitalizedName.length <= 100 == false) {
+  //     console.log("userName.value is longer than 100 chars");
+  //     return;
+  //   }
+  // }
 
   //checking for user's email
   //email should be verified using regex
-  if (isValidEmail(userEmail.value) == false) {
-    console.log("Invalid email id entered.");
-    try {
-      emailError.textContent = "Invalid email ID format";
-      emailError.style.display = "block";
-    } catch (error) {}
+  // if (isValidEmail(userEmail.value) == false) {
+  //   console.log("Invalid email id entered.");
+  //   try {
+  //     emailError.textContent = "Invalid email ID format";
+  //     emailError.style.display = "block";
+  //   } catch (error) {}
 
-    return;
-  } else {
-    try {
-      emailError.style.display = "none";
-    } catch (error) {}
-  }
+  //   return;
+  // } else {
+  //   try {
+  //     emailError.style.display = "none";
+  //   } catch (error) {}
+  // }
 
   //Checking user's phone no.
   //phone no should have exactly 10 digits
   // TODO : Fix the issue, the phone number is not getting validated
-  if (isValidPhoneNumber(userNumber.value) == false) {
-    console.log("Invalid phone no. entered.");
-    phoneError.textContent = "Invalid phone number";
-    phoneError.style.display = "block";
-    // return;
-  }
+  // if (isValidPhoneNumber(userNumber.value) == false) {
+  //   console.log("Invalid phone no. entered.");
+  //   phoneError.textContent = "Invalid phone number";
+  //   phoneError.style.display = "block";
+  //   // return;
+  // }
 
   const user = {
     name: capitalizedName,
@@ -896,8 +903,9 @@ function searchUsers() {
     getUserArray.onsuccess = (event) => {
       if (query) {
         const getAllUserKeys = userObjectStore.getAllKeys();
-
+        
         getAllUserKeys.onsuccess = (event) => {
+          userKeysArrayForSearch= getAllUserKeys.result
           const matchedNames = getUserArray.result
             .filter((customer) => customer.name.toLowerCase().includes(query))
             .map((customer) => customer);
@@ -911,7 +919,7 @@ function searchUsers() {
             usersTable.innerHTML =
               '<tbody id="users"><tr><th>Index</th><th>Name</th><th>Mobile No.</th><th>Email</th><th>Date</th><th>Delete</th></tr></tbody>';
             matchedNames.forEach((user) => {
-              usersTable.innerHTML += `<tr"><td>${tempIndex}</td><td>${user.name}</td><td>${user.phoneNumber}</td><td>${user.email}</td><td>${user.timeStamp}</td><td><img class="small" src="./assets/delete.png" style="width:20px" onclick="openDeleteUserPermissionModal(${userKeysArrayForSearch[index]})" /></td></tr>`;
+              usersTable.innerHTML += `<tr id="${userKeysArrayForSearch[index]}"><td>${tempIndex}</td><td>${user.name}</td><td>${user.phoneNumber}</td><td>${user.email}</td><td>${user.timeStamp}</td><td><img class="small" src="./assets/delete.png" style="width:20px" onclick="openDeleteUserPermissionModal(${userKeysArrayForSearch[index]})" /></td></tr>`;
 
               tempIndex += 1;
               index += 1;
@@ -1059,22 +1067,99 @@ function saveUserToIndexedDB(dbName, storeName, user) {
   };
 }
 
-function isValidEmail(email) {
-  if (!email || typeof email !== "string") {
-    return false;
-  }
+// function isValidEmail(email) {
+//   if (!email || typeof email !== "string") {
+//     return false;
+//   }
 
-  // Regular expression for email validation
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
+//   // Regular expression for email validation
+//   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+//   return emailRegex.test(email);
+// }
+
+// function isValidPhoneNumber(phoneNumber) {
+//   if (!phoneNumber || typeof phoneNumber !== "string") {
+//     return false;
+//   }
+
+//   // Regular expression for a 10-digit phone number
+//   const phoneRegex = /^\d{10}$/;
+//   return phoneRegex.test(phoneNumber);
+// }
+
+function isValidEmail(email){
+  const regexForEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+  return regexForEmail.test(email)
 }
 
-function isValidPhoneNumber(phoneNumber) {
-  if (!phoneNumber || typeof phoneNumber !== "string") {
-    return false;
+function isValidPhoneNumber(number){
+  const regexForPhoneNumber = /(?:\?91[-\s]?)?0?\d{11}/;
+  return !regexForPhoneNumber.test(number) 
+}
+
+
+function checkIfValid(inputId, warningId, inputType, length=null){
+  const inputElement = document.getElementById(inputId)
+  const warningElement = document.getElementById(warningId)
+
+  // if input component's value's length becomes zero after focusing on input
+  if(inputElement.value.length == 0){
+    warningElement.style.display = "block";
+    addUserButton.style.backgroundColor = "grey"
+    addUserButton.disabled = true
+    return true
+  }else{
+    addUserButton.style.backgroundColor = "#4285f4"
+    addUserButton.disabled = false
   }
 
-  // Regular expression for a 10-digit phone number
-  const phoneRegex = /^\d{10}$/;
-  return phoneRegex.test(phoneNumber);
+  // Checking if the input component is of email and is valid or not
+  if(warningId == "email-warning"){
+    console.log("its email")
+    if(isValidEmail(inputElement.value) == false){
+      warningElement.style.display = "block"
+      addUserButton.style.backgroundColor = "grey"
+      addUserButton.disabled = true
+      return true
+    }else{
+      warningElement.style.display = "none"
+      addUserButton.style.backgroundColor = "#4285f4"
+      addUserButton.disabled = false
+      return false
+    }
+    
+  }
+
+  // If input component is of string and is valid or not (if it has length)
+  if(inputType == "string"){
+    if(length != null){
+      if(inputElement.value.length > length){
+        warningElement.style.display = "block";
+        addUserButton.style.backgroundColor = "grey"
+        addUserButton.disabled = true
+        return true
+      }else{
+        warningElement.style.display = "none"
+        addUserButton.style.backgroundColor = "#4285f4"
+        addUserButton.disabled = false
+        return false
+      }
+    }
+  }
+
+  // If input component is of phone number and is valid or not
+  if(warningId == "number-warning"){
+    if(isValidPhoneNumber(inputElement.value) == false){
+      warningElement.style.display = "block";
+      addUserButton.style.backgroundColor = "grey";
+      addUserButton.disabled = true;
+      return true
+    }else{
+      warningElement.style.display = "none";
+      addUserButton.style.backgroundColor = "#4285f4"
+      addUserButton.disabled = false
+      return false
+    }
+  }
+
 }

@@ -57,7 +57,9 @@
               class="modal-input"
               placeholder="Enter customer's name..."
               autocomplete="off"
+              oninput="checkIfValid('username', 'name-warning', 'string', 50)"
             />
+            <div id="name-warning" class="warning"><span>Please Enter Valid Name (Less than 50 characters)</span></div>
             <div id="modal-name-dropdown" class="modal-name-dropdown">
               <div>
                 <div id="namelist" class="name-display"></div>
@@ -74,7 +76,9 @@
             class="modal-input"
             placeholder="Enter Email Address..."
             autocomplete="off"
+            oninput="checkIfValid('useremail', 'email-warning', 'string')"
           ></input>
+          <div id="email-warning" class="warning"><span>Please Enter Valid Email (Example : test@gmail.com)</span></div>
           <input
             name="usernumber"
             type="number"
@@ -82,7 +86,9 @@
             class="modal-input"
             placeholder="Enter Phone Number..."
             autocomplete="off"
+            oninput="checkIfValid('usernumber', 'number-warning', 'number')"
           ></input>
+          <div id="number-warning" class="warning"><span>Please Enter Valid Phone Number (+91 is already added)</span></div>
           <!-- <div class="cat-amt-collection">
             <select
               name="category"
