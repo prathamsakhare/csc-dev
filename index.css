@@ -336,6 +336,13 @@ table tr {
   margin-right: auto;
 }
 
+.warning{
+  color: red; 
+  font-size: 12px;
+  font-weight: 500;
+  display: none;
+}
+
 .modal-input{
   padding: 0.5rem;
   width: 97%;

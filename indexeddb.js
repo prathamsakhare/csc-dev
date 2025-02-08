@@ -16,6 +16,8 @@ const recordTable = document.getElementById("record-table");
 const noRecords = document.getElementById("no-records");
 const categoryList = document.getElementById("category")
 
+const addUserFromRecordFormButton = document.getElementById('add-user-btn')
+
 // users table
 const usersTable = document.getElementById("users-table");
 const noUsers = document.getElementById("no-users");
@@ -186,6 +188,8 @@ function getAllUsers() {
     const getUserArray = userObjectStore.getAll();
 
     var userKeysArray = [];
+
+    
 
     getUserArray.onsuccess = function () {
       const getAllKeysOfUserArray = userObjectStore.getAllKeys();
@@ -763,6 +767,8 @@ function closeModal() {
   recordAmount.value = "";
 }
 
+
+
 // Get form values of record
 function getRecordFormValues() {
   // current time
@@ -992,10 +998,15 @@ function search(userArray) {
   let query = recordCustomer?.value.toLowerCase();
   userNameList.innerHTML = "";
   userNameDropdown.style.display = "none";
+  addUserButton.style.backgroundColor = "#4285f4"
+  addUserButton.disabled = false
 
   if (query) {
     // Filter customerData array for matching names
     userNameDropdown.style.display = "flex";
+
+    addUserButton.style.backgroundColor = "grey"
+    addUserButton.disabled = true
 
     const matchedNames = userArray
       .filter((customer) => customer.name.toLowerCase().includes(query))
@@ -1025,6 +1036,8 @@ function setCustomerName(name, number) {
   recordCustomer.value = name;
   GLOBALTEMPORARYCUSTOMERNUMBER = number
   userNameDropdown.style.display = "none";
+  addUserButton.style.backgroundColor = "#4285f4"
+  addUserButton.disabled = false
 }
 
 function saveUserToIndexedDB(dbName, storeName, user) {
@@ -1098,10 +1111,10 @@ function isValidPhoneNumber(number){
 }
 
 
-function checkIfValid(inputId, warningId, inputType, length=null){
+function checkIfValid(inputId, warningId, inputType, length=null, addUserButtonId){
   const inputElement = document.getElementById(inputId)
   const warningElement = document.getElementById(warningId)
-
+  const addUserButton = document.getElementById(addUserButtonId)
   // if input component's value's length becomes zero after focusing on input
   if(inputElement.value.length == 0){
     warningElement.style.display = "block";

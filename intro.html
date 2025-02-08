@@ -68,7 +68,7 @@
             <div id="modal-name-dropdown" class="modal-name-dropdown">
               <div>
                 <div id="namelist" class="name-display"></div>
-                <button class="add-user-btn" onclick="openAddUserModal()">
+                <button id="add-user-btn" class="add-user-btn" onclick="openAddUserModal()">
                   + Add '<span id="name-suggest"></span>'
                 </button>
               </div>
@@ -87,6 +87,7 @@
               name="category"
               id="category"
               class="select-input cat-amt-select"
+              
             >
               <option value="select">Select Category</option>
               <!-- <option value="Adhar Card">Adhar Card</option>
@@ -100,7 +101,6 @@
               class="select-input amt"
               placeholder="Enter amount recieved..."
               autocomplete="off"
-
             />
           </div>
           <button
@@ -113,7 +113,7 @@
         </div>
       </form>
       <!-- Add User Modal -->
-      <form id="userInputForm" onsubmit="return false">
+      <form id="userInputForm" >
         <div class="addUserModal-body" id="addUserModal">
           <!-- <div class="modal-name"> -->
           <div class="add-user-modal-heading">
@@ -134,9 +134,10 @@
               class="addUserModal-input"
               placeholder="Enter customer's name..."
               autocomplete="off"
-
+              oninput="checkIfValid('username', 'name-warning', 'string', 50, 'addUserModal-save-btn')"
             />
-            <div
+            <div id="name-warning" class="warning"><span>Please Enter Valid Name (Less than 50 characters)</span></div>
+            <!-- <div
               id="usernameError"
               style="
                 color: red;
@@ -145,7 +146,7 @@
                 padding-left: 10px;
                 padding-right: 10px;
               "
-            ></div>
+            ></div> -->
             <input
               type="email"
               id="useremail"
@@ -153,9 +154,10 @@
               class="addUserModal-input"
               placeholder="Enter email..."
               autocomplete="off"
-
+              oninput="checkIfValid('useremail', 'email-warning', 'string', null, 'addUserModal-save-btn')"
             />
-            <div
+            <div id="email-warning" class="warning"><span>Please Enter Valid Email (Example : test@gmail.com)</span></div>
+            <!-- <div
               id="emailError"
               style="
                 color: red;
@@ -164,7 +166,7 @@
                 padding-left: 10px;
                 padding-right: 10px;
               "
-            ></div>
+            ></div> -->
 
             <input
               type="number"
@@ -173,9 +175,10 @@
               class="addUserModal-input"
               placeholder="Enter phone number..."
               autocomplete="off"
-
+              oninput="checkIfValid('usernumber', 'number-warning', 'number', null, 'addUserModal-save-btn')"
             />
-            <div
+            <div id="number-warning" class="warning"><span>Please Enter Valid Phone Number (+91 is already added)</span></div>
+            <!-- <div
               id="phoneError"
               style="
                 color: red;
@@ -184,7 +187,7 @@
                 padding-left: 10px;
                 padding-right: 10px;
               "
-            ></div>
+            ></div> -->
           </div>
 
           <button
