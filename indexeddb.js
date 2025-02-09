@@ -557,6 +557,7 @@ function keyOfAddedUser(id) {}
 
 // add user
 function addUser(user) {
+
   const request = window.indexedDB.open(dbName, 1);
 
   request.onsuccess = (event) => {
@@ -860,8 +861,8 @@ function getUserFormValues() {
   //   }
   // }
 
-  //checking for user's email
-  //email should be verified using regex
+  // checking for user's email
+  // email should be verified using regex
   // if (isValidEmail(userEmail.value) == false) {
   //   console.log("Invalid email id entered.");
   //   try {
@@ -886,6 +887,11 @@ function getUserFormValues() {
   //   // return;
   // }
 
+  if(capitalizedName.length == '' || userEmail.value.length == '' || userNumber.value.length == ''){
+    console.alert('Please fill all details')
+    return 
+  }
+  
   const user = {
     name: capitalizedName,
     email: userEmail.value,
@@ -895,6 +901,8 @@ function getUserFormValues() {
 
   addUser(user);
   setCustomerName(capitalizedName, userNumber.value)
+
+  
 
   closeAddUserModal();
 }
