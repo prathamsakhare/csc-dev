@@ -157,16 +157,104 @@ function getAllRecords() {
         if (getRequest.result) {
           if (getRequest.result.length > 0) {
             noRecords.style.display = "none";
-            let tempIndex = 1;
-            let indexForRecordsArray = 0
             
-            getRequest.result.forEach((record, key) => {
-              recordTable.innerHTML += `<tr id="${recordsKeysArray[indexForRecordsArray]}"><td>${tempIndex}</td><td>${record.recordCustomer}</td><td>${record.recordCustomerPhoneNumber}</td><td>${record.recordCategory}</td><td><abbr title="${record.recordDescription}">${record.recordDescription}</abbr></td><td>${record.recordAmount}</td><td>${record.recordDate}</td><td>${record.recordTime}</td><td><img src="./assets/delete.png" class="small" onclick="deleteRecord(${recordsKeysArray[indexForRecordsArray]})" /></td></tr>`;
 
-              tempIndex += 1;
-              indexForRecordsArray += 1;
-            });
-            GLOBALRECORDTABLE = recordTable.innerHTML
+            const rowsPerPage = 10;
+            let currentPage = 1;
+            
+            
+
+
+            function displayTable(page) {
+              let tempIndex = (page-1)*rowsPerPage+1;
+              let indexForRecordsArray = 0
+              const startIndex = (page - 1) * rowsPerPage;
+              const endIndex = startIndex + rowsPerPage;
+              const slicedData = getRequest.result.slice(startIndex, endIndex);
+  
+              // Clear existing table rows
+              recordTable.innerHTML = `
+           <tbody id="records">
+          <tr>
+            <th>Index</th>
+            <th>Name</th>
+            <th>Mobile No.</th>
+            <th>Category</th>
+            <th>Description</th>
+            <th>Amount</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Delete</th>
+          </tr>
+        </tbody>
+      `;
+              
+              // Add new rows to the table
+              slicedData.forEach(record => {
+                  const row = recordTable.insertRow();
+
+                  row.setAttribute("id", recordsKeysArray[indexForRecordsArray])
+
+                  // TODO : Insert cells from records table
+                  const indexCell = row.insertCell(0)
+                  const nameCell = row.insertCell(1)
+                  const mobileCell = row.insertCell(2)
+                  const categoryCell = row.insertCell(3)
+                  const descriptionCell = row.insertCell(4)
+                  const amountCell = row.insertCell(5)
+                  const dateCell = row.insertCell(6)
+                  const timeCell = row.insertCell(7)
+                  const deleteCell = row.insertCell(8)
+
+                  indexCell.innerHTML = tempIndex;
+                  nameCell.innerHTML = record.recordCustomer;
+                  mobileCell.innerHTML = record.recordCustomerPhoneNumber;
+                  categoryCell.innerHTML = record.recordCategory
+                  descriptionCell.innerHTML = record.recordDescription
+                  amountCell.innerHTML = record.recordAmount
+                  dateCell.innerHTML = record.recordDate
+                  timeCell.innerHTML = record.recordTime
+                  deleteCell.innerHTML = `<img src="./assets/delete.png" class="small" onclick="deleteRecord(${recordsKeysArray[indexForRecordsArray]})" />`
+
+                  tempIndex += 1
+                  indexForRecordsArray += 1
+
+              });
+  
+              // Update pagination
+              updatePagination(page);
+          }
+  
+          function updatePagination(currentPage) {
+              const pageCount = Math.ceil(getRequest.result.length / rowsPerPage);
+              const paginationContainer = document.getElementById("pagination");
+              paginationContainer.innerHTML = "";
+  
+              for (let i = 1; i <= pageCount; i++) {
+                  const pageLink = document.createElement("a");
+                  pageLink.href = "#";
+                  pageLink.innerText = i;
+                  pageLink.onclick = function () {
+                      displayTable(i);
+                  };
+                  if (i === currentPage) {
+                      pageLink.style.fontWeight = "bold";
+                  }
+                  paginationContainer.appendChild(pageLink);
+                  paginationContainer.appendChild(document.createTextNode(" "));
+              }
+          }
+  
+              // Initial display
+              displayTable(currentPage);
+
+            // getRequest.result.forEach((record, key) => {
+            //   recordTable.innerHTML += `<tr id="${recordsKeysArray[indexForRecordsArray]}"><td>${tempIndex}</td><td>${record.recordCustomer}</td><td>${record.recordCustomerPhoneNumber}</td><td>${record.recordCategory}</td><td><abbr title="${record.recordDescription}">${record.recordDescription}</abbr></td><td>${record.recordAmount}</td><td>${record.recordDate}</td><td>${record.recordTime}</td><td><img src="./assets/delete.png" class="small" onclick="deleteRecord(${recordsKeysArray[indexForRecordsArray]})" /></td></tr>`;
+
+            //   tempIndex += 1;
+            //   indexForRecordsArray += 1;
+            // });
+            // GLOBALRECORDTABLE = recordTable.innerHTML
           } else {
             recordTable.style.display = "none";
             noRecords.style.display = "block";
@@ -528,6 +616,7 @@ function addRecord(record) {
 
     recordsObjectStore.add(record);
 
+    location.reload()
     //Getting The Data
     const transaction = db.transaction(["records"]);
     const store = transaction.objectStore("records");
