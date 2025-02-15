@@ -247,14 +247,7 @@ function getAllRecords() {
   
               // Initial display
               displayTable(currentPage);
-
-            // getRequest.result.forEach((record, key) => {
-            //   recordTable.innerHTML += `<tr id="${recordsKeysArray[indexForRecordsArray]}"><td>${tempIndex}</td><td>${record.recordCustomer}</td><td>${record.recordCustomerPhoneNumber}</td><td>${record.recordCategory}</td><td><abbr title="${record.recordDescription}">${record.recordDescription}</abbr></td><td>${record.recordAmount}</td><td>${record.recordDate}</td><td>${record.recordTime}</td><td><img src="./assets/delete.png" class="small" onclick="deleteRecord(${recordsKeysArray[indexForRecordsArray]})" /></td></tr>`;
-
-            //   tempIndex += 1;
-            //   indexForRecordsArray += 1;
-            // });
-            // GLOBALRECORDTABLE = recordTable.innerHTML
+              GLOBALRECORDTABLE = recordTable.innerHTML
           } else {
             recordTable.style.display = "none";
             noRecords.style.display = "block";
