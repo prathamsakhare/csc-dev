@@ -230,6 +230,7 @@ function getAllRecords() {
               const paginationContainer = document.getElementById("pagination");
               paginationContainer.innerHTML = "";
   
+              
               for (let i = 1; i <= pageCount; i++) {
                   const pageLink = document.createElement("a");
                   pageLink.href = "#";
@@ -247,6 +248,8 @@ function getAllRecords() {
                   paginationContainer.appendChild(pageLink);
                   paginationContainer.appendChild(document.createTextNode(" "));
               }
+
+              
           }
   
               // Initial display
