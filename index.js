@@ -57,8 +57,7 @@ function closeModal() {
   description.value = "";
   category.value = "select";
   amount.value = "";
-  console.log("closeModal getting called")
-  // location.reload()
+  location.reload()
 }
 
 function openAddUserModal() {
