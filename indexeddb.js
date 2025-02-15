@@ -239,7 +239,7 @@ function getAllRecords() {
                   };
                   if (i === currentPage) {
                     pageLink.style.fontWeight = "bold";
-                    console.log('classList',pageLink.classList); 
+                    // console.log('classList',pageLink.classList); 
                     pageLink.classList.toggle("active");
                       
                       
