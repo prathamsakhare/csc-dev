@@ -11,3 +11,51 @@
 9) document is not defined, when mongodb connection code put into index.js that has id selectors of JavaScript : https://stackoverflow.com/questions/32126003/node-js-document-is-not-defined
 10) Basic CRUD with MongoDB : https://dev.to/danmusembi/beginners-tutorial-for-crud-operations-in-nodejs-and-mongodb-k7k
 11) px to rem converter : https://nekocalc.com/px-to-rem-converter
+12) Limiting characters to be shown : https://stackoverflow.com/questions/74195319/how-to-limit-the-amount-of-characters-and-put-at-the-end
+13) Getting event.target.result from events of indexedDB : https://stackoverflow.com/questions/76051025/how-can-i-get-return-value-from-onsuccess-event-in-indexeddb
+14) Ways to solve problem of overflow in css : https://dev.to/tammibriggs/two2-ways-to-prevent-padding-from-causing-an-overflow-in-css-4ain
+15) If you want to preserve the innerHTML of an HTML element while manipulating other parts of the DOM, you can store its value in a variable and then reassign it after your modifications. Here's an example:
+
+```
+// Get the element
+const myElement = document.getElementById("myElement");
+
+// Store the innerHTML
+const originalInnerHTML = myElement.innerHTML;
+
+// Make changes to the DOM...
+
+// Restore the original innerHTML
+myElement.innerHTML = originalInnerHTML;
+```
+16) To keep autosuggestions from browser off, for input fields, set autocomplete="off"
+17) How to merge detached head to main branch : https://www.geeksforgeeks.org/how-to-reconcile-detached-head-with-master-origin-in-git/
+18) Creating new object store in database : https://stackoverflow.com/questions/38852012/how-to-add-a-new-objectstore-to-an-existing-indexeddb
+
+19) To hide the default scrollbar by browser :
+```
+.divclass::-webkit-scrollbar{
+    display:none
+}
+```
+20) Hiding modal / element upon clicking anywhere else on screen : 
+```
+document.addEventListener("click", function(event){
+  console.log("event : ", event.target)
+  if(event.target.matches("#categories-add-button") == true || event.target.matches("#modal-name-dropdown") == true || event.target.matches(".icon-dropdown")== true || event.target.matches("#add-category-btn")== true || event.target.matches("#addCategoryModal") == true || event.target.matches("#categoryName") || event.target.matches(".add-category-heading") == true){
+    categoryList.style.display = "block"
+    addCategoryButton.style.display = "block"
+  }else{
+    categoryList.style.display = "none"
+    addCategoryButton.style.display = "none"
+  }
+})
+```
+
+<!-- TODOs  -->
+<!-- (temporarily done : Implement checks that without selecting required fields, record cannot be added (shows warnings) -->
+<!-- Feature that lets user add / remove categories : DONE -->
+<!-- Feature to display warning if no category exists -->
+<!-- Give an option in selector in records page, for categories, to add categories if no categories are added -->
+<!-- Implement loader and animation -->
+<!-- @SrishtiRaut : Implement pagination for records and users -->

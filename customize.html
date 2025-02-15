@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./customize.css">
+    <!-- <script src="./indexeddb.js" defer></script> -->
+    <script src="./customize.js" defer></script>
     <title>Customization</title>
 </head>
 <body>
@@ -21,19 +23,84 @@
           >
         </div>
       </header>
+      <div id="overlay" class="overlay"></div>
       <main>
         <div id="users-topbar">
         <h2>Customize</h2>
         <p>You can customize following...</p>
         <button
-          id="users-add-button"
+          id="categories-add-button"
           class="main-button"
+          onclick="openCategoryList()"
         > 
-           Categories
+           Categories <img src="./assets/./dropdown.png" class="icon-dropdown" />
         </button>
-        <div>
-            
+        <div id="modal-name-dropdown" class="modal-name-dropdown">
+          <div>
+            <div id="namelist" class="name-display">
+              <!-- TODO : Remove Sample Data (Only to test front end) -->
+              <!-- <option class="suggestion-item">${category.name}</option>
+              <option class="suggestion-item">${category.name}</option>
+              <option class="suggestion-item">${category.name}</option>
+              <option class="suggestion-item">${category.name}</option>
+              <option class="suggestion-item">${category.name}</option>
+              <option class="suggestion-item">${category.name}</option>
+              <option class="suggestion-item">${category.name}</option>
+              <option class="suggestion-item">${category.name}</option> -->
+
+            </div>
+            <button id="add-category-btn" onclick="openAddCategoryModal()">
+              + Add Category
+            </button>
+          </div>
         </div>
+        <form id="userInputForm">
+          <div class="addCategoryModal-body" id="addCategoryModal">
+            <!-- <div class="modal-name"> -->
+            <div class="add-category-modal-heading">
+              <h2 class="add-category-heading">Add Category</h2>
+              <button
+                id="modal-close-btn"
+                class="close"
+                style="background:none;height: fit-content;border: none;padding: 5px;color: red;font-size: 1rem;"
+                onclick="closeAddCategoryModal()"
+              >
+                X
+              </button>
+            </div>
+            <div class="wrapper">
+              <input
+                type="text"
+                id="categoryName"
+                name="username"
+                class="addCategoryModal-input"
+                placeholder="Enter category..."
+                autocomplete="off"
+  
+              />
+              <div
+                id="usernameError"
+                style="
+                  color: red;
+                  font-size: 12px;
+                  display: none;
+                  padding-left: 10px;
+                  padding-right: 10px;
+                "
+              ></div>
+              
+              
+            </div>
+  
+            <button
+              id="addCategoryModal-save-btn"
+              class="main-button"
+              onclick="addCategory()"
+            >
+              Add
+            </button>
+          </div>
+        </form>
         <!-- ! Button to download Users table into a .xlsx file -->
         <!-- <div>
           <button

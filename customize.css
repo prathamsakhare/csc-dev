@@ -1,0 +1,405 @@
+:root {
+    --main-button-bgcolor: #4285f4;
+    --table-header-bgcolor: #fafafa;
+    --table-border-color: #efefef;
+    --header-border-color: #efefef;
+  
+    --secondary-button-bgcolor:white;
+    --secondary-button-color : #4285f4
+  }
+  
+  body {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: "Roboto", sans-serif;
+    background-color: white;
+  }
+  
+  .main-button {
+    background-color: var(--main-button-bgcolor);
+    border: none;
+    padding: 10px 30px;
+    color: white;
+    border-radius: 3px;
+    font-weight: bold;
+    
+  }
+  
+  
+  .secondary-button {
+    background-color: var(--secondary-button-bgcolor);
+    border: 1px solid var(--secondary-button-color);
+    padding: 10px 30px;
+    color: var(--secondary-button-color);
+    border-radius: 3px;
+    font-weight: bold;
+  }
+  
+  .danger-button {
+    background-color: red;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  .small{
+    padding: 10px 10px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+  
+  .main-button:hover, .secondary-button:hover {
+    cursor: pointer;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  
+  header {
+    border: 1px solid var(--header-border-color);
+    display: flex;
+    flex-direction: row;
+    height: 7vh;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  #logo {
+    margin-left: 1rem;
+  
+  }
+  
+  #profile-button{
+    margin-right: 15px;
+  
+  }
+  
+  main {
+    height: 90vh;
+    margin-left: 15%;
+    margin-right: 15%;
+  }
+  
+  #record-topbar {
+    display: flex;
+    flex-direction: row;
+    padding-top: 2rem;
+    align-items: center;
+    max-height: 100px;
+    justify-content: space-between;
+  }
+  
+  #record-topbar > #record-add-button {
+    margin-left: auto;
+  }
+  
+  #record-table {
+    width: 100%;
+    text-align: center;
+    border-collapse: collapse;
+    border: 1px solid var(--table-border-color);
+  }
+  
+  #record-table tr {
+    width: 100%;
+  }
+  
+  #record-table td,
+  #record-table th {
+    padding: 10px;
+  }
+  
+  table tr {
+    border-bottom: 1px solid var(--table-border-color);
+  }
+  
+  #record-table th {
+    padding: 20px 10px;
+    background-color: var(--table-header-bgcolor);
+    max-width: 100%;
+    
+  }
+  
+  #record-table td {
+    border-radius: 5px;
+    max-width: 20ch;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  /* no records heading */
+  #no-records{
+    position: absolute;
+    left : 50%;
+    transform: translate(-50%, 50%);
+    text-align: center;
+  }
+  
+  
+  /* Modal */
+  .modal{
+    position: fixed;
+    display: none;
+    border: 1px solid grey;
+    border-radius: 5px;
+    width: 50%;
+    height: 60vh;
+    padding: 15px;
+    margin-top: 4rem;
+    z-index: 6;
+    transform: translate(50%, 0%);
+    background-color: white;
+  }
+  
+  .overlay {
+    position: fixed;
+    display: none;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(3px);
+    z-index: 4;
+  }
+  
+  .modal-heading{
+    display: flex;
+    flex-direction: row;
+    height: 3rem;
+    padding-left: 2rem;
+  }
+  
+  .close{
+    margin-left: auto;
+    margin-right: 10px;
+    margin-top: 10px;
+  }
+  
+  .close:hover{
+    background-color: red;
+    border: none;
+    padding: 10px 30px;
+    color: white;
+    border-radius: 3px;
+    font-weight: bold;
+  }
+  
+  .modal-body{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    padding-top: 0px;
+    margin-top: 2rem;
+    justify-content: space-evenly;
+    position: absolute;
+    bottom: 10px;
+    top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .modal-input{
+    padding: 0.5rem;
+    width: 97%;
+    margin-top: 10px;
+    border: none;
+    border-bottom: 1px solid grey;
+  
+  }
+  
+  .modal textarea{
+    font-family: "Roboto", sans-serif;;
+  }
+  
+  
+  /* In order to remove outline while focusing on element */
+  .modal-input:focus{
+    outline: none;
+    background-color: #F1F3F4;
+  }
+  
+  .modal-input::-webkit-input-placeholder {
+    font-family: "Roboto", sans-serif;
+  }
+  
+  .modal-input:-ms-input-placeholder {
+    font-family: "Roboto", sans-serif;
+  }
+  
+  .modal-input:-moz-placeholder {
+    font-family: "Roboto", sans-serif;
+  }
+  
+  .modal-input::-moz-placeholder {
+    font-family: "Roboto", sans-serif;
+  }
+  
+  .cat-amt-collection{
+    display: flex;
+    flex-direction: row;
+  }
+  
+  
+  .select-input{
+    padding: 0.5rem;
+    margin-top: 10px;
+    border: none;
+    border-bottom: 1px solid grey;
+    margin: 10px;
+  }
+  
+  .select-input:focus{
+    outline : none;
+  }
+  
+  .cat-amt-select{
+    width: 50%;
+  }
+  .amt{
+    width: 50%;
+  }
+  
+  
+  .modal-body button{
+    margin-top: 2rem;
+  }
+  
+  
+  /* name search dropdowm */
+  .modal-name-dropdown{
+    position: absolute;
+    background-color: white;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    width: 20%;
+    display: block;
+    flex-direction: column;
+    overflow: auto;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    /* NOTE : If you want to display category list while adding a new category, you can uncomment the below line */
+    z-index: 10;
+  }
+
+  .modal-name-dropdown::-webkit-scrollbar{
+    display: none;
+  }
+
+  #add-category-btn{
+    display: none;
+  }
+  .name-display {
+    display: none;
+    /* transition: all .5s ease; */
+    
+  }
+  
+  
+  .modal-name-dropdown button{
+    margin-top: 0px;
+    background-color: white;
+    color: var(--main-button-bgcolor);
+    border: none;
+    padding: 5px;
+    position:sticky;
+    bottom: 0px;
+    width: 100%;
+    height: 40px;
+    text-align: left;
+    font-weight: 700;
+    cursor: pointer;
+    
+  }
+  
+  
+  .suggestion-item {
+    /* cursor: pointer; */
+    display: flex;
+    /* border: 0.5px solid black; */
+    align-items: center;
+    justify-content: space-between;
+    height: 1.875rem;
+    padding: 5px;
+    border-bottom: 1px solid grey;
+    
+  }
+  
+  /* not working */
+  .suggestion_item > .suggestion_mobile{
+    margin-left: auto;
+  }
+  
+  
+  
+  
+  .addCategoryModal-body{
+    border: 1px solid red;
+    position:absolute;
+    top: 50%;
+    left : 50%;
+    width: 350px;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    display: none;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border: none;
+    z-index: 10;
+  }
+  
+  .addCategoryModal-input{
+    box-sizing: border-box;
+    padding: 0.5rem;
+    width: 80%;
+    align-self: center;
+    margin-top: 10px;
+    margin: 10px;
+    border: none;
+    border-bottom: 1px solid grey;
+  }
+  
+  .addCategoryModal-input:focus{
+    outline: none;
+    background-color: #F1F3F4;
+  }
+  
+  
+  .addCategoryModal-body button{
+    margin: 10px;
+  }
+  
+  .add-category-heading{
+    margin-left: 15px;
+  }
+  
+  .add-category-modal-heading{
+    display: flex;
+    flex-direction: row;
+    height: 4rem;
+    justify-content: space-between;
+  }
+  
+  abbr[title]{
+    text-decoration: none;
+  }
+
+#modal-close-btn:hover{
+  cursor: pointer;
+}
+
+#categories-add-button{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.icon-dropdown{
+  height: 15px;
+  width: 15px;
+}
+

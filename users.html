@@ -24,8 +24,14 @@
         ><button id="profile-button" class="main-button intro-btn">Intro!</button></a
       >
       <a href="./intro.html"
-        ><button id="profile-button" class="main-button records-btn">Records</button></a
+        ><button id="profile-button" class="main-button">Records</button></a
       >
+      <a href="./customize.html"
+        ><button id="profile-button" class="main-button">Customize</button></a
+      >
+      <!-- <a href="./customize.html"
+        ><button id="profile-button" class="main-button">Customize</button></a
+      > -->
       </div>
     </header>
 
@@ -36,13 +42,13 @@
         <button
           id="modal-close-btn"
           class="close secondary-button"
-          onclick="closeModal()"
+          onclick="closeUserModal()"
         >
           Close
         </button>
       </div>
       <!-- Add User Modal -->
-      <form id="userInputForm">
+      <form id="userInputForm" >
         <div class="modal-body">
           <!-- <div class="modal-name"> -->
           <div class="wrapper">
@@ -51,7 +57,10 @@
               id="username"
               class="modal-input"
               placeholder="Enter customer's name..."
+              autocomplete="off"
+              oninput="checkIfValid('username', 'name-warning', 'string', 50, 'modal-save-btn', ['name-warning', 'email-warning', 'number-warning'])"
             />
+            <div id="name-warning" class="warning"><span>Please Enter Valid Name (Less than 50 characters)</span></div>
             <div id="modal-name-dropdown" class="modal-name-dropdown">
               <div>
                 <div id="namelist" class="name-display"></div>
@@ -67,14 +76,20 @@
             type="email"
             class="modal-input"
             placeholder="Enter Email Address..."
+            autocomplete="off"
+            oninput="checkIfValid('useremail', 'email-warning', 'string', null, 'modal-save-btn', ['name-warning', 'email-warning', 'number-warning'])"
           ></input>
+          <div id="email-warning" class="warning"><span>Please Enter Valid Email (Example : test@gmail.com)</span></div>
           <input
             name="usernumber"
             type="number"
             id="usernumber"
             class="modal-input"
             placeholder="Enter Phone Number..."
+            autocomplete="off"
+            oninput="checkIfValid('usernumber', 'number-warning', 'number', null, 'modal-save-btn', ['name-warning', 'email-warning', 'number-warning'])"
           ></input>
+          <div id="number-warning" class="warning"><span>Please Enter Valid Phone Number (+91 is already added)</span></div>
           <!-- <div class="cat-amt-collection">
             <select
               name="category"
@@ -97,60 +112,112 @@
           <button
             id="modal-save-btn"
             class="main-button"
+            style="background-color: grey;"
+            disabled
             onclick="getUserFormValues()"
           >
-            Save User
+            Add User
           </button>
         </div>
       </form>
       <!-- Add User Modal -->
+      
+    </div>
+    <div id="updateUserModal" class="modal">
+      <div class="modal-heading">
+        <h2>Add User</h2>
+        <button
+          id="modal-close-btn"
+          class="close secondary-button"
+          onclick="closeAddUserModal()"
+        >
+          Close
+        </button>
+      </div>
+      <!-- Add User Modal -->
       <form id="userInputForm">
-        <div class="addUserModal-body" id="addUserModal">
+        <div class="modal-body">
           <!-- <div class="modal-name"> -->
-          <div class="add-user-modal-heading"><h2 class="add-user-heading">Add User</h2>
-            <button
-              id="modal-close-btn"
-              class="close secondary-button"
-              onclick="closeAddUserModal()"
-            >
-              Close
-            </button></div>
           <div class="wrapper">
             <input
               type="text"
-              id="username"
-              name="username"
-              class="addUserModal-input"
+              id="updateusername"
+              class="modal-input"
               placeholder="Enter customer's name..."
+              autocomplete="off"
             />
-            <input
-              type="email"
-              id="useremail"
-              name="useremail"
-              class="addUserModal-input"
-              placeholder="Enter email..."
-            />
+            <div id="modal-name-dropdown" class="modal-name-dropdown">
+              <div>
+                <div id="namelist" class="name-display"></div>
+                <!-- <button class="add-user-btn" onclick="openAddUserModal()">
+                  + Add '<span id="name-suggest"></span>'
+                </button> -->
+              </div>
+            </div>
+          </div>
+          <input
+            name="usermail"
+            id="updateuseremail"
+            type="email"
+            class="modal-input"
+            placeholder="Enter Email Address..."
+            autocomplete="off"
+          ></input>
+          <input
+            name="usernumber"
+            type="number"
+            id="updateusernumber"
+            class="modal-input"
+            placeholder="Enter Phone Number..."
+            autocomplete="off"
+          ></input>
+          
+          <!-- <div class="cat-amt-collection">
+            <select
+              name="category"
+              id="category"
+              class="select-input cat-amt-select"
+            >
+              <option value="select">Select Category</option>
+              <option value="Adhar Card">Adhar Card</option>
+              <option value="Shram Card">Shram Card</option>
+              <option value="PMKCY">PMKCY</option>
+              <option value="Mudra Yoajana">Mudra Yojana</option>
+            </select>
             <input
               type="number"
-              id="usernumber"
-              name="usernumber"
-              class="addUserModal-input"
-              placeholder="Enter phone number..."
+              id="amt"
+              class="select-input amt"
+              placeholder="Enter amount recieved..."
             />
-          </div>
-
-          <button
-            id="addUserModal-save-btn"
-            onclick="getUserFormValues()"
-            class="main-button"
-          >
-            Save User
-          </button>
+          </div> -->
+          <!-- <button id="modal-update-btn" class="main-button" onclick="updateUser()">
+            Update User
+          </button> -->
         </div>
       </form>
+      
     </div>
-
     <main>
+      <div class="searchBar">
+        <div class="filters">
+          <input type="text" id="searchbar" placeholder="Search Users..." oninput="searchUsers()" autocomplete="off" />
+          <div class="filter-date">
+            <div class="filter-date-from">
+              <span>From </span> <input id="startDate" type="date" onchange="filterDataByDate()" />
+            </div>
+            <div class="filter-date-from">
+              <span>To </span> <input id="endDate" type="date" onchange="filterDataByDate()" />
+            </div>
+          </div>
+          <button id="filter-clear-btn" class="main-button danger-button" onclick="clearAllFilters()" style="width: 15rem; padding: 0.5rem;">Clear Filters</button>
+        </div>
+        <div id="userlist" class="userList" style="display: none;">
+          <h3 id="noUsersWarning" class="noUsersWarning" style="display: none;">No Users!</h3>
+          <!-- <div class="search-result-option" ><p class="search-result-option-name">Random Name</p> <p class="search-result-option-number">9356524183</p></div> -->
+         
+        </div>
+      </div>
       <div id="users-topbar">
         <h2>Users</h2>
 
@@ -180,14 +247,19 @@
             <th>Mobile No.</th>
             <th>Email</th>
             <th>Date</th>
+            <th>Delete</th>
+            <!-- <th>Update</th> -->
           </tr>
         </tbody>
       </table>
-      <div id="pagination"></div>
+      <div style="height: 1rem;"></div>
       <div id="no-users">
         <h1>No Users!</h1>
         <p>Please click on 'Add User' button to add an user.</p>
       </div>
+      <!-- Delete user permission modal -->
+      <form id="delete-user-permission">
+      </form>
     </main>
 
    

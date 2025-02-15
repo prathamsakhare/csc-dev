@@ -1,3 +1,9 @@
+
+const modal = document.getElementById('modal')
+const username = document.getElementById('username')
+const useremail = document.getElementById('useremail')
+const usernumber = document.getElementById('usernumber')
+
 function exportTableToExcel(tableId, filename = ''){
     let downloadLink;
     const dataType = 'application/vnd.ms-excel';

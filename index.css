@@ -34,8 +34,25 @@ body {
   font-weight: bold;
 }
 
-.main-button:hover, .secondary-button:hover {
+.danger-button {
+  background-color: red;
+  padding: 5px 10px;
   cursor: pointer;
+}
+.disabled-button{
+  background-color: grey;
+}
+
+.small{
+  padding: 10px 10px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.main-button:hover, .secondary-button:hover, .disabled-button:hover {
+  cursor: pointer;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 header {
@@ -49,11 +66,7 @@ header {
 
 #logo {
   margin-left: 1rem;
-  /* background-color: var(--main-button-bgcolor);
-  color: white;
-  padding: 5px;
-  border: 1px white solid;
-  border-radius: 10px; */
+
 }
 
 #profile-button{
@@ -62,16 +75,145 @@ header {
 }
 
 main {
-  /* border: 1px red solid;   to analyse structure  */
   height: 90vh;
   margin-left: 15%;
   margin-right: 15%;
 }
 
+/* NOTE : In Dev */
+.searchBar {
+  margin-top: 20px;
+  width: 70%;
+  
+}
+.searchBar input {
+  width: 100%;
+  height: 2rem;
+  border-radius: 5px;
+  border: 1px solid grey;
+  padding: 10px;
+}
+
+.searchBar input:focus {
+  background-color: #d1c9c9;
+  color: black;
+  border: none;
+  outline: none;
+}
+
+.searchBar input::placeholder:focus {
+  color: white;
+}
+.filters{
+  display: flex;
+  gap: 10px; 
+  max-width: 100%; 
+  align-items: center;
+}
+
+.filter-date{
+  margin-left: auto;
+  display: flex;
+  gap: 10px;
+}
+
+.filter-date-from{
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  align-items: center;
+}
+
+.userList {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 5px;
+  min-height: 4rem;
+  text-align: center;
+  position: fixed;
+  z-index: 5000;
+  background-color: white;
+  width: 400px;
+}
+
+.noUsersWarning {
+  margin: 0px;
+  padding-top: 20px;
+}
+
+.search-result-option {
+  width: calc(100% - 10px - 10px);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 25px;
+  padding: 10px;
+}
+
+.search-result-option-name,
+.search-result-option-number {
+  padding-top: 0px;
+  margin-top: 0px;
+  padding: 5px;
+}
+
+#users-topbar {
+  display: flex;
+  flex-direction: row;
+  padding-top: 2rem;
+  align-items: center;
+  max-height: 100px;
+  justify-content: space-between;
+}
+
+#users-topbar > #users-add-button {
+  margin-left: auto;
+}
+
+#users-table {
+  width: 100%;
+  text-align: center;
+  border-collapse: collapse;
+  border: 1px solid var(--table-border-color);
+  margin-bottom: 3rem;
+  /* TODO : Box shadow for table : try */
+  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+}
+
+#users-table tr {
+  width: 100%;
+}
+
+#users-table td,
+#users-table th {
+  padding: 10px;
+}
+
+table tr {
+  border-bottom: 1px solid var(--table-border-color);
+}
+
+#users-table th {
+  padding: 20px 10px;
+  background-color: var(--table-header-bgcolor);
+  max-width: 100%;
+}
+
+#users-table td {
+  border-radius: 5px;
+}
+
+/* no records heading */
+#no-users {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  text-align: center;
+}
+
+
 #record-topbar {
   display: flex;
   flex-direction: row;
-  /* height : 40px; */
   padding-top: 2rem;
   align-items: center;
   max-height: 100px;
@@ -79,16 +221,16 @@ main {
 }
 
 #record-topbar > #record-add-button {
-  /* height: 30px; */
   margin-left: auto;
 }
 
 #record-table {
   width: 100%;
   text-align: center;
-  /* border: 1px solid black; */
   border-collapse: collapse;
   border: 1px solid var(--table-border-color);
+  /* TODO : Box shadow for records table : try */
+  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
 }
 
 #record-table tr {
@@ -105,19 +247,18 @@ table tr {
 }
 
 #record-table th {
-  /* border-right: 1px solid white;  */
   padding: 20px 10px;
   background-color: var(--table-header-bgcolor);
   max-width: 100%;
   
 }
 
-/* #record-table th:last-child {
-  border-right: 1px solid black;
-} */
-
 #record-table td {
   border-radius: 5px;
+  max-width: 20ch;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* no records heading */
@@ -126,7 +267,6 @@ table tr {
   left : 50%;
   transform: translate(-50%, 50%);
   text-align: center;
-  /* border: 1px solid red; */
 }
 
 
@@ -134,14 +274,12 @@ table tr {
 .modal{
   position: fixed;
   display: none;
-  /* flex-direction: column; */
   border: 1px solid grey;
   border-radius: 5px;
   width: 50%;
   height: 60vh;
   padding: 15px;
   margin-top: 4rem;
-  /* justify-content: space-evenly; */
   z-index: 6;
   transform: translate(50%, 0%);
   background-color: white;
@@ -184,7 +322,6 @@ table tr {
 }
 
 .modal-body{
-  /* margin-top: 2rem; */
   width: 90%;
   display: flex;
   flex-direction: column;
@@ -192,13 +329,19 @@ table tr {
   padding-top: 0px;
   margin-top: 2rem;
   justify-content: space-evenly;
-  /* height: 100%; */
   position: absolute;
   bottom: 10px;
   top: 50px;
   margin-left: auto;
   margin-right: auto;
-  /* align-self: center; */
+}
+
+.warning{
+  color: red; 
+  font-size: 12px;
+  font-weight: 500;
+  display: none;
+  padding-left: 1rem;
 }
 
 .modal-input{
@@ -272,12 +415,10 @@ table tr {
 .modal-name-dropdown{
   position: absolute;
   background-color: white;
-  /* border: 1px solid grey; */
   border: none;
   border-radius: 5px;
   max-height: 200px;
   width: 50%;
-  /* margin-top: 55px; */
   display: none;
   flex-direction: column;
   overflow: auto;
@@ -297,13 +438,11 @@ table tr {
 
 .modal-name-dropdown button{
   margin-top: 0px;
-  /* margin: 5px; */
   background-color: white;
   color: var(--main-button-bgcolor);
   border: none;
   padding: 5px;
   position:sticky;
-  /* top: 200px; */
   bottom: 0px;
   width: 100%;
   height: 40px;
@@ -369,7 +508,6 @@ table tr {
   display: flex;
   flex-direction: row;
   height: 4rem;
-  /* padding-left: 2rem; */
   justify-content: space-between;
 }
 

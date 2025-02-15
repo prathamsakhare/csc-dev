@@ -6,8 +6,13 @@
     <script src="./index.js" defer></script>
     <script src="./indexeddb.js" defer></script>
     <script src="./users.js" defer></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/6.0.0/introjs.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -21,11 +26,17 @@
       <h1 id="logo">CSC<span>PMS</span></h1>
       <div>
         <a href="./index.html"
-        ><button id="profile-button" class="main-button intro-btn">Intro!</button></a
-      >
-      <a href="./users.html"
-        ><button id="profile-button" class="main-button users-btn">Users</button></a
-      >
+          ><button id="profile-button" class="main-button">Intro!</button></a
+        >
+        <a href="./users.html"
+          ><button id="profile-button" class="main-button">Users</button></a
+        >
+        <a href="./customize.html"
+          ><button id="profile-button" class="main-button">Customize</button></a
+        >
+        <!-- <a href="./customize.html"
+          ><button id="profile-button" class="main-button">Customize</button></a
+        > -->
       </div>
     </header>
 
@@ -52,11 +63,12 @@
               class="modal-input"
               placeholder="Enter customer's name..."
               oninput="getAllUsers()"
+              autocomplete="off"
             />
             <div id="modal-name-dropdown" class="modal-name-dropdown">
               <div>
                 <div id="namelist" class="name-display"></div>
-                <button class="add-user-btn" onclick="openAddUserModal()">
+                <button id="add-user-btn" class="add-user-btn" onclick="openAddUserModal()">
                   + Add '<span id="name-suggest"></span>'
                 </button>
               </div>
@@ -67,24 +79,28 @@
             id="desc"
             class="modal-input"
             placeholder="Enter description..."
+            autocomplete="off"
+
           ></textarea>
           <div class="cat-amt-collection">
             <select
               name="category"
               id="category"
               class="select-input cat-amt-select"
+              
             >
               <option value="select">Select Category</option>
-              <option value="Adhar Card">Adhar Card</option>
+              <!-- <option value="Adhar Card">Adhar Card</option>
               <option value="Shram Card">Shram Card</option>
               <option value="PMKCY">PMKCY</option>
-              <option value="Mudra Yoajana">Mudra Yojana</option>
+              <option value="Mudra Yoajana">Mudra Yojana</option> -->
             </select>
             <input
               type="number"
               id="amt"
               class="select-input amt"
               placeholder="Enter amount recieved..."
+              autocomplete="off"
             />
           </div>
           <button
@@ -97,82 +113,136 @@
         </div>
       </form>
       <!-- Add User Modal -->
-      <form id="userInputForm">
+      <form id="userInputForm" >
         <div class="addUserModal-body" id="addUserModal">
           <!-- <div class="modal-name"> -->
-            <div class="add-user-modal-heading"><h2 class="add-user-heading">Add User</h2>
-              <button
-                id="modal-close-btn"
-                class="close secondary-button"
-                onclick="closeAddUserModal()"
-              >
-                Close
-              </button></div>
-            <div class="wrapper">
-              <input
-                type="text"
-                id="username"
-                name="username"
-                class="addUserModal-input"
-                placeholder="Enter customer's name..."
-              />
-              <input
-                type="email"
-                id="useremail"
-                name="useremail"
-                class="addUserModal-input"
-                placeholder="Enter email..."
-                
-              />
-              <div id="emailError" 
-                style="color: red; 
-                      font-size: 12px; 
-                      display: none; 
-                      padding-left: 10px;
-                      padding-right: 10px;">
-              </div>
+          <div class="add-user-modal-heading">
+            <h2 class="add-user-heading">Add User</h2>
+            <button
+              id="modal-close-btn"
+              class="close secondary-button"
+              onclick="closeAddUserModal()"
+            >
+              Close
+            </button>
+          </div>
+          <div class="wrapper">
+            <input
+              type="text"
+              id="username"
+              name="username"
+              class="addUserModal-input"
+              placeholder="Enter customer's name..."
+              autocomplete="off"
+              oninput="checkIfValid('username', 'name-warning', 'string', 50, 'addUserModal-save-btn', ['name-warning', 'email-warning', 'number-warning'])"
+            />
+            <div id="name-warning" class="warning"><span>Please Enter Valid Name (Less than 50 characters)</span></div>
+            <!-- <div
+              id="usernameError"
+              style="
+                color: red;
+                font-size: 12px;
+                display: none;
+                padding-left: 10px;
+                padding-right: 10px;
+              "
+            ></div> -->
+            <input
+              type="email"
+              id="useremail"
+              name="useremail"
+              class="addUserModal-input"
+              placeholder="Enter email..."
+              autocomplete="off"
+              oninput="checkIfValid('useremail', 'email-warning', 'string', null, 'addUserModal-save-btn', ['name-warning', 'email-warning', 'number-warning'])"
+            />
+            <div id="email-warning" class="warning"><span>Please Enter Valid Email (Example : test@gmail.com)</span></div>
+            <!-- <div
+              id="emailError"
+              style="
+                color: red;
+                font-size: 12px;
+                display: none;
+                padding-left: 10px;
+                padding-right: 10px;
+              "
+            ></div> -->
 
-              <input
-                type="number"
-                id="usernumber"
-                name="usernumber"
-                class="addUserModal-input"
-                placeholder="Enter phone number..."
-              />
-              <div id="phoneError" 
-                style="color: red; 
-                      font-size: 12px; 
-                      display: none; 
-                      padding-left: 10px;
-                      padding-right: 10px;">
-              </div>
-             
-            </div>
+            <input
+              type="number"
+              id="usernumber"
+              name="usernumber"
+              class="addUserModal-input"
+              placeholder="Enter phone number..."
+              autocomplete="off"
+              oninput="checkIfValid('usernumber', 'number-warning', 'number', null, 'addUserModal-save-btn', ['name-warning', 'email-warning', 'number-warning'])"
+            />
+            <div id="number-warning" class="warning"><span>Please Enter Valid Phone Number (+91 is already added)</span></div>
+            <!-- <div
+              id="phoneError"
+              style="
+                color: red;
+                font-size: 12px;
+                display: none;
+                padding-left: 10px;
+                padding-right: 10px;
+              "
+            ></div> -->
+          </div>
 
-            <button id="addUserModal-save-btn" onclick="getUserFormValues()" class="main-button">Save User</button>
-
+          <button
+            id="addUserModal-save-btn"
+            onclick="getUserFormValues()"
+            class="main-button"
+          >
+            Save User
+          </button>
         </div>
       </form>
     </div>
 
     <main>
+      <!-- NOTE : In Dev -->
+      <div class="searchBar">
+        <div class="filters">
+          <input type="text" id="searchbar" placeholder="Search Records by Category..." oninput="searchRecords()" autocomplete="off" />
+          <div class="filter-date">
+            <div class="filter-date-from">
+              <span>From </span> <input id="startDate" type="date" onchange="filterDataByDateForRecords()" />
+            </div>
+            <div class="filter-date-from">
+              <span>To </span> <input id="endDate" type="date" onchange="filterDataByDateForRecords()" />
+            </div>
+          </div>
+          <button id="filter-clear-btn" class="main-button disabled-button" onclick="clearAllFiltersForRecords()" style="width: 15rem; padding: 0.5rem;">Clear Filters</button>
+        </div>
+        <div id="userlist" class="userList" style="display: none;">
+          <h3 id="noUsersWarning" class="noUsersWarning" style="display: none;">No Users!</h3>
+          <!-- <div class="search-result-option" ><p class="search-result-option-name">Random Name</p> <p class="search-result-option-number">9356524183</p></div> -->
+         
+        </div>
+      </div>
       <div id="record-topbar">
         <h2>Records</h2>
         <div>
-
           <button
-          id="download-users-table-button" class="main-button" style="background-color: #008000;"
-          onclick="exportTableToExcel('record-table', 'records')"
-        >
-          Export<i class="fa-regular fa-file-excel" style="padding-left: 5px;"></i>
-        </button>
-        <button
-          id="record-add-button"
-          class="main-button"
-          onclick="openModal()"
-        >
-          Add Record
-        </button>
+            id="download-records-table-button"
+            class="main-button"
+            style="background-color: #008000"
+            onclick="exportTableToExcel('record-table', 'records')"
+          >
+            Export<i
+              class="fa-regular fa-file-excel"
+              style="padding-left: 5px"
+            ></i>
+          </button>
+          <button
+            id="record-add-button"
+            class="main-button"
+            onclick="openModal()"
+          >
+            Add Record
+          </button>
         </div>
       </div>
       <table id="record-table">
@@ -186,41 +256,15 @@
             <th>Amount</th>
             <th>Date</th>
             <th>Time</th>
+            <th>Delete</th>
           </tr>
         </tbody>
       </table>
+      <div style="height: 2rem;"></div>
       <div id="no-records">
         <h1>No Records!</h1>
         <p>Please click on 'Add Record' button to add a record.</p>
       </div>
     </main>
   </body>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/6.0.0/intro.min.js"></script>
-  <script>
-    introJs().setOptions({
-      steps:[
-              {
-                element: document.querySelector('#record-table'),
-                intro: 'All record details are visible here.'
-              },
-              {
-                element: document.querySelector('#record-add-button'),
-                intro: 'Click here to create a new record.'
-              },
-              {
-                element: document.querySelector('#download-users-table-button'),
-                intro: 'Click here to download all records into a .xls file.'
-              },
-              {
-                element: document.querySelector('.users-btn'),
-                intro: 'Click here to go to the Users tab.'
-              },
-              {
-                element: document.querySelector('.intro-btn'),
-                intro: 'Click here to return to the Welcome page.'
-              }
-            ],
-            dontShowAgain: true,
-    }).start();
-  </script>
 </html>
