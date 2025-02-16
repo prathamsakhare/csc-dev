@@ -511,6 +511,52 @@ table tr {
   justify-content: space-between;
 }
 
-abbr[title]{
+/* TODO : Add background color as primary which will be shown all the time (also upon hovering) */
+.introjs-tooltipbuttons a{
+  background-color: var(--main-button-bgcolor);
+  color: white;
   text-decoration: none;
+  font-weight: 300;
+}
+
+.introjs-tooltipbuttons a:hover{
+  background-color: var(--main-button-bgcolor);
+  color: white;
+  text-decoration: none;
+  font-weight: 300;
+}
+
+/* PAGINATION */
+
+.center {
+  margin-bottom: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
+
+.pagination{
+  display: inline-block;
+}
+
+.pagination a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: background-color .3s;
+  margin: 1px;
+}
+
+.pagination a.active {
+  background-color: #4285f4;
+  color: white;
+  border-radius: 3px;
+}
+
+.pagination a:hover:not(.active) {
+  background-color: #ddd;
+  border-radius: 3px;
 }

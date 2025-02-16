@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./intro.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/6.0.0/introjs.min.css">
     <script src="./intro.js" defer></script>
     <title>Introduction</title>
   </head>
@@ -33,8 +34,26 @@
         Streamline your customer service operations with CSC PMS - where all
         your records and insights come together in one place.
       </p>
-
-      <button class="main-button" onclick="openModal()">Get Started</button>
+        
+       <button class="main-button" id="start-btn" onclick="openModal()">Get Started</button>
+    
+      
     </main>
   </body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/6.0.0/intro.min.js"></script>
+  <script>
+    introJs().setOptions({
+      steps:[
+              {
+                title: 'Hello',
+                intro: 'Follow along for a quick guided tour of this software.'
+              },
+              {
+                element: document.querySelector('#start-btn'),
+                intro: 'Click here to start using the PMS.'
+              }
+            ],
+            dontShowAgain: true,
+    }).start();
+  </script>
 </html>

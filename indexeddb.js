@@ -230,6 +230,7 @@ function getAllRecords() {
               const paginationContainer = document.getElementById("pagination");
               paginationContainer.innerHTML = "";
   
+              
               for (let i = 1; i <= pageCount; i++) {
                   const pageLink = document.createElement("a");
                   pageLink.href = "#";
@@ -238,11 +239,17 @@ function getAllRecords() {
                       displayTable(i);
                   };
                   if (i === currentPage) {
-                      pageLink.style.fontWeight = "bold";
+                    pageLink.style.fontWeight = "bold";
+                    // console.log('classList',pageLink.classList); 
+                    pageLink.classList.toggle("active");
+                      
+                      
                   }
                   paginationContainer.appendChild(pageLink);
                   paginationContainer.appendChild(document.createTextNode(" "));
               }
+
+              
           }
   
               // Initial display
