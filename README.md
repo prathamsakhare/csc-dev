@@ -51,6 +51,7 @@ document.addEventListener("click", function(event){
   }
 })
 ```
+21)https://www.webslesson.info/2021/07/how-to-display-excel-data-in-html-table.html
 
 <!-- TODOs  -->
 <!-- (temporarily done : Implement checks that without selecting required fields, record cannot be added (shows warnings) -->
@@ -58,4 +59,4 @@ document.addEventListener("click", function(event){
 <!-- Feature to display warning if no category exists -->
 <!-- Give an option in selector in records page, for categories, to add categories if no categories are added -->
 <!-- Implement loader and animation -->
-<!-- @SrishtiRaut : Implement pagination for records and users -->
+<!-- @SrishtiRaut : Implement pagination for records and users. Edit: done-->

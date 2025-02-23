@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<!-- <title>Convert Excel to HTML Table using JavaScript</title> -->
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    
+    <!-- Using SheetJS library -->
+    <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+    <div class="container">
+    	<!-- <h2 class="text-center mt-4 mb-4">Convert Excel to HTML Table using JavaScript</h2> -->
+    	<div class="card">
+    		<div class="card-header"><b>Select Excel File</b></div>
+    		<div class="card-body">
+    			<!-- Let the user select an excel file from local computer. -->
+                <input type="file" id="excel_file" />
+
+    		</div>
+    	</div>
+        <!-- Display excel sheet data on web page in HTML table format. -->
+        <div id="excel_data" class="mt-5"></div>
+    </div>
+</body>
+</html>
+
+<script>
+//store file tag property under one variable. Means pick the input element.
+const excel_file = document.getElementById('excel_file');
+
+//Once the user uploads the excel file, i.e on change to the input element, do the following.
+excel_file.addEventListener('change', (event) => {
+
+    //Check if the uploaded file is .xls or .xlsx. If not, display error. Else display its data into the html table.
+    if(!['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.ms-excel'].includes(event.target.files[0].type)){
+        //Display error
+        document.getElementById('excel_data').innerHTML = '<div class="alert alert-danger">Invalid file format. Please upload a .xls or .xlsx file.</div>';
+        excel_file.value = '';
+        return false;
+    }
+    //Go ahead with displaying data.
+    //Read the file using FileReader object.
+    var reader = new FileReader();
+    reader.readAsArrayBuffer(event.target.files[0]);    //Here file must be read as ArrayBuffer by passing the file object using event.target.files[0].
+    console.log(event.target.files[0]);
+    console.log("reader: ", reader);
+
+    reader.onload = function(event){
+        //Convert what we have got from FileReader object to Unit8Array object.
+        var data = new Uint8Array(reader.result);  //Pass Filereader result into Unit8Array constructor.
+        console.log("data: ", data);
+        
+        var work_book = XLSX.read(data, {type:'array'});    //Pass Unit8Array data in SheetJS's read() function, it returns selected excel workbook object.
+        console.log("work_book: ", work_book);
+        
+        var sheet_name = work_book.SheetNames;
+
+        //Get first sheet's data in JSON format
+        //Use the sheet_to_json() library function by passing the workbook's 0th sheet.
+        var sheet_data = XLSX.utils.sheet_to_json(work_book.Sheets[sheet_name[0]], {header:1});     //sheet_data variable contains the sheet data in JSON format now.
+        console.log("sheet_data: ", sheet_data);
+        
+        if(sheet_data.length > 0){  //if the sheet has some data, convert if(fyi, right now it is in JSON format) into HTML format.
+
+            var table_output = '<table class="table table-striped table-bordered">';
+            
+            for(var row = 0; row < sheet_data.length; row++){
+                table_output += '<tr>';
+                for(var cell = 0; cell < sheet_data[row].length; cell++){
+                    if(row == 0){
+                        table_output += '<th>'+sheet_data[row][cell]+'</th>';
+                    }
+                    else{
+                        table_output += '<td>'+sheet_data[row][cell]+'</td>';
+                    }
+                }
+                table_output += '</tr>';
+            }
+
+            table_output += '</table>';
+
+            document.getElementById('excel_data').innerHTML = table_output;
+        }
+
+        excel_file.value = '';
+
+    }
+
+});
+
+</script>

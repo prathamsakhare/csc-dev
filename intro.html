@@ -6,6 +6,7 @@
     <script src="./index.js" defer></script>
     <script src="./indexeddb.js" defer></script>
     <script src="./users.js" defer></script>
+    
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
@@ -19,6 +20,8 @@
       href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
       rel="stylesheet"
     />
+     <!-- Using SheetJS library -->
+     <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
     <title>CSC PMS</title>
   </head>
   <body>
@@ -199,7 +202,17 @@
           </button>
         </div>
       </form>
+      
     </div>
+
+    <!-- Import Excelsheet modal -->
+    <div id="importModal" class="modal">
+      <form id="importExcelSheetForm">
+        <!-- Let the user select an excel file from local computer. -->
+        <input type="file" id="excel_file" />
+      </form>
+    </div>
+    
 
     <main>
       <!-- NOTE : In Dev -->
@@ -225,6 +238,20 @@
       <div id="record-topbar">
         <h2>Records</h2>
         <div>
+          <!-- IMPORT button -->
+          <button
+            id="import-button"
+            class="main-button"
+            style="background-color: purple"
+            onclick="openImportModal()"
+          >
+          
+            Import<i
+              class="fa-solid fa-file-arrow-down"
+              style="padding-left: 5px"
+            ></i>
+          </button>
+          <!-- EXPORT button -->
           <button
             id="download-records-table-button"
             class="main-button"
@@ -236,6 +263,7 @@
               style="padding-left: 5px"
             ></i>
           </button>
+          <!-- ADD RECORD button -->
           <button
             id="record-add-button"
             class="main-button"
