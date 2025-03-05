@@ -374,7 +374,7 @@ function getAllUsers() {
             setTimeout(() => {
               displayTable(currentPage);
           }, 100); // Small delay to ensure table refresh
-          
+
             GLOBALUSERTABLE = usersTable.innerHTML
           } else {
             usersTable.style.display = "none";
@@ -394,136 +394,6 @@ function getAllUsers() {
   };
 }
 
-
-// console.log(getAllRecords())
-// function getAllUsers() {
-//     const request = window.indexedDB.open(dbName);
-
-//     request.onsuccess = (event) => {
-//     const db = event.target.result;
-
-//     const transaction = db.transaction("users", "readonly");
-//     const userObjectStore = transaction.objectStore("users");
-
-//     const getUserArray = userObjectStore.getAll();
-
-//     var userKeysArray = [];
-
-//     getUserArray.onsuccess = function () {
-//       const getAllKeysOfUserArray = userObjectStore.getAllKeys();
-
-//       getAllKeysOfUserArray.onsuccess = function () {
-//         userKeysArray = getAllKeysOfUserArray.result;
-
-//         if (getUserArray.result.length > 0) {
-//           noUsers.style.display = "none";
-
-//           // let tempIndex = 1;
-//           // let indexForKeysArray = 0;
-
-//           // getUserArray.result.forEach((user, key) => {
-//           //   console.log(user, " : ", userKeysArray[indexForKeysArray], " : ", key)
-//           //   usersTable.innerHTML += `<tr key="${key}" id="${userKeysArray[indexForKeysArray]}"><td>${tempIndex}</td><td>${user.name}</td><td>${user.phoneNumber}</td><td>${user.email}</td><td>${user.timeStamp}</td><td><img class="small" src="./assets/delete.png" style="width:20px" onclick="openDeleteUserPermissionModal(${userKeysArray[key]})" /></td></tr>`;
-
-//           //   tempIndex += 1;
-//           //   indexForKeysArray += 1;
-
-//           // });
-
-//           const rowsPerPage = 10;
-//           let currentPage = 1;
-
-//           function displayTable(page) {
-//             let tempIndex = (page-1)*rowsPerPage+1;
-//             let indexForUserArray = 0
-//             const startIndex = (page - 1) * rowsPerPage;
-//             const endIndex = startIndex + rowsPerPage;
-//             const slicedData = getUserArray.result.slice(startIndex, endIndex);
-//             // Clear existing table rows
-//             usersTable.innerHTML = `
-//         <tr>
-//           <th>Index</th>
-//           <th>Name</th>
-//           <th>Mobile No.</th>
-//           <th>Email</th>
-//           <th>Date</th>
-//           <th>Delete</th>
-//         </tr>
-//     `;
-
-            
-//             // Add new rows to the table
-//             slicedData.forEach(user => {
-//                 const row = usersTable.children[0].insertRow();
-
-//                 row.setAttribute("id", userKeysArray[indexForUserArray])
-
-//                 const indexCell = row.insertCell(0)
-//                 const nameCell = row.insertCell(1)
-//                 const mobileCell = row.insertCell(2)
-//                 const emailCell = row.insertCell(3)
-//                 const dateCell = row.insertCell(4)
-//                 const deleteCell = row.insertCell(5)
-
-//                 indexCell.innerHTML = tempIndex;
-//                 nameCell.innerHTML = user.name;
-//                 mobileCell.innerHTML = user.phoneNumber;
-//                 emailCell.innerHTML = user.email;
-//                 dateCell.innerHTML = user.timeStamp
-//                 deleteCell.innerHTML = `<img src="./assets/delete.png" class="small" onclick="deleteUserAndRecords(${userKeysArray[indexForUserArray]})" />`
-
-//                 tempIndex += 1
-//                 indexForUserArray += 1
-
-//             });
-
-//             // Update pagination
-//             updatePagination(page);
-//           }
-
-//           function updatePagination(currentPage) {
-//               const pageCount = Math.ceil(getUserArray.result.length / rowsPerPage);
-//               const paginationContainer = document.getElementById("pagination");
-//               paginationContainer.innerHTML = "";
-  
-              
-//               for (let i = 1; i <= pageCount; i++) {
-//                   const pageLink = document.createElement("a");
-//                   pageLink.href = "#";
-//                   pageLink.innerText = i;
-//                   pageLink.onclick = function () {
-//                       displayTable(i);
-//                   };
-//                   if (i === currentPage) {
-//                     pageLink.style.fontWeight = "bold";
-//                     // console.log('classList',pageLink.classList); 
-//                     pageLink.classList.toggle("active"); 
-                      
-//                   }
-//                   paginationContainer.appendChild(pageLink);
-//                   paginationContainer.appendChild(document.createTextNode(" "));
-//               }   
-//           }
-//           // Initial display
-//           displayTable(currentPage);
-
-//           GLOBALUSERTABLE = usersTable.innerHTML;
-
-//         } else {
-//           usersTable.style.display = "none";
-//           noUsers.style.display = "block";
-//           exportUsersButton.disabled = true;
-//           exportUsersButton.style.backgroundColor = "grey";
-//         }
-//       };
-
-//       search(getUserArray.result);
-//     };
-//     getUserArray.onerror = function (event) {
-//       console.error("Error retrieving user:", event.target.errorCode);
-//     };
-//   };
-// }
 getAllUsers();
 
 function getAllCategories() {
