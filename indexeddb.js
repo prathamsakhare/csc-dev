@@ -148,7 +148,7 @@ function getAllRecords() {
 
     const getRequest = recordObjectStore.getAll();
 
-    var recordsKeysArray = [];
+    let recordsKeysArray = [];
 
     getRequest.onsuccess = function () {
       const getAllKeysOfRecordsArray = recordObjectStore.getAllKeys();
@@ -280,7 +280,7 @@ function getAllUsers() {
 
     const getRequest = recordObjectStore.getAll();
 
-    var recordsKeysArray = [];
+    let recordsKeysArray = [];
 
     getRequest.onsuccess = function () {
       const getAllKeysOfRecordsArray = recordObjectStore.getAllKeys();
@@ -336,8 +336,8 @@ function getAllUsers() {
                   mobileCell.innerHTML = user.phoneNumber;
                   emailCell.innerHTML = user.email;
                   dateCell.innerHTML = user.timeStamp
-                  deleteCell.innerHTML = `<img src="./assets/delete.png" class="small" onclick="deleteUserAndRecords(${recordsKeysArray[indexForRecordsArray]})" />`
-
+                  deleteCell.innerHTML = `<img src="./assets/delete.png" class="small" onclick="openDeleteUserPermissionModal(${recordsKeysArray[indexForRecordsArray]})" />`
+                  
                   console.log(row)
 
                   tempIndex += 1
@@ -409,7 +409,7 @@ function getAllCategories() {
 
   const getCategoryArray = categoriesObjectStore.getAll();
 
-  var categoryKeysArray = [];
+  let categoryKeysArray = [];
 
   getCategoryArray.onsuccess = function () {
     const getAllKeysOfCategoryArray = categoriesObjectStore.getAllKeys();
@@ -501,7 +501,7 @@ function filterDataByDate(){
 
         const getAllUserKeys = userObjectStore.getAllKeys();
 
-        var userKeysArrayForSearch = [];
+        let userKeysArrayForSearch = [];
         getAllUserKeys.onsuccess = () => {
           userKeysArrayForSearch = getAllUserKeys.result
           const filteredCustomers = filterCustomersByDate("users", getUserArray.result, startDate.value, endDate.value);
@@ -578,7 +578,7 @@ function filterDataByDateForRecords(){
 
         const getAllRecordsKeys = recordsObjectStore.getAllKeys();
 
-        var recordsKeysArrayForSearch = [];
+        let recordsKeysArrayForSearch = [];
         getAllRecordsKeys.onsuccess = () => {
           
           const filteredCustomers = filterCustomersByDate("records", getRecordsArray.result, startDate.value, endDate.value);
@@ -1083,7 +1083,7 @@ function searchUsers() {
 
     const getUserArray = userObjectStore.getAll();
 
-    var userKeysArrayForSearch = [];
+    let userKeysArrayForSearch = [];
 
     getUserArray.onsuccess = (event) => {
       if (query) {
@@ -1139,7 +1139,7 @@ function searchRecords() {
 
     const getUserArray = userObjectStore.getAll();
 
-    var recordsKeysArray = [];
+    let recordsKeysArray = [];
 
     getUserArray.onsuccess = (event) => {
       if (query.length > 0) {
@@ -1436,7 +1436,7 @@ function getAllUsersToSearch() {
 
   const getUserArray = userObjectStore.getAll();
 
-  var userKeysArray = [];
+  let userKeysArray = [];
 
   getUserArray.onsuccess = function () {
     const getAllKeysOfUserArray = userObjectStore.getAllKeys();
