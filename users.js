@@ -4,36 +4,36 @@ const username = document.getElementById('username')
 const useremail = document.getElementById('useremail')
 const usernumber = document.getElementById('usernumber')
 
-function exportTableToExcel(tableId, filename = ''){
-    let downloadLink;
-    const dataType = 'application/vnd.ms-excel';
-    const tableSelect = document.getElementById(tableId);
-    const tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+// function exportTableToExcel(tableId, filename = ''){
+//     let downloadLink;
+//     const dataType = 'application/vnd.ms-excel';
+//     const tableSelect = document.getElementById(tableId);
+//     const tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
     
-    // Specify file name
-    filename = filename?filename+'.xls':'excel_data.xls';
+//     // Specify file name
+//     filename = filename?filename+'.xlsx':'excel_data.xlsx';
     
-    // Create download link element
-    downloadLink = document.createElement("a");
+//     // Create download link element
+//     downloadLink = document.createElement("a");
     
-    document.body.appendChild(downloadLink);
+//     document.body.appendChild(downloadLink);
     
-    if(navigator.msSaveOrOpenBlob){
-        var blob = new Blob(['\ufeff', tableHTML], {
-            type: dataType
-        });
-        navigator.msSaveOrOpenBlob( blob, filename);
-    }else{
-        // Create a link to the file
-        downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+//     if(navigator.msSaveOrOpenBlob){
+//         var blob = new Blob(['\ufeff', tableHTML], {
+//             type: dataType
+//         });
+//         navigator.msSaveOrOpenBlob( blob, filename);
+//     }else{
+//         // Create a link to the file
+//         downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
     
-        // Setting the file name
-        downloadLink.download = filename;
+//         // Setting the file name
+//         downloadLink.download = filename;
         
-        //triggering the function
-        downloadLink.click();
-    }
-  }
+//         //triggering the function
+//         downloadLink.click();
+//     }
+//   }
 
 
 // const data = [

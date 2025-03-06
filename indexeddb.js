@@ -1,4 +1,5 @@
 // form input fields for record
+
 const recordCustomer = document.getElementById("name");
 let GLOBALTEMPORARYCUSTOMERNUMBER = ""
 const recordDescription = document.getElementById("desc");
@@ -1376,4 +1377,48 @@ function checkIfValid(inputId, warningId, inputType, length=null, addUserButtonI
     // return 
   }
 
+}
+
+// function exportTableToExcel(tableId, filename = ''){
+//   let downloadLink;
+//   const dataType = 'application/vnd.ms-excel';
+//   // const dataType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+//   const tableSelect = document.getElementById(tableId);
+//   const tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+  
+//   // Specify file name
+//   filename = filename?filename+'.xlsx':'excel_data.xlsx';
+
+  
+//   // Create download link element
+//   downloadLink = document.createElement("a");
+  
+//   document.body.appendChild(downloadLink);
+  
+//   if(navigator.msSaveOrOpenBlob){
+//       var blob = new Blob(['\ufeff', tableHTML], {
+//           type: dataType
+//       });
+//       navigator.msSaveOrOpenBlob(blob, filename);
+//   }else{
+//       // Create a link to the file
+//       downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+  
+//       // Setting the file name
+//       downloadLink.download = filename;
+      
+//       //triggering the function
+//       downloadLink.click();
+//   }
+// }
+
+// TODO : While creating xlsx file, it is now taking records / users on first page only, but we need to take all available records / users
+function exportTableToExcel(tableId, filename = 'excel_data.xlsx') {
+  const table = document.getElementById(tableId);
+  const ws = XLSX.utils.table_to_sheet(table); // Convert table to worksheet
+  const wb = XLSX.utils.book_new(); // Create a new workbook
+  XLSX.utils.book_append_sheet(wb, ws, "Sheet1"); // Add worksheet to workbook
+  
+  // Write file and trigger download
+  XLSX.writeFile(wb, filename+".xlsx");
 }
