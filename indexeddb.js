@@ -107,7 +107,7 @@ request.onupgradeneeded = (event) => {
   // usersobjectStore.createIndex("idIndex", {unique : true})
   usersobjectStore.createIndex("nameIndex", "name", { unique: false });
   usersobjectStore.createIndex("emailIndex", "email", { unique: false });
-  usersobjectStore.createIndex("phoneIndex", "phoneNumber", { unique: false });
+  usersobjectStore.createIndex("phoneIndex", "phoneNumber", { unique: true });
 
   const categoriesObjectStore = db.createObjectStore( "categories", {autoIncrement: true} );
   categoriesObjectStore.createIndex("nameIndex", "name", { unique: false });
@@ -260,6 +260,7 @@ function getAllRecords() {
           console.log("Records not found");
         }
       };
+      // search(getUserArray.result);
     };
 
     getRequest.onerror = function (event) {
@@ -1412,6 +1413,7 @@ function checkIfValid(inputId, warningId, inputType, length=null, addUserButtonI
 //   }
 // }
 
+
 // TODO : While creating xlsx file, it is now taking records / users on first page only, but we need to take all available records / users
 function exportTableToExcel(tableId, filename = 'excel_data.xlsx') {
   const table = document.getElementById(tableId);
@@ -1422,3 +1424,52 @@ function exportTableToExcel(tableId, filename = 'excel_data.xlsx') {
   // Write file and trigger download
   XLSX.writeFile(wb, filename+".xlsx");
 }
+
+function getAllUsersToSearch() {
+  const request = window.indexedDB.open(dbName);
+
+  request.onsuccess = (event) => {
+  const db = event.target.result;
+
+  const transaction = db.transaction("users", "readonly");
+  const userObjectStore = transaction.objectStore("users");
+
+  const getUserArray = userObjectStore.getAll();
+
+  var userKeysArray = [];
+
+  getUserArray.onsuccess = function () {
+    const getAllKeysOfUserArray = userObjectStore.getAllKeys();
+
+    getAllKeysOfUserArray.onsuccess = function () {
+      userKeysArray = getAllKeysOfUserArray.result;
+
+      if (getUserArray.result.length > 0) {
+        noUsers.style.display = "none";
+
+        let tempIndex = 1;
+        let indexForKeysArray = 0;
+        getUserArray.result.forEach((user, key) => {
+          usersTable.innerHTML += `<tr key="${key}" id="${userKeysArray[indexForKeysArray]}"><td>${tempIndex}</td><td>${user.name}</td><td>${user.phoneNumber}</td><td>${user.email}</td><td>${user.timeStamp}</td><td><img class="small" src="./assets/delete.png" style="width:20px" onclick="openDeleteUserPermissionModal(${userKeysArray[indexForKeysArray]})" /></td></tr>`;
+
+          tempIndex += 1;
+          indexForKeysArray += 1;
+        });
+
+        GLOBALUSERTABLE = usersTable.innerHTML;
+      } else {
+        usersTable.style.display = "none";
+        noUsers.style.display = "block";
+        exportUsersButton.disabled = true;
+        exportUsersButton.style.backgroundColor = "grey";
+      }
+    };
+
+    search(getUserArray.result);
+  };
+  getUserArray.onerror = function (event) {
+    console.error("Error retrieving user:", event.target.errorCode);
+  };
+};
+}
+getAllUsersToSearch();
