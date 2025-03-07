@@ -51,7 +51,7 @@ document.addEventListener("click", function(event){
   }
 })
 ```
-
+21) How to return indexedDB event / query out of the handler? : https://stackoverflow.com/questions/46326212/how-to-return-indexeddb-query-result-out-of-event-handler
 <!-- TODOs  -->
 <!-- (temporarily done : Implement checks that without selecting required fields, record cannot be added (shows warnings) -->
 <!-- Feature that lets user add / remove categories : DONE -->
