@@ -49,7 +49,7 @@
         </button>
       </div>
       <!-- Add User Modal -->
-      <form id="userInputForm" >
+      <form id="userInputForm" onsubmit="return false">
         <div class="modal-body">
           <!-- <div class="modal-name"> -->
           <div class="wrapper">
@@ -91,31 +91,13 @@
             oninput="checkIfValid('usernumber', 'number-warning', 'number', null, 'modal-save-btn', ['name-warning', 'email-warning', 'number-warning'])"
           ></input>
           <div id="number-warning" class="warning"><span>Please Enter Valid Phone Number (+91 is already added)</span></div>
-          <!-- <div class="cat-amt-collection">
-            <select
-              name="category"
-              id="category"
-              class="select-input cat-amt-select"
-            >
-              <option value="select">Select Category</option>
-              <option value="Adhar Card">Adhar Card</option>
-              <option value="Shram Card">Shram Card</option>
-              <option value="PMKCY">PMKCY</option>
-              <option value="Mudra Yoajana">Mudra Yojana</option>
-            </select>
-            <input
-              type="number"
-              id="amt"
-              class="select-input amt"
-              placeholder="Enter amount recieved..."
-            />
-          </div> -->
+          <div id="duplicate-warning" class="warning"><span>User with this phone number already exists, please enter different number</span></div>
           <button
             id="modal-save-btn"
             class="main-button"
             style="background-color: grey;"
             disabled
-            onclick="getUserFormValues()"
+            onclick="getUserFormValues('user-modal')"
           >
             Add User
           </button>
@@ -124,81 +106,7 @@
       <!-- Add User Modal -->
       
     </div>
-    <div id="updateUserModal" class="modal">
-      <div class="modal-heading">
-        <h2>Add User</h2>
-        <button
-          id="modal-close-btn"
-          class="close secondary-button"
-          onclick="closeAddUserModal()"
-        >
-          Close
-        </button>
-      </div>
-      <!-- Add User Modal -->
-      <form id="userInputForm">
-        <div class="modal-body">
-          <!-- <div class="modal-name"> -->
-          <div class="wrapper">
-            <input
-              type="text"
-              id="updateusername"
-              class="modal-input"
-              placeholder="Enter customer's name..."
-              autocomplete="off"
-            />
-            <div id="modal-name-dropdown" class="modal-name-dropdown">
-              <div>
-                <div id="namelist" class="name-display"></div>
-                <!-- <button class="add-user-btn" onclick="openAddUserModal()">
-                  + Add '<span id="name-suggest"></span>'
-                </button> -->
-              </div>
-            </div>
-          </div>
-          <input
-            name="usermail"
-            id="updateuseremail"
-            type="email"
-            class="modal-input"
-            placeholder="Enter Email Address..."
-            autocomplete="off"
-          ></input>
-          <input
-            name="usernumber"
-            type="number"
-            id="updateusernumber"
-            class="modal-input"
-            placeholder="Enter Phone Number..."
-            autocomplete="off"
-          ></input>
-          
-          <!-- <div class="cat-amt-collection">
-            <select
-              name="category"
-              id="category"
-              class="select-input cat-amt-select"
-            >
-              <option value="select">Select Category</option>
-              <option value="Adhar Card">Adhar Card</option>
-              <option value="Shram Card">Shram Card</option>
-              <option value="PMKCY">PMKCY</option>
-              <option value="Mudra Yoajana">Mudra Yojana</option>
-            </select>
-            <input
-              type="number"
-              id="amt"
-              class="select-input amt"
-              placeholder="Enter amount recieved..."
-            />
-          </div> -->
-          <!-- <button id="modal-update-btn" class="main-button" onclick="updateUser()">
-            Update User
-          </button> -->
-        </div>
-      </form>
-      
-    </div>
+    
     <main>
       <div class="searchBar">
         <div class="filters">

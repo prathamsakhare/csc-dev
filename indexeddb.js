@@ -166,7 +166,7 @@ function getAllRecords() {
 
             function displayTable(page) {
               let tempIndex = (page-1)*rowsPerPage+1;
-              let indexForRecordsArray = 0
+              let indexForRecordsArray = (page-1)*rowsPerPage
               const startIndex = (page - 1) * rowsPerPage;
               const endIndex = startIndex + rowsPerPage;
 
@@ -295,10 +295,11 @@ function getAllUsers() {
 
             const rowsPerPage = 10;
             let currentPage = 1;
-
+            // TODO : Fix the id issue in order to correctly delete the user
+            
             function displayTable(page) {
               let tempIndex = (page-1)*rowsPerPage+1;
-              let indexForRecordsArray = 0
+              let indexToSetForAllUsers = (page-1)*rowsPerPage
               const startIndex = (page - 1) * rowsPerPage;
               const endIndex = startIndex + rowsPerPage;
 
@@ -324,7 +325,7 @@ function getAllUsers() {
               slicedData.forEach(user => {
                   const row = usersTable.insertRow();
 
-                  row.setAttribute("id", recordsKeysArray[indexForRecordsArray])
+                  row.setAttribute("id", recordsKeysArray[indexToSetForAllUsers])
 
                   const indexCell = row.insertCell(0)
                   const nameCell = row.insertCell(1)
@@ -338,12 +339,12 @@ function getAllUsers() {
                   mobileCell.innerHTML = user.phoneNumber;
                   emailCell.innerHTML = user.email;
                   dateCell.innerHTML = user.timeStamp
-                  deleteCell.innerHTML = `<img src="./assets/delete.png" class="small" onclick="openDeleteUserPermissionModal(${recordsKeysArray[indexForRecordsArray]})" />`
+                  deleteCell.innerHTML = `<img src="./assets/delete.png" class="small" onclick="openDeleteUserPermissionModal(${recordsKeysArray[indexToSetForAllUsers]})" />`
                   
                   console.log(row)
 
                   tempIndex += 1
-                  indexForRecordsArray += 1
+                  indexToSetForAllUsers += 1
 
               });
   
@@ -1007,7 +1008,7 @@ function getRecordFormValues() {
   closeModal();
 }
 
-async function getUserFormValues() {
+async function getUserFormValues(source) {
   // current date
   const today = new Date();
   const yyyy = today.getFullYear();
@@ -1079,12 +1080,22 @@ async function getUserFormValues() {
 
   try {
     userAdded = await addUser(user);
-    setCustomerName(capitalizedName, userNumber.value)
-    closeAddUserModal();
+    if(source == "record-modal"){
+      setCustomerName(capitalizedName, userNumber.value)
+      closeAddUserModal();
+    }
+    if(source == "user-modal"){
+      location.reload()
+    }
   } catch (error) {
     duplicateWarning.style.display = 'block'
-    return error
+    console.log("error occurred while adding user...")
+    userForm.addEventListener("submit", function(event){
+      event.preventDefault()
+    })
+    // return error
   }
+  
 
 }
 
