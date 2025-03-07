@@ -138,6 +138,7 @@
               oninput="checkIfValid('username', 'name-warning', 'string', 50, 'addUserModal-save-btn', ['name-warning', 'email-warning', 'number-warning'])"
             />
             <div id="name-warning" class="warning"><span>Please Enter Valid Name (Less than 50 characters)</span></div>
+            
             <!-- <div
               id="usernameError"
               style="
@@ -179,6 +180,7 @@
               oninput="checkIfValid('usernumber', 'number-warning', 'number', null, 'addUserModal-save-btn', ['name-warning', 'email-warning', 'number-warning'])"
             />
             <div id="number-warning" class="warning"><span>Please Enter Valid Phone Number (+91 is already added)</span></div>
+            <div id="duplicate-warning" class="warning"><span>User with this phone number already exists, please enter different number</span></div>
             <!-- <div
               id="phoneError"
               style="

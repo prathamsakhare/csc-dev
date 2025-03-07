@@ -27,6 +27,8 @@ const noUsers = document.getElementById("no-users");
 const userForm = document.getElementById("userInputForm");
 const addUserButton = document.getElementById("modal-save-btn")
 
+const duplicateWarning = document.getElementById("duplicate-warning")
+
 // elements for suggestion list for names
 let userNameList = document.getElementById("namelist");
 let userNameDropdown = document.getElementById("modal-name-dropdown");
@@ -711,8 +713,8 @@ function keyOfAddedUser(id) {}
 
 // add user
 function addUser(user) {
-
-  const request = window.indexedDB.open(dbName, 1);
+  return new Promise(function(resolve, reject){
+    const request = window.indexedDB.open(dbName, 1);
 
   request.onsuccess = (event) => {
     const db = event.target.result;
@@ -725,12 +727,28 @@ function addUser(user) {
 
     getUserRequest.onsuccess = (event) => {
       keyOfAddedUser(event.target.result);
+      resolve(true)
     };
+
+    getUserRequest.onerror = (event) => {
+      reject(false)
+    }
 
     //Getting The Data
     const transaction = db.transaction(["users"]);
     const store = transaction.objectStore("users");
+
+    transaction.oncomplete = function() {
+      db.close();
+    };
+
+    transaction.onerror = (event) => {
+      reject(false)
+    }
+    
   };
+  })
+
 }
 // addUser({name : "user 1",email : "user1@gmail.com", "phoneNumber" : "9876543210"})
 
@@ -989,12 +1007,14 @@ function getRecordFormValues() {
   closeModal();
 }
 
-function getUserFormValues() {
+async function getUserFormValues() {
   // current date
   const today = new Date();
   const yyyy = today.getFullYear();
   let mm = today.getMonth() + 1; // Months start at 0!
   let dd = today.getDate();
+
+  let userAdded = null
 
   if (dd < 10) dd = "0" + dd;
   if (mm < 10) mm = "0" + mm;
@@ -1057,12 +1077,15 @@ function getUserFormValues() {
     timeStamp: formattedToday,
   };
 
-  addUser(user);
-  setCustomerName(capitalizedName, userNumber.value)
+  try {
+    userAdded = await addUser(user);
+    setCustomerName(capitalizedName, userNumber.value)
+    closeAddUserModal();
+  } catch (error) {
+    duplicateWarning.style.display = 'block'
+    return error
+  }
 
-  
-
-  closeAddUserModal();
 }
 
 function searchUsers() {
